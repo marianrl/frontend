@@ -1,8 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {branchService} from "./services/ams/branch";
+import {ApiResponse} from "./services/ams/branch";
+import Button from "./components/Button";
 
 function App() {
+
+  const [userData, setUserData] = useState<ApiResponse | null>(null);
+
+  const handleClick = () => {
+    branchService.fetchAllBranches("branch")
+        .then((userData) => {setUserData(userData)});
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +29,7 @@ function App() {
         >
           Learn React
         </a>
+        <Button label="Buscar todos" onClick={handleClick}/>
       </header>
     </div>
   );
