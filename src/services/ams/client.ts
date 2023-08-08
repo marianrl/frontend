@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Branch } from "../../types/branch";
+import { Client } from "../../types/client";
 
 export interface ApiResponse {
     // Define la estructura de la respuesta de la API si es necesario
@@ -9,8 +9,8 @@ export interface ApiResponse {
 
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
-const branchService = {
-    async fetchAllBranches(endpoint: string): Promise<ApiResponse> {
+const clientService = {
+    async fetchAllClients(endpoint: string): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}`);
             return {
@@ -18,11 +18,11 @@ const branchService = {
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Error al obtener los datos de branches');
+            throw new Error('Error al obtener los datos de clients');
         }
     },
 
-    async fetchBranchById(endpoint: string, id: number): Promise<ApiResponse> {
+    async fetchClientById(endpoint: string, id: number): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
@@ -30,35 +30,35 @@ const branchService = {
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Error al obtener los datos de branches por ID');
+            throw new Error('Error al obtener los datos de clients por ID');
         }
     },
 
-    async createBranch(endpoint: string, branch: Branch): Promise<ApiResponse> {
+    async createClient(endpoint: string, client: Client): Promise<ApiResponse> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, branch);
+            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, client);
             return {
                 data: response.data,
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Error al crear la branch');
+            throw new Error('Error al crear el client');
         }
     },
 
-    async updateBranch(endpoint: string, id: number, branch: Branch): Promise<ApiResponse> {
+    async updateClient(endpoint: string, id: number, client: Client): Promise<ApiResponse> {
         try {
-            const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, branch);
+            const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, client);
             return {
                 data: response.data,
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Error al actualizar los datos de la branch');
+            throw new Error('Error al actualizar los datos del client');
         }
     },
 
-    async deleteBranch(endpoint: string, id: number): Promise<ApiResponse> {
+    async deleteClient(endpoint: string, id: number): Promise<ApiResponse> {
         try {
             const response = await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
@@ -66,9 +66,9 @@ const branchService = {
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Error al eliminar la branch');
+            throw new Error('Error al eliminar el client');
         }
     }
 };
 
-export {branchService}
+export {clientService}
