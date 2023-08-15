@@ -3,11 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import {branchService} from "./services/ams/branch";
 import {ApiResponse} from "./services/ams/branch";
-import Button from "./components/Button";
+import Button from "./components/button";
+import Switch from "./components/switch";
 
 function App() {
 
-  const [userData, setUserData] = useState<ApiResponse | null>(null);
+  const [, setUserData] = useState<ApiResponse | null>(null);
 
   const handleClick = () => {
     branchService.fetchAllBranches("branch")
@@ -30,6 +31,7 @@ function App() {
           Learn React
         </a>
         <Button label="Buscar todos" onClick={handleClick}/>
+        <Switch label="" />
       </header>
     </div>
   );
