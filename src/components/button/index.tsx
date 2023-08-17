@@ -1,14 +1,14 @@
 import React from 'react';
+import './style.css'
 
 interface ButtonProps {
     label: string;
     onClick: () => void;
-    disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, ...buttonProps }) => {
     return (
-        <button onClick={onClick} disabled={disabled}>
+        <button className="button" onClick={onClick} {...buttonProps}>
             {label}
         </button>
     );

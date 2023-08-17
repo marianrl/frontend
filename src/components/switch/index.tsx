@@ -18,7 +18,7 @@ const Switch: React.FC<SwitchProps> = ({ label }) => {
                 <input type="checkbox" checked={isChecked} onChange={toggleSwitch} />
                 <span className="slider"></span>
             </label>
-            <p>{label} {isChecked ? 'Recordar usuario' : 'No recordar usuario'}</p>
+            <p>{label} {isChecked ? 'Recordar usuario' : 'Recordar usuario'}</p>
         </div>
     );
 };

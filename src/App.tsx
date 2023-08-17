@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {branchService} from "./services/ams/branch";
-import {ApiResponse} from "./services/ams/branch";
-import Button from "./components/button";
-import Switch from "./components/switch";
+import {branchService} from './services/ams/branch';
+import {ApiResponse} from './services/ams/branch';
+import Button from './components/button';
+import CancelButton from "./components/cancelbutton";
+import TextBox from "./components/textbox";
+import Switch from './components/switch';
+import Buttongroup from "./components/buttongroup";
+import Logo from './img/Logo.png'
 
 function App() {
 
@@ -15,23 +18,42 @@ function App() {
         .then((userData) => {setUserData(userData)});
   }
 
+  const [text, setText] = useState('');
+
+  const [password, setPassword] = useState('');
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button label="Buscar todos" onClick={handleClick}/>
+        <img
+            src={Logo}
+            className="App-logo"
+            alt="logo"
+        />
+        <TextBox
+            label="Usuario:"
+            value={text}
+            onChange={handleTextChange}
+            placeholder="Ingresa usuario aquí"/>
+        <TextBox
+            label="Contraseña:"
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="Ingresa contraseña aquí"
+            type="password"/>
         <Switch label="" />
+        <Buttongroup>
+          <Button label="ACEPTAR" onClick={handleClick}/>
+          <CancelButton label="BORRAR" onClick={handleClick}/>
+        </Buttongroup>
       </header>
     </div>
   );
