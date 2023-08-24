@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { User } from "../../types/user";
+import { UserRequest } from "../../types/user_request";
 
 export interface ApiResponse {
     // Define la estructura de la respuesta de la API si es necesario
@@ -31,6 +32,18 @@ const userService = {
             };
         } catch (error) {
             throw new Error('Error al obtener los datos de los Usuarios por ID');
+        }
+    },
+
+    async fetchUserByMailAndPassword(endpoint: string, userRequest: UserRequest): Promise<ApiResponse> {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, userRequest);
+            return {
+                data: response.data,
+                status: response.status,
+            };
+        } catch (error) {
+            throw new Error('Usuario o contraseña incorrecta');
         }
     },
 
