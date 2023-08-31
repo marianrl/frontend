@@ -15,7 +15,7 @@ const TextBox: React.FC<TextBoxProps> = ({
     onChange,
     label,
     placeholder,
-    type = 'text'
+    type = 'text',
 }) => {
     const [isPasswordVisible, setPasswordVisible] = useState(false);
 

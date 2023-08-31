@@ -1,17 +1,16 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes ,Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Login from "./pages/login";
-import Home from "./pages/home";
+import Home from "./pages/home"
 
 const App: React.FC = () => {
   return (
       <BrowserRouter>
           <Routes>
-              <Route>
-                  <Route path="/login" element={<Login/>} />
-                  <Route path="/home" element={<Home/>} />
-              </Route>
+              <Route path="/login" element={<Login/>} />
+              <Route path="/home" element={<Home/>} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
       </BrowserRouter>
   );

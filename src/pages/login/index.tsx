@@ -4,21 +4,25 @@ import TextBox from "../../components/textbox";
 import Switch from "../../components/switch";
 import Buttongroup from "../../components/buttongroup";
 import Button from "../../components/button";
-import CancelButton from "../../components/cancelbutton";
 import {ApiResponse} from "../../services/ams/branch";
 import {userService} from "../../services/ams/user";
 import {UserRequest} from "../../types/user_request";
+import {useNavigate} from "react-router-dom";
 
 const Login: React.FC = () => {
 
     const [, setUserData] = useState<ApiResponse | null>(null);
 
-    const [text, setText] = useState('');
+    const [user, setUser] = useState('');
 
     const [password, setPassword] = useState('');
 
-    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setText(event.target.value);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const navigate = useNavigate();
+
+    const handleUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUser(event.target.value);
     };
 
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,40 +30,59 @@ const Login: React.FC = () => {
     };
 
     const handleClick = () => {
-        const admin:UserRequest ={
-            mail: "admin",
-            password: "admin"
+        const userRequest:UserRequest ={
+            mail: user,
+            password: password
         }
 
-        userService.fetchUserByMailAndPassword("user/authenticate", admin)
-            .then((userData) => {setUserData(userData)});
+        userService.fetchUserByMailAndPassword("user/authenticate", userRequest)
+            .then((userData) => {
+                if (userData) {
+                    setUserData(userData);
+                    setErrorMessage('');
+                    navigate('/home');
+                } else {
+                    setUserData(null);
+                    setErrorMessage('Usuario o contraseña incorrecta');
+                }
+            })
+            .catch(() => {
+                setUserData(null);
+                setErrorMessage('Error al procesar la solicitud');
+        });
     }
+
+    const handleFormSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+    };
 
     return (
         <div className="App">
-            <header className="App-header">
-                <img
-                    src={Logo}
-                    className="App-logo"
-                    alt="logo"
-                />
-                <TextBox
-                    label="Usuario:"
-                    value={text}
-                    onChange={handleTextChange}
-                    placeholder="Ingresa usuario aquí"/>
-                <TextBox
-                    label="Contraseña:"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    placeholder="Ingresa contraseña aquí"
-                    type="password"/>
-                <Switch label="" />
-                <Buttongroup>
-                    <Button label="ACEPTAR" onClick={handleClick}/>
-                    <CancelButton label="BORRAR" onClick={handleClick}/>
-                </Buttongroup>
-            </header>
+            <form onSubmit={handleFormSubmit}>
+                <header className="App-header">
+                    <img
+                        src={Logo}
+                        className="App-logo"
+                        alt="logo"
+                    />
+                    <TextBox
+                        label="Usuario:"
+                        value={user}
+                        onChange={handleUserChange}
+                        placeholder="Ingresa usuario aquí"/>
+                    <TextBox
+                        label="Contraseña:"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        placeholder="Ingresa contraseña aquí"
+                        type="password"/>
+                    {errorMessage && <p>{errorMessage}</p>}
+                    <Switch label="" />
+                    <Buttongroup>
+                        <Button type="submit" label="INGRESAR" onClick={handleClick}/>
+                    </Buttongroup>
+                </header>
+            </form>
         </div>
     );
 };
