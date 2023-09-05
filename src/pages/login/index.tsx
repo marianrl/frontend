@@ -8,8 +8,11 @@ import {ApiResponse} from "../../services/ams/branch";
 import {userService} from "../../services/ams/user";
 import {UserRequest} from "../../types/user_request";
 import {useNavigate} from "react-router-dom";
+import {useSession} from "../../components/sessionprovider";
 
 const Login: React.FC = () => {
+
+    const { login } = useSession();
 
     const [, setUserData] = useState<ApiResponse | null>(null);
 
@@ -38,8 +41,9 @@ const Login: React.FC = () => {
         userService.fetchUserByMailAndPassword("user/authenticate", userRequest)
             .then((userData) => {
                 if (userData) {
-                    setUserData(userData);
                     setErrorMessage('');
+                    login(user);
+                    console.log('user: ' + user);
                     navigate('/home');
                 } else {
                     setUserData(null);
