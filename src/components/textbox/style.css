@@ -7,12 +7,15 @@
 }
 
 .custom-textbox label {
+    text-align: left;
     font-size: 14px;
     margin-bottom: 4px;
 }
 
 .custom-textbox input {
     padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -35,7 +38,7 @@
 /* Estilos específicos para el icono del ojo */
 .custom-textbox span {
     position: absolute;
-    top: 62%;
+    top: 57%;
     right: 8px;
     transform: translateY(-50%);
     cursor: pointer;
