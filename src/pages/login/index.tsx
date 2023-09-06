@@ -62,32 +62,40 @@ const Login: React.FC = () => {
 
     return (
         <div className="App">
-            <form onSubmit={handleFormSubmit}>
-                <header className="App-header">
-                    <img
-                        src={Logo}
-                        className="App-logo"
-                        alt="logo"
-                    />
-                    <TextBox
-                        label="Usuario:"
-                        value={user}
-                        onChange={handleUserChange}
-                        placeholder="Ingresa usuario aquí"/>
-                    <TextBox
-                        label="Contraseña:"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="Ingresa contraseña aquí"
-                        type="password"/>
-                    {errorMessage && <p>{errorMessage}</p>}
-                    <Switch label="" />
-                    <Buttongroup>
-                        <Button type="submit" label="INGRESAR" onClick={handleClick}/>
-                    </Buttongroup>
-                </header>
-            </form>
+            <div className="split-screen">
+                <div className="left">
+                    <div className="background-image">
+                        <img
+                            src={Logo}
+                            className="App-logo"
+                            alt="logo"
+                        />
+                    </div>
+                </div>
+                <div className="right">
+                    <form onSubmit={handleFormSubmit} >
+                        <TextBox
+                            label="Usuario:"
+                            value={user}
+                            onChange={handleUserChange}
+                            placeholder="Ingresa usuario aquí"/>
+                        <TextBox
+                            label="Contraseña:"
+                            value={password}
+                            onChange={handlePasswordChange}
+                            placeholder="Ingresa contraseña aquí"
+                            type="password"/>
+                        {errorMessage && <p>{errorMessage}</p>}
+                        <Switch label="" />
+                        <Buttongroup>
+                            <Button type="submit" label="INGRESAR" onClick={handleClick}/>
+                        </Buttongroup>
+
+                    </form>
+                </div>
+            </div>
         </div>
+
     );
 };
 

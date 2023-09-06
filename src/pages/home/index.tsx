@@ -15,11 +15,13 @@ const Home: React.FC = () => {
     };
 
     return (
-        <div>
-            <Buttongroup>
-                <Button onClick={handleLogout} type="button" label="Cerrar Sesion"/>
-            </Buttongroup>
-        </div>
+        <header className="App-header">
+            <div>
+                <Buttongroup>
+                    <Button onClick={handleLogout} type="button" label="Cerrar Sesion"/>
+                </Buttongroup>
+            </div>
+        </header>
     );
 }
 
