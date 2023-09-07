@@ -75,6 +75,7 @@ const Login: React.FC = () => {
                 </div>
                 <div className="right">
                     <form onSubmit={handleFormSubmit} >
+                        <h2 className="title">BIENVENIDO</h2>
                         <InputWrapper
                             htmlFor="user"
                             label="Usuario"

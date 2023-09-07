@@ -1,8 +1,8 @@
 .input-wrapper {
     position: relative;
     line-height: 14px;
-    margin: 0 10px;
-    display: inline-block;
+    margin: 20px 10px;
+
 }
 .label {
     color: #bbb;
@@ -34,6 +34,7 @@
     padding: 10px 20px;
     border-radius: 20px;
     position: relative;
+    width: 250px;
 }
 .input:invalid + .label {
     -webkit-transform: translateY(0);
