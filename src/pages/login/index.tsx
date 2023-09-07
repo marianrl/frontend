@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import Logo from "../../img/Logo.png";
 import TextBox from "../../components/textbox";
 import Switch from "../../components/switch";
-import Buttongroup from "../../components/buttongroup";
 import Button from "../../components/button";
+import InputWrapper from "../../components/inputfield";
 import {ApiResponse} from "../../services/ams/branch";
 import {userService} from "../../services/ams/user";
 import {UserRequest} from "../../types/user_request";
 import {useNavigate} from "react-router-dom";
 import {useSession} from "../../components/sessionprovider";
+
 
 const Login: React.FC = () => {
 
@@ -74,22 +75,19 @@ const Login: React.FC = () => {
                 </div>
                 <div className="right">
                     <form onSubmit={handleFormSubmit} >
-                        <TextBox
-                            label="Usuario:"
-                            value={user}
-                            onChange={handleUserChange}
-                            placeholder="Ingresa usuario aquí"/>
-                        <TextBox
-                            label="Contraseña:"
-                            value={password}
-                            onChange={handlePasswordChange}
-                            placeholder="Ingresa contraseña aquí"
-                            type="password"/>
+                        <InputWrapper
+                            htmlFor="user"
+                            label="Usuario"
+                            type="text"
+                        />
+                        <InputWrapper
+                            htmlFor="pass"
+                            label="Contraseña"
+                            type="password"
+                        />
                         {errorMessage && <p>{errorMessage}</p>}
                         <Switch label="" />
-                        <Buttongroup>
-                            <Button type="submit" label="INGRESAR" onClick={handleClick}/>
-                        </Buttongroup>
+                        <Button type="submit" label="INGRESAR" onClick={handleClick}/>
 
                     </form>
                 </div>
