@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Logo from "../../img/Logo.png";
-import Switch from "../../components/switch";
 import Button from "../../components/button";
 import InputWrapper from "../../components/inputfield";
 import {ApiResponse} from "../../services/ams/branch";
