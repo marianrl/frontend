@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Logo from "../../img/Logo.png";
-import TextBox from "../../components/textbox";
 import Switch from "../../components/switch";
 import Button from "../../components/button";
 import InputWrapper from "../../components/inputfield";
@@ -77,14 +76,15 @@ const Login: React.FC = () => {
                     <form onSubmit={handleFormSubmit} >
                         <h2 className="title">BIENVENIDO</h2>
                         <InputWrapper
-                            htmlFor="user"
                             label="Usuario"
                             type="text"
+                            htmlFor="text"
                         />
                         <InputWrapper
-                            htmlFor="pass"
                             label="Contraseña"
                             type="password"
+                            htmlFor="password"
+
                         />
                         {errorMessage && <p>{errorMessage}</p>}
                         <Switch label="" />

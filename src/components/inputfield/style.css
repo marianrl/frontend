@@ -54,3 +54,12 @@
     -ms-transform: translateY(-20px);
     transform: translateY(-20px);
 }
+#EyeIcon{
+    position: absolute;
+    display: block;
+    bottom: .5rem;
+    right: 1rem;
+
+    user-select: none;
+    cursor: pointer;
+}
