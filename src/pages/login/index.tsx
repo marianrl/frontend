@@ -79,15 +79,18 @@ const Login: React.FC = () => {
                             label="Usuario"
                             type="text"
                             htmlFor="text"
+                            value={user}
+                            onChange={handleUserChange}
                         />
                         <InputWrapper
                             label="Contraseña"
                             type="password"
                             htmlFor="password"
+                            value={password}
+                            onChange={handlePasswordChange}
 
                         />
-                        {errorMessage && <p>{errorMessage}</p>}
-                        <Switch label="" />
+                        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
                         <Button type="submit" label="INGRESAR" onClick={handleClick}/>
 
                     </form>

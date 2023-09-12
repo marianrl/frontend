@@ -52,4 +52,9 @@
   color: #13139F;
 }
 
+.errorMessage{
+  font-size: 13px;
+  color: red;
+}
+
 
