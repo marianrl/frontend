@@ -49,12 +49,13 @@
 }
 
 .title{
-  color: #13139F;
+  color: #00004b;
 }
 
 .errorMessage{
   font-size: 13px;
-  color: red;
+  color: #a30202;
+  font-weight: bold;
 }
 
 

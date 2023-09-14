@@ -1,8 +1,8 @@
 import React from 'react';
-import Buttongroup from "../../components/buttongroup";
-import Button from "../../components/button";
 import {useSession} from "../../components/sessionprovider";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/navbar";
+
 
 const Home: React.FC = () => {
 
@@ -16,13 +16,10 @@ const Home: React.FC = () => {
 
     return (
         <header className="App-header">
-            <div>
-                <Buttongroup>
-                    <Button onClick={handleLogout} type="button" label="Cerrar Sesion"/>
-                </Buttongroup>
-            </div>
+            <Navbar/>
         </header>
     );
 }
+
 
 export default Home;
