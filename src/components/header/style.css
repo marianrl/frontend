@@ -1,0 +1,9 @@
+.header{
+    background-color: #ffffff;
+    padding-left: 150px;
+    padding-bottom: 25px;
+    display: flex;
+}
+.profile-contein{
+    margin-left: auto;
+}

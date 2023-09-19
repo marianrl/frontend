@@ -2,6 +2,9 @@ import React from 'react';
 import {useSession} from "../../components/sessionprovider";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
+import Header from "../../components/header";
+import './style.css'
+
 
 
 const Home: React.FC = () => {
@@ -15,9 +18,14 @@ const Home: React.FC = () => {
     };
 
     return (
-        <header className="App-header">
-            <Navbar/>
-        </header>
+        <div className="home">
+            <header>
+                <Navbar/>
+                <div>
+                    <Header name= "Mariano Home"/>
+                </div>
+            </header>
+        </div>
     );
 }
 

@@ -22,7 +22,6 @@ const Navbar: React.FC = () => {
 
     return (
         <div>
-            <div className="area"></div>
             <nav className="main-menu">
                 <ul>
                     <li>
