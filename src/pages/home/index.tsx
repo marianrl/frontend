@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import './style.css'
+import Card from "../../components/grid";
 
 
 
@@ -23,6 +24,9 @@ const Home: React.FC = () => {
                 <Navbar/>
                 <div>
                     <Header name= "Mariano Home"/>
+                </div>
+                <div>
+                    <Card/>
                 </div>
             </header>
         </div>

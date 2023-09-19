@@ -1,0 +1,39 @@
+.overviewCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background-color: #fff;
+    transform: translateY(0);
+    transition: all 0.3s;
+}
+.overviewCard-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    font-size: 21px;
+    color: #fff;
+}
+.overviewCard-icon--document {
+    background-color: #e67e22;
+}
+.overviewCard-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.overviewCard-title {
+    font-size: 18px;
+    color: #1bbae1;
+    margin: 0;
+}
+.text-light {
+    font-weight: 300;
+}
+.overviewCard-subtitle {
+    margin: 2px;
+    color: #777;
+}
