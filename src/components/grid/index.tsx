@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.css'
 import Card from "../card";
+import Graphblock from "../graphblock";
 
 const Grid: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ const Grid: React.FC = () => {
                     <Card/>
                     <Card/>
                 </div>
+                <Graphblock/>
             </main>
         </div>
     );

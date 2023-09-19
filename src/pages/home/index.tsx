@@ -8,6 +8,7 @@ import Card from "../../components/grid";
 
 
 
+
 const Home: React.FC = () => {
 
     const { logout } = useSession();
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
                 <div>
                     <Card/>
                 </div>
+
             </header>
         </div>
     );
