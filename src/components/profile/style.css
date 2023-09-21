@@ -4,7 +4,8 @@
 .write-post-container {
     width: 100%;
     border-radius: 6px;
-    padding: 20px;
+    padding: 20px 0;
+    margin-right: 20px;
     color: #626262;
 }
 .user-profile {

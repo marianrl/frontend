@@ -31,6 +31,7 @@ const Login: React.FC = () => {
         setPassword(event.target.value);
     };
 
+
     const handleClick = () => {
         const userRequest:UserRequest ={
             mail: user,
@@ -90,7 +91,10 @@ const Login: React.FC = () => {
 
                         />
                         {errorMessage && <p className="errorMessage">{errorMessage}</p>}
-                        <Button type="submit" label="INGRESAR" onClick={handleClick}/>
+                        <Button
+                            type="submit"
+                            label="INGRESAR"
+                            onClick={handleClick}/>
 
                     </form>
                 </div>

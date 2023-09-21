@@ -19,6 +19,12 @@ const Navbar: React.FC = () => {
         logout(); // Cierra la sesión
         navigate('/login'); // Redirige al usuario a la página de inicio de sesión
     };
+    const handleAudit = () => {
+        navigate('/audit');
+    };
+    const handleHome = () => {
+        navigate('/home');
+    };
 
     return (
         <div>
@@ -41,7 +47,7 @@ const Navbar: React.FC = () => {
                 </ul>
                 <ul className="menu-block">
                     <li>
-                        <a href="#">
+                        <a href="#" onClick={handleHome}>
                             <i className="fa fa-home fa-2x"><AiOutlineHome/></i>
                             <span className="nav-text">Inicio</span>
                         </a>
@@ -59,7 +65,7 @@ const Navbar: React.FC = () => {
                         </a>
                     </li>
                     <li className="has-subnav">
-                        <a href="#">
+                        <a href="#" onClick={handleAudit}>
                             <i className="fa fa-camera-retro fa-2x"><BsFileBarGraph/></i>
                             <span className="nav-text">Auditorias Internas</span>
                         </a>
