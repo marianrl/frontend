@@ -4,20 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import Table from "../../components/table";
-
-
-
-
-
 const Audit: React.FC = () => {
 
     const { logout } = useSession();
     const navigate = useNavigate();
-
-    const handleLogout = () => {
-        logout(); // Cierra la sesión
-        navigate('/login'); // Redirige al usuario a la página de inicio de sesión
-    };
 
     const userData = [
         {
@@ -59,7 +49,7 @@ const Audit: React.FC = () => {
     return (
         <div className="home">
             <header>
-                <Navbar/>
+                <Navbar logout={logout} navigate={navigate}/>
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>

@@ -9,12 +9,12 @@ import {useNavigate} from "react-router-dom";
 import Logo from "../../img/Logo_izquierda.png";
 import Nombre from "../../img/Logo_derecha.png";
 import Buttongroup from "../buttongroup";
-
-const Navbar: React.FC = () => {
-
-    const { logout } = useSession();
-    const navigate = useNavigate();
-
+interface NavbarProps {
+    logout: () => void; // Función de cierre de sesión
+    navigate: (to: string) => void; // Función de navegación
+    user: string
+}
+const Navbar: React.FC<NavbarProps> = ({logout, navigate, user}) => {
     const handleLogout = () => {
         logout(); // Cierra la sesión
         navigate('/login'); // Redirige al usuario a la página de inicio de sesión
@@ -25,7 +25,6 @@ const Navbar: React.FC = () => {
     const handleHome = () => {
         navigate('/home');
     };
-
     return (
         <div>
             <nav className="main-menu">
@@ -47,31 +46,31 @@ const Navbar: React.FC = () => {
                 </ul>
                 <ul className="menu-block">
                     <li>
-                        <a href="#" onClick={handleHome}>
+                        <a href="/home" onClick={handleHome}>
                             <i className="fa fa-home fa-2x"><AiOutlineHome/></i>
                             <span className="nav-text">Inicio</span>
                         </a>
                     </li>
                     <li className="has-subnav">
-                        <a href="#">
+                        <a href="/mensajes">
                             <i className="fa fa-globe fa-2x"><BiMessageDetail/></i>
                             <span className="nav-text">Mensajes</span>
                         </a>
                     </li>
                     <li className="has-subnav">
-                        <a href="#">
+                        <a href="/auditafip">
                             <i className="fa fa-comments fa-2x"><AiOutlineAudit/></i>
                             <span className="nav-text">Auditorias AFIP</span>
                         </a>
                     </li>
                     <li className="has-subnav">
-                        <a href="#" onClick={handleAudit}>
+                        <a href="/audit" onClick={handleAudit}>
                             <i className="fa fa-camera-retro fa-2x"><BsFileBarGraph/></i>
                             <span className="nav-text">Auditorias Internas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="/reportes">
                             <i className="fa fa-film fa-2x"><TbReportSearch/></i>
                             <span className="nav-text">Reportes</span>
                         </a>
@@ -79,7 +78,7 @@ const Navbar: React.FC = () => {
                 </ul>
                 <ul className="logout">
                     <li>
-                        <a href="#" onClick={handleLogout}>
+                        <a href="/login" onClick={handleLogout}>
                             <i className="fa fa-power-off fa-2x"><BiLogOut/></i>
                             <span className="nav-text">Logout</span>
                         </a>

@@ -6,30 +6,21 @@ import Header from "../../components/header";
 import './style.css'
 import Card from "../../components/grid";
 
-
-
-
 const Home: React.FC = () => {
 
-    const { logout } = useSession();
+    const { logout, user } = useSession();
     const navigate = useNavigate();
-
-    const handleLogout = () => {
-        logout(); // Cierra la sesión
-        navigate('/login'); // Redirige al usuario a la página de inicio de sesión
-    };
 
     return (
         <div className="home">
             <header>
-                <Navbar/>
+                <Navbar logout={logout} navigate={navigate} user={user} />
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>
                 <div>
                     <Card/>
                 </div>
-
             </header>
         </div>
     );

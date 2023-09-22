@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import Logo from "../../img/Logo.png";
 import Button from "../../components/button";
 import InputWrapper from "../../components/inputfield";
-import {ApiResponse} from "../../services/ams/branch";
-import {userService} from "../../services/ams/user";
+import {userService, ApiResponse} from "../../services/ams/user";
 import {UserRequest} from "../../types/user_request";
 import {useNavigate} from "react-router-dom";
 import {useSession} from "../../components/sessionprovider";
@@ -44,7 +43,7 @@ const Login: React.FC = () => {
                     setErrorMessage('');
                     login(user);
                     console.log('user: ' + user);
-                    navigate('/home');
+                    navigate('/home',{state:{user}});
                 } else {
                     setUserData(null);
                     setErrorMessage('Usuario o contraseña incorrecta');
