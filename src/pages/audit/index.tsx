@@ -49,7 +49,7 @@ const Audit: React.FC = () => {
     return (
         <div className="home">
             <header>
-                <Navbar logout={logout} navigate={navigate}/>
+                <Navbar logout={logout} navigate={navigate} user={""}/>
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>

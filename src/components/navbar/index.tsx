@@ -25,6 +25,9 @@ const Navbar: React.FC<NavbarProps> = ({logout, navigate, user}) => {
     const handleHome = () => {
         navigate('/home');
     };
+    const handleAuditAfip = () => {
+        navigate('/auditafip');
+    };
     return (
         <div>
             <nav className="main-menu">
@@ -38,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({logout, navigate, user}) => {
                             />
                             <img
                                 src={Nombre}
-                                className="nav-logo"
+                                className="nav-nombre"
                                 alt="Nombre"
                             />
                         </Buttongroup>
@@ -58,7 +61,7 @@ const Navbar: React.FC<NavbarProps> = ({logout, navigate, user}) => {
                         </a>
                     </li>
                     <li className="has-subnav">
-                        <a href="/auditafip">
+                        <a href="/auditafip" onClick={handleAuditAfip}>
                             <i className="fa fa-comments fa-2x"><AiOutlineAudit/></i>
                             <span className="nav-text">Auditorias AFIP</span>
                         </a>

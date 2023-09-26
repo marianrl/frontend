@@ -5,6 +5,7 @@
     grid-template-areas: "main";
     overflow-x: hidden;
     padding-left: 150px;
+    height: 100vh;
 }
 .main {
     grid-area: main;

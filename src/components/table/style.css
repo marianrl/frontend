@@ -2,11 +2,7 @@
     position:relative;
     margin-left: 120px
 }
-.scroll-window{
-    height: 20rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
+
 .scroll-window table{
     margin-bottom:0;
 }
@@ -37,8 +33,12 @@ table.fixed-header  thead tr{
     width:16rem;
 }
 
+#bodywrap{
+    height: 100vh;
+}
 #bodywrap ::-webkit-scrollbar {
     width: 1rem;
+
 }
 
 #bodywrap ::-webkit-scrollbar-track {

@@ -17,12 +17,12 @@
 .main-menu:hover,nav.main-menu.expanded {
     width:300px;
     overflow:visible;
+
 }
 
 .main-menu {
     background:#00004b;
-    border-right:1px solid #e5e5e5;
-    position:absolute;
+    display: flex;
     top:0;
     bottom:0;
     height:100vh;
@@ -32,6 +32,8 @@
     -webkit-transition:width .05s linear;
     transition:width .15s linear;
     z-index:1000;
+    min-height: 100vh;
+    position:fixed;
 }
 
 .main-menu>ul {
@@ -39,12 +41,15 @@
 }
 
 .main-menu .menu-block{
-    margin-top: 120px;
+    top: 100px;
+    left:0;
+    bottom:0;
+    position:absolute;
 }
 
 .main-menu li {
     position:relative;
-    display:block;
+    display:flex;
     width:300px;
 }
 
@@ -88,7 +93,15 @@
     vertical-align:middle;
     width:80px;
     padding: 2px;
-
+    margin-left: 5px;
+}
+.main-menu .nav-nombre{
+    position:relative;
+    display:table-cell;
+    vertical-align:middle;
+    width:80px;
+    padding: 2px;
+    margin-left: 50px;
 }
 
 .main-menu>ul.logout {
