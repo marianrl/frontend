@@ -7,7 +7,6 @@ import {UserRequest} from "../../types/user_request";
 import {useNavigate} from "react-router-dom";
 import {useSession} from "../../components/sessionprovider";
 
-
 const Login: React.FC = () => {
 
     const { login } = useSession();
@@ -38,13 +37,13 @@ const Login: React.FC = () => {
         }
 
         userService.fetchUserByMailAndPassword("user/authenticate", userRequest)
-            .then((userData) => {
-                if (userData) {
+            .then((response) => {
+                console.log(response.status)
+                if (response.status === 200) {
                     setErrorMessage('');
                     login(user);
-                    console.log('user: ' + user);
-                    navigate('/home',{state:{user}});
-                } else {
+                    navigate('/home');
+                } else if(response.status === 404){
                     setUserData(null);
                     setErrorMessage('Usuario o contraseña incorrecta');
                 }

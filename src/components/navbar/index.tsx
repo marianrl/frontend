@@ -9,12 +9,11 @@ import {useNavigate} from "react-router-dom";
 import Logo from "../../img/Logo_izquierda.png";
 import Nombre from "../../img/Logo_derecha.png";
 import Buttongroup from "../buttongroup";
-interface NavbarProps {
-    logout: () => void; // Función de cierre de sesión
-    navigate: (to: string) => void; // Función de navegación
-    user: string
-}
-const Navbar: React.FC<NavbarProps> = ({logout, navigate, user}) => {
+
+const Navbar: React.FC = () => {
+
+    const { logout } = useSession();
+    const navigate = useNavigate();
     const handleLogout = () => {
         logout(); // Cierra la sesión
         navigate('/login'); // Redirige al usuario a la página de inicio de sesión

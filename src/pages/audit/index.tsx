@@ -1,13 +1,17 @@
-import React from 'react';
-import {useSession} from "../../components/sessionprovider";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect} from 'react';
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import Table from "../../components/table";
+import {useNavigate} from "react-router-dom";
 const Audit: React.FC = () => {
-
-    const { logout } = useSession();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem('user')) {
+            // Redirigir solo si el usuario no está autenticado
+            navigate("/login");
+        }
+    }, [ navigate]);
 
     const userData = [
         {
@@ -49,7 +53,7 @@ const Audit: React.FC = () => {
     return (
         <div className="home">
             <header>
-                <Navbar logout={logout} navigate={navigate} user={""}/>
+                <Navbar/>
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>

@@ -34,12 +34,18 @@ const userService = {
 
     async fetchUserByMailAndPassword(endpoint: string, userRequest: UserRequest): Promise<ApiResponse> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, userRequest);
+            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, userRequest, {
+                validateStatus: function (status) {
+                    // Personaliza cómo Axios debe tratar los códigos de estado de respuesta.
+                    // Devuelve true para permitir que Axios maneje la respuesta como exitosa (no un error).
+                    return status === 200 || status === 404; // Puedes agregar otros códigos de estado si es necesario.
+                },
+            });
             return {
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Usuario o contraseña incorrecta');
+            throw new Error('Error al procesar la solicitud');
         }
     },
 

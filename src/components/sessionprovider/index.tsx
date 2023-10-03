@@ -22,6 +22,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
+            console.log('SessionProvider useEffect ' + storedUser);
             setUser(storedUser);
         }
     }, []);
@@ -30,12 +31,14 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     const login = (username: string) => {
         setUser(username);
         localStorage.setItem('user', username);
+        console.log('SessionProvider login ' + localStorage.getItem('user'));
     };
 
     // Función para cerrar sesión
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user');
+        console.log('SessionProvider logout ' + localStorage.getItem('user'));
     };
 
     return (
