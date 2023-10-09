@@ -23,6 +23,7 @@ const Audit: React.FC = () => {
                 .then((response) => {
                     const allCommonAudits = response.data;
                     setData(allCommonAudits);
+                    console.log(allCommonAudits);
                 })
                 .catch(() => {
                     setData([]);

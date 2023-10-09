@@ -3,18 +3,25 @@ import './style.css'
 import Button from "../button";
 import Buttongroup from "../buttongroup";
 import {AiFillFileAdd} from "react-icons/ai";
+
+interface features{
+    id: number;
+    auditType: {id: number, auditType: string};
+    answer: {id: number, answer: string};
+    audited: {id: number, audited: string}
+}
 interface data {
     auditDate: string;
-    lastname: string;
+    lastName: string;
     name: string;
     cuil:string;
-    legajo:string;
-    asignacion: string;
-    cliente: string;
+    file:string;
+    allocation: string;
+    client: { id: number, client: string };
     uoc: string;
-    sucursal: string;
-    fechaIngreso: string;
-    caracteristicas: string;
+    branch: { id: number, branch: string };
+    admissionDate: string;
+    features: features;
 }
 const handleClick = () => {
 
@@ -86,16 +93,16 @@ const Table: React.FC<TableProps> = ({ data }) => {
                                 {data.map((user, index) => (
                                     <tr key={index}>
                                         <td>{user.auditDate}</td>
-                                        <td>{user.lastname}</td>
+                                        <td>{user.lastName}</td>
                                         <td>{user.name}</td>
                                         <td>{user.cuil}</td>
-                                        <td>{user.legajo}</td>
-                                        <td>{user.asignacion}</td>
-                                        <td>{user.cliente}</td>
+                                        <td>{user.file}</td>
+                                        <td>{user.allocation}</td>
+                                        <td>{user.client.client}</td>
                                         <td>{user.uoc}</td>
-                                        <td>{user.sucursal}</td>
-                                        <td>{user.fechaIngreso}</td>
-                                        <td>{user.caracteristicas}</td>
+                                        <td>{user.branch.branch}</td>
+                                        <td>{user.admissionDate}</td>
+                                        <td>{user.features.id}</td>
                                         <td className="text-right">
                                             <Buttongroup>
                                                 <Button
