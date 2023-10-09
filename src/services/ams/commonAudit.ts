@@ -11,7 +11,7 @@ export interface ApiResponse {
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
 const commonAuditService = {
-    async fetchAllFeatures(endpoint: string): Promise<ApiResponse> {
+    async fetchAllCommonAudit(endpoint: string): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}`);
             return {
@@ -22,7 +22,7 @@ const commonAuditService = {
             throw new Error('Error al obtener las Auditorias');
         }
     },
-    async fetchFeaturesById(endpoint: string, id : string): Promise<ApiResponse> {
+    async fetchCommonAuditById(endpoint: string, id : string): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
@@ -33,7 +33,7 @@ const commonAuditService = {
             throw new Error('Error al obtener las Auditorias por ID');
         }
     },
-    async createFeatures(endpoint: string, commonAudit: CommonAudit): Promise<ApiResponse> {
+    async createCommonAudit(endpoint: string, commonAudit: CommonAudit): Promise<ApiResponse> {
         try {
             const response = await axios.post(`${API_BASE_URL}/${endpoint}`, commonAudit);
             return {

@@ -9,7 +9,7 @@ export interface ApiResponse {
 
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
-const featurService = {
+const featureService = {
     async fetchAllFeatures(endpoint: string): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}`);
@@ -67,4 +67,4 @@ const featurService = {
     }
 };
 
-export {featurService}
+export {featureService}

@@ -3,16 +3,24 @@ import './style.css'
 import Button from "../button";
 import Buttongroup from "../buttongroup";
 import {AiFillFileAdd} from "react-icons/ai";
-interface UserData {
+interface data {
+    auditDate: string;
+    lastname: string;
     name: string;
-    email: string;
-    status: string;
+    cuil:string;
+    legajo:string;
+    asignacion: string;
+    cliente: string;
+    uoc: string;
+    sucursal: string;
+    fechaIngreso: string;
+    caracteristicas: string;
 }
 const handleClick = () => {
 
 }
 interface TableProps {
-    data: UserData[];
+    data: data[];
 }
 
 const Table: React.FC<TableProps> = ({ data }) => {
@@ -37,13 +45,37 @@ const Table: React.FC<TableProps> = ({ data }) => {
                                 <thead>
                                 <tr>
                                     <th>
-                                        <div>Nombre auditoria</div>
+                                        <div>Fecha auditoria</div>
                                     </th>
                                     <th>
-                                        <div>Progreso</div>
+                                        <div>Apellido</div>
                                     </th>
                                     <th>
-                                        <div>Fecha</div>
+                                        <div>nombre</div>
+                                    </th>
+                                    <th>
+                                        <div>Cuil</div>
+                                    </th>
+                                    <th>
+                                        <div>Legajo</div>
+                                    </th>
+                                    <th>
+                                        <div>Asignacion</div>
+                                    </th>
+                                    <th>
+                                        <div>Cliente</div>
+                                    </th>
+                                    <th>
+                                        <div>UOC</div>
+                                    </th>
+                                    <th>
+                                        <div>Sucursal</div>
+                                    </th>
+                                    <th>
+                                        <div>Fecha ingreso</div>
+                                    </th>
+                                    <th>
+                                        <div>Caracteristicas</div>
                                     </th>
                                     <th>
                                         <div></div>
@@ -53,9 +85,17 @@ const Table: React.FC<TableProps> = ({ data }) => {
                                 <tbody>
                                 {data.map((user, index) => (
                                     <tr key={index}>
+                                        <td>{user.auditDate}</td>
+                                        <td>{user.lastname}</td>
                                         <td>{user.name}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.status}</td>
+                                        <td>{user.cuil}</td>
+                                        <td>{user.legajo}</td>
+                                        <td>{user.asignacion}</td>
+                                        <td>{user.cliente}</td>
+                                        <td>{user.uoc}</td>
+                                        <td>{user.sucursal}</td>
+                                        <td>{user.fechaIngreso}</td>
+                                        <td>{user.caracteristicas}</td>
                                         <td className="text-right">
                                             <Buttongroup>
                                                 <Button

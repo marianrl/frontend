@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import Table from "../../components/table";
 import {useNavigate} from "react-router-dom";
+import {commonAuditService} from "../../services/ams/commonAudit";
+
 const Audit: React.FC = () => {
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -13,42 +17,20 @@ const Audit: React.FC = () => {
         }
     }, [ navigate]);
 
-    const userData = [
-        {
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },
-        {
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },
-        {
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },{
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },{
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },{
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },{
-            name: "Michael Jones",
-            email: "michael@gmail.com",
-            status: "active",
-        },
-
-        // Agrega más objetos de datos aquí si es necesario
-    ];
-
+    useEffect(() => {
+        async function fetchData() {
+            commonAuditService.fetchAllCommonAudit("commonAudit")
+                .then((response) => {
+                    const allCommonAudits = response.data;
+                    setData(allCommonAudits);
+                })
+                .catch(() => {
+                    setData([]);
+                    setErrorMessage('Error al procesar la solicitud');
+                });
+        }
+        fetchData();
+    }, []);
 
     return (
         <div className="home">
@@ -57,7 +39,11 @@ const Audit: React.FC = () => {
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>
-                <Table data={userData}/>
+                {errorMessage ? (
+                    <p>{errorMessage}</p>
+                ) : (
+                    <Table data={data} />
+                )}
             </header>
         </div>
     );
