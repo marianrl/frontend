@@ -3,13 +3,20 @@ import './style.css'
 import Button from "../button";
 import Buttongroup from "../buttongroup";
 import {AiFillFileAdd} from "react-icons/ai";
-import {Link} from "react-router-dom";
 
 interface data {
-    auditNumber: number;
-    auditDate: string;
-    idTipoAuditoria: {auditType: string};
-    idAuditado: {id: number, audited: string}
+    lastName: string;
+    name: string;
+    cuil: string;
+    file: string;
+    allocation: string;
+    client: {client: string}
+    uoc: string;
+    branch: {branch: string};
+    admissionDate: string;
+    features:{auditType: {auditType: string }; answer: {answer:string}};
+    audit:{auditNumber:number;auditDate: string;idTipoAuditoria:{auditType:string};idAuditado:{audited:string}};
+
 }
 const handleClick = () => {
 
@@ -18,7 +25,7 @@ interface TableProps {
     data: data[];
 }
 
-const Table: React.FC<TableProps> = ({ data }) => {
+const TableAfip: React.FC<TableProps> = ({ data }) => {
     return (
         <div id="bodywrap">
             <div className="row">
@@ -59,20 +66,19 @@ const Table: React.FC<TableProps> = ({ data }) => {
                                 <tbody>
                                 {data.map((user, index) => (
                                     <tr key={index}>
-                                        <td>{user.auditDate}</td>
-                                        <td>{user.auditNumber}</td>
-                                        <td>{user.idTipoAuditoria.auditType}</td>
-                                        <td>{user.idAuditado.audited}</td>
+                                        <td>{user.lastName}</td>
+                                        <td>{user.name}</td>
+                                        <td>{user.cuil}</td>
+                                        <td>{user.file}</td>
                                         <td className="text-right">
                                             <Buttongroup>
-                                                <Link to={`/auditdetail`}>
                                                     <Button
                                                         type="button"
                                                         label="Responder"
                                                         backgroundColor="green"
                                                         hoverColor="green"
                                                         hoverBorderColor="2px solid green"
-                                                        onClick={() => handleClick()}/></Link>
+                                                        onClick={() => handleClick()}/>
                                                     </Buttongroup>
                                         </td>
                                     </tr>
@@ -87,4 +93,4 @@ const Table: React.FC<TableProps> = ({ data }) => {
     );
 };
 
-export default Table;
+export default TableAfip;

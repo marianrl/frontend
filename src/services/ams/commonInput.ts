@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {CommonAudit} from "../../types/commonAudit";
+import {CommonInput} from "../../types/commonInput";
 
 
 export interface ApiResponse {
@@ -10,8 +10,8 @@ export interface ApiResponse {
 
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
-const commonAuditService = {
-    async fetchAllCommonAudit(endpoint: string): Promise<ApiResponse> {
+const commonInputService = {
+    async fetchAllCommonInput(endpoint: string): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}`);
             return {
@@ -22,7 +22,7 @@ const commonAuditService = {
             throw new Error('Error al obtener las Auditorias');
         }
     },
-    async fetchCommonAuditById(endpoint: string, id : string): Promise<ApiResponse> {
+    async fetchCommonAuditById(endpoint: string, id: number): Promise<ApiResponse> {
         try {
             const response = await axios.get(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
@@ -33,7 +33,7 @@ const commonAuditService = {
             throw new Error('Error al obtener las Auditorias por ID');
         }
     },
-    async createCommonAudit(endpoint: string, commonAudit: CommonAudit): Promise<ApiResponse> {
+    async createCommonAudit(endpoint: string, commonAudit: CommonInput): Promise<ApiResponse> {
         try {
             const response = await axios.post(`${API_BASE_URL}/${endpoint}`, commonAudit);
             return {
@@ -44,7 +44,7 @@ const commonAuditService = {
             throw new Error('Error al crear nuevas auditorias');
         }
     },
-    async updateGroup(endpoint: string, id : string, commonAudit: CommonAudit): Promise<ApiResponse> {
+    async updateGroup(endpoint: string, id : string, commonAudit: CommonInput): Promise<ApiResponse> {
         try {
             const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, commonAudit);
             return {
@@ -68,4 +68,4 @@ const commonAuditService = {
     }
 };
 
-export {commonAuditService}
+export {commonInputService}

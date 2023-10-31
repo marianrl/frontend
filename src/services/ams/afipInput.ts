@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {AfipAudit} from "../../types/afipAudit";
+import {AfipInput} from "../../types/afipInput";
 
 export interface ApiResponse {
     // Define la estructura de la respuesta de la API si es necesario
@@ -32,9 +32,9 @@ const afipAuditService = {
             throw new Error('Error al obtener las Auditorias por ID');
         }
     },
-    async createFeatures(endpoint: string, afipAudit: AfipAudit): Promise<ApiResponse> {
+    async createFeatures(endpoint: string, afipInput: AfipInput): Promise<ApiResponse> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, afipAudit);
+            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, afipInput);
             return {
                 data: response.data,
                 status: response.status,
@@ -43,7 +43,7 @@ const afipAuditService = {
             throw new Error('Error al crear nuevas auditorias');
         }
     },
-    async updateGroup(endpoint: string, id : string, afipAudit: AfipAudit): Promise<ApiResponse> {
+    async updateGroup(endpoint: string, id : string, afipAudit: AfipInput): Promise<ApiResponse> {
         try {
             const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, afipAudit);
             return {

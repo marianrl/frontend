@@ -1,10 +1,10 @@
 import {Client} from "./client";
 import {Branch} from "./branch";
 import {Features} from "./features";
+import {Audit} from "./audit";
 
-export interface CommonAudit {
+export interface AfipInput {
     id: number;
-    auditDate: string;
     lastName: string;
     name: string;
     cuil: string;
@@ -15,4 +15,5 @@ export interface CommonAudit {
     branch: Branch;
     admissionDate: string;
     features: Features;
+    audit: Audit;
 }

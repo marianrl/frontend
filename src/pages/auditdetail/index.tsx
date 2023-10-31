@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
-import Table from "../../components/table";
-import {useNavigate} from "react-router-dom";
-import {auditService} from "../../services/ams/audit";
+import TableAfip from "../../components/tableafip";
+import {useNavigate, useParams} from "react-router-dom";
+import{commonInputService} from "../../services/ams/commonInput";
 
-const Audit: React.FC = () => {
+const AuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
+    const { auditNumber } = useParams<{ auditNumber: string }>();
+    if (auditNumber != null) {
+        const auditNumberValue = parseInt(auditNumber, 10);
+    }
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -19,7 +23,7 @@ const Audit: React.FC = () => {
 
     useEffect(() => {
         async function fetchData() {
-            auditService.fetchAllAudit("audit")
+            commonInputService.fetchCommonAuditById('commonInput',2)
                 .then((response) => {
                     const allAudit = response.data;
                     setData(allAudit);
@@ -43,7 +47,7 @@ const Audit: React.FC = () => {
                 {errorMessage ? (
                     <p>{errorMessage}</p>
                 ) : (
-                    <Table data={data} />
+                    <TableAfip data={data} />
                 )}
             </header>
         </div>
@@ -51,4 +55,4 @@ const Audit: React.FC = () => {
 }
 
 
-export default Audit;
+export default AuditDetail;

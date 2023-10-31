@@ -5,6 +5,7 @@ import Login from "./pages/login";
 import Home from "./pages/home"
 import {SessionProvider} from "./components/sessionprovider";
 import Audit from "./pages/audit";
+import Auditdetail from "./pages/auditdetail";
 
 const App: React.FC = () => {
     return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
                       <Route path="/login" element={<Login/>} />
                       <Route path="/home" element={ <Home />} />
                       <Route path="/audit" element={<Audit />} />
+                      <Route path="/auditdetail" element={<Auditdetail />} />
                       <Route path="*" element={<Navigate to="/login" replace />} />
                   </Routes>
               </SessionProvider>

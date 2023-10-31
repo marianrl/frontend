@@ -2,7 +2,7 @@ import {Client} from "./client";
 import {Branch} from "./branch";
 import {Features} from "./features";
 
-export interface AfipAudit {
+export interface CommonInput {
     id: number;
     auditDate: string;
     lastName: string;
