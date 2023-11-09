@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@types/datatables.net": "^1.10.25",
-    "@types/jquery": "^3.5.19"
+    "@types/jquery": "^3.5.19",
+    "@types/styled-components": "^5.1.30"
   }
 }

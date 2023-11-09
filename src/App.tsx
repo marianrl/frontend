@@ -6,6 +6,9 @@ import Home from "./pages/home"
 import {SessionProvider} from "./components/sessionprovider";
 import Audit from "./pages/audit";
 import Auditdetail from "./pages/auditdetail";
+import Reports from "./pages/reports"
+import AuditAfip from "./pages/auditafip"
+import Messages from "./pages/messages"
 
 const App: React.FC = () => {
     return (
@@ -16,7 +19,10 @@ const App: React.FC = () => {
                       <Route path="/login" element={<Login/>} />
                       <Route path="/home" element={ <Home />} />
                       <Route path="/audit" element={<Audit />} />
-                      <Route path="/auditdetail" element={<Auditdetail />} />
+                      <Route path="/messages" element={<Messages/>} />
+                      <Route path="/auditafip" element={<AuditAfip/>} />
+                      <Route path="/auditdetail" element={<Auditdetail/>} />
+                      <Route path="/reports" element={<Reports/>} />
                       <Route path="*" element={<Navigate to="/login" replace />} />
                   </Routes>
               </SessionProvider>

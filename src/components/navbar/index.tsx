@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
                         </a>
                     </li>
                     <li className="has-subnav">
-                        <a href="/mensajes">
+                        <a href="/messages">
                             <i className="fa fa-globe fa-2x"><BiMessageDetail/></i>
                             <span className="nav-text">Mensajes</span>
                         </a>
@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
                         </a>
                     </li>
                     <li>
-                        <a href="/reportes">
+                        <a href="/reports">
                             <i className="fa fa-film fa-2x"><TbReportSearch/></i>
                             <span className="nav-text">Reportes</span>
                         </a>
