@@ -43,7 +43,7 @@ const Audit: React.FC = () => {
                 {errorMessage ? (
                     <p>{errorMessage}</p>
                 ) : (
-                    <Table data={data} />
+                    <Table data={data}/>
                 )}
             </header>
         </div>

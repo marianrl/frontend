@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './style.css'
 import Button from "../button";
 import Buttongroup from "../buttongroup";
-import {AiFillFileAdd} from "react-icons/ai";
+import Modal from "../modal";
 
 interface data {
     lastName: string;
@@ -18,30 +18,27 @@ interface data {
     audit:{auditNumber:number;auditDate: string;idTipoAuditoria:{auditType:string};idAuditado:{audited:string}};
 
 }
-const handleClick = () => {
 
-}
 interface TableProps {
     data: data[];
 }
 
 const TableAfip: React.FC<TableProps> = ({ data }) => {
+
+    const [estadoModal, cambiarEstadoModal] = useState(false);
+
+
     return (
-        <div id="bodywrap">
+         <div id="bodywrap">
+             <Modal
+                 estado={estadoModal}
+                 cambiarEstadoModal={cambiarEstadoModal}
+             />
+
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
-                        <h2>Auditoria vigentes</h2>
-                        <div>
-                            <Buttongroup>
-                                <div className="container">
-                                    <a className="add" href="#">
-                                        <i><AiFillFileAdd/></i>
-                                        <span>Agregar</span>
-                                    </a>
-                                </div>
-                            </Buttongroup>
-                        </div>
+                        <h2>Detalle de Auditoria</h2>
                         <div className="scroll-window">
                             <table className="table table-striped table-hover user-list fixed-header">
                                 <thead>
@@ -74,11 +71,11 @@ const TableAfip: React.FC<TableProps> = ({ data }) => {
                                             <Buttongroup>
                                                     <Button
                                                         type="button"
-                                                        label="Responder"
-                                                        backgroundColor="green"
-                                                        hoverColor="green"
-                                                        hoverBorderColor="2px solid green"
-                                                        onClick={() => handleClick()}/>
+                                                        label="Ver detalle"
+                                                        backgroundColor="#00004b"
+                                                        hoverColor="#00004b"
+                                                        hoverBorderColor="2px solid #00004b"
+                                                        onClick={() => cambiarEstadoModal(!estadoModal)}/>
                                                     </Buttongroup>
                                         </td>
                                     </tr>

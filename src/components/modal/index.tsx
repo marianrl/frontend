@@ -2,17 +2,25 @@ import React from 'react'
 import './style.css'
 import { RxCross2 } from 'react-icons/rx';
 
-const Modal = () => {
+
+interface ModelProps {
+
+    estado: boolean
+    cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>
+
+}
+const Modal: React.FC<ModelProps> = ({ estado, cambiarEstadoModal}) => {
     return (
+    <>
+        {estado &&
         <div>
             <div className="Overlay">
                 <div className="ContendorModal">
                     <div className="Encabezado">
                         <h3 className="TituloModal">Titulo</h3>
                     </div>
-
                     <button className="BotonCerrar">
-                        <i className="Cruz"><RxCross2/></i>
+                        <i className="Cruz"><RxCross2 onClick={() => cambiarEstadoModal(!estado)} /></i>
                     </button>
                     <div className="Contenido">
                         <h1 className="TituloContenido">
@@ -25,10 +33,11 @@ const Modal = () => {
                             Aceptar
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
+        }
+    </>
     );
 }
 

@@ -20,6 +20,7 @@ table.fixed-header th div{
     margin-top: -.5rem;
     z-index: 11;
     color:#333;
+
 }
 table.fixed-header  thead tr{
     height:2.5rem;
@@ -59,9 +60,14 @@ table.fixed-header  thead tr{
     font-size: 15px;
     color: black;
 }
-.add:hover {
-    color: red;
-}
+
 .container{
     text-align: right;
+}
+table {
+    width:100rem;
+}
+td {
+    width: 25%;
+    text-align: left;
 }

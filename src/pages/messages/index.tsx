@@ -22,7 +22,6 @@ const Messages: React.FC = () => {
                     <Header name= "Mariano Home"/>
                 </div>
                 <div>
-                    <Modal></Modal>
                 </div>
             </header>
         </div>
