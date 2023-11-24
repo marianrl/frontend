@@ -33,6 +33,10 @@ const Audit: React.FC = () => {
         fetchData();
     }, []);
 
+    const handleAuditClick = (auditNumber: number) => {
+        navigate(`/auditDetails/${auditNumber}`);
+    };
+
     return (
         <div className="home">
             <header>
@@ -43,7 +47,7 @@ const Audit: React.FC = () => {
                 {errorMessage ? (
                     <p>{errorMessage}</p>
                 ) : (
-                    <Table data={data}/>
+                    <Table data={data} onAuditClick={handleAuditClick}/>
                 )}
             </header>
         </div>

@@ -9,10 +9,8 @@ const AuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
-    const { auditNumber } = useParams<{ auditNumber: string }>();
-    if (auditNumber != null) {
-        const auditNumberValue = parseInt(auditNumber, 10);
-    }
+    const { auditNumber } = useParams();
+    let auditNumberValue: number = 0;
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -21,9 +19,13 @@ const AuditDetail: React.FC = () => {
         }
     }, [ navigate]);
 
+    if (auditNumber != null) {
+        auditNumberValue = parseInt(auditNumber, 10);
+    }
+
     useEffect(() => {
         async function fetchData() {
-            commonInputService.fetchCommonAuditById('commonInput',2)
+            commonInputService.fetchCommonAuditById('commonInput',auditNumberValue)
                 .then((response) => {
                     const allAudit = response.data;
                     setData(allAudit);

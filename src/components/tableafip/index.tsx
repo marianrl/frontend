@@ -16,7 +16,6 @@ interface data {
     admissionDate: string;
     features:{auditType: {auditType: string }; answer: {answer:string}};
     audit:{auditNumber:number;auditDate: string;idTipoAuditoria:{auditType:string};idAuditado:{audited:string}};
-
 }
 
 interface TableProps {
