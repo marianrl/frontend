@@ -22,7 +22,7 @@ interface TableProps {
     data: data[];
 }
 
-const TableAfip: React.FC<TableProps> = ({ data }) => {
+const TableDetails: React.FC<TableProps> = ({ data }) => {
 
     const [estadoModal, cambiarEstadoModal] = useState(false);
 
@@ -89,4 +89,4 @@ const TableAfip: React.FC<TableProps> = ({ data }) => {
     );
 };
 
-export default TableAfip;
+export default TableDetails;

@@ -16,9 +16,10 @@ interface data {
 interface TableProps {
     data: data[];
     onAuditClick: (auditNumber: number) => void;
+    auditType: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const Table: React.FC<TableProps> = ({ data , onAuditClick }) => {
+const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType }) => {
 
     const [estadoModal, cambiarEstadoModal] = useState(false);
     const handleClick = (auditNumber: number) => {
@@ -76,15 +77,16 @@ const Table: React.FC<TableProps> = ({ data , onAuditClick }) => {
                                             <td>{user.idAuditado.audited}</td>
                                             <td className="text-right">
                                                 <Buttongroup>
-                                                    <Link to={`/auditDetails/${user.auditNumber}`}>
+                                                    <Link to={`/${auditType}/${user.auditNumber}`}>
                                                         <Button
                                                             type="button"
                                                             label="Responder"
                                                             backgroundColor="green"
                                                             hoverColor="green"
                                                             hoverBorderColor="2px solid green"
-                                                            onClick={() => handleClick(user.auditNumber)}/></Link>
-                                                        </Buttongroup>
+                                                            onClick={() => handleClick(user.auditNumber)}/>
+                                                    </Link>
+                                                </Buttongroup>
                                             </td>
                                         </tr>
                                     ))}

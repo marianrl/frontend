@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
-import TableAfip from "../../components/tableafip";
+import TableDetails from "../../components/tabledetails";
 import {useNavigate, useParams} from "react-router-dom";
 import{commonInputService} from "../../services/ams/commonInput";
 
-const AuditDetail: React.FC = () => {
+const AfipAuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ const AuditDetail: React.FC = () => {
 
     useEffect(() => {
         async function fetchData() {
-            commonInputService.fetchCommonAuditById('commonInput',auditNumberValue)
+            commonInputService.fetchCommonAuditById('afipInput',auditNumberValue)
                 .then((response) => {
                     const allAudit = response.data;
                     setData(allAudit);
@@ -49,7 +49,7 @@ const AuditDetail: React.FC = () => {
                 {errorMessage ? (
                     <p>{errorMessage}</p>
                 ) : (
-                    <TableAfip data={data} />
+                    <TableDetails data={data} />
                 )}
             </header>
         </div>
@@ -57,4 +57,4 @@ const AuditDetail: React.FC = () => {
 }
 
 
-export default AuditDetail;
+export default AfipAuditDetail;

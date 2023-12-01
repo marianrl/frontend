@@ -1,32 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
-import Table from "../../components/table";
-import {useNavigate} from "react-router-dom";
-import {auditService} from "../../services/ams/audit";
+import TableDetails from "../../components/tabledetails";
+import {useNavigate, useParams} from "react-router-dom";
+import{commonInputService} from "../../services/ams/commonInput";
 
-interface TipoAuditoria {
-    id: number;
-    auditType: string;
-}
-
-interface Auditado {
-    id: number;
-    audited: string;
-}
-
-interface AuditData {
-    id: number;
-    auditNumber: number;
-    auditDate: string;
-    idTipoAuditoria: TipoAuditoria;
-    idAuditado: Auditado;
-}
-
-const Audit: React.FC = () => {
+const CommonAuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
+    const { auditNumber } = useParams();
+    let auditNumberValue: number = 0;
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -35,18 +19,17 @@ const Audit: React.FC = () => {
         }
     }, [ navigate]);
 
+    if (auditNumber != null) {
+        auditNumberValue = parseInt(auditNumber, 10);
+    }
+
     useEffect(() => {
         async function fetchData() {
-            auditService.fetchAllAudit("audit")
+            commonInputService.fetchCommonAuditById('commonInput',auditNumberValue)
                 .then((response) => {
                     const allAudit = response.data;
-
-                    const filteredAudit = allAudit.filter(
-                        (audit: AuditData) => audit.idTipoAuditoria.id === 1
-                    );
-
-                    setData(filteredAudit);
-                    console.log(filteredAudit);
+                    setData(allAudit);
+                    console.log(allAudit);
                 })
                 .catch(() => {
                     setData([]);
@@ -55,10 +38,6 @@ const Audit: React.FC = () => {
         }
         fetchData();
     }, []);
-
-    const handleAuditClick = (auditNumber: number) => {
-        navigate(`/commonAuditDetails/${auditNumber}`);
-    };
 
     return (
         <div className="home">
@@ -70,7 +49,7 @@ const Audit: React.FC = () => {
                 {errorMessage ? (
                     <p>{errorMessage}</p>
                 ) : (
-                    <Table data={data} onAuditClick={handleAuditClick} auditType="commonAuditDetails"/>
+                    <TableDetails data={data} />
                 )}
             </header>
         </div>
@@ -78,4 +57,4 @@ const Audit: React.FC = () => {
 }
 
 
-export default Audit;
+export default CommonAuditDetail;
