@@ -8,10 +8,7 @@ const Grid: React.FC = () => {
         <div className="grid">
             <main className="main">
                 <div className="main-overview">
-                    <Card/>
-                    <Card/>
-                    <Card/>
-                    <Card/>
+                    <Card title='Mensajes' text="3 nuevas notificaciones" showAlertIcon={true}/>
                 </div>
                 <Graphblock/>
             </main>

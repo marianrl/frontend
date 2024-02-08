@@ -6,6 +6,7 @@
     background-color: #fff;
     transform: translateY(0);
     transition: all 0.3s;
+    min-width: 250px;
 }
 .overviewCard-icon {
     display: flex;
@@ -23,15 +24,15 @@
 .overviewCard-description {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: end;
 }
 .overviewCard-title {
     font-size: 18px;
-    color: #1bbae1;
+    color: #00004b;
     margin: 0;
 }
 .text-light {
-    font-weight: 300;
+    font-weight: bold;
 }
 .overviewCard-subtitle {
     margin: 2px;
