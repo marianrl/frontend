@@ -47,25 +47,15 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType }) => {
                                 </div>
                             </Buttongroup>
                         </div>
-                        <div className="scroll-window">
-                            <table className="table table-striped table-hover user-list fixed-header">
+                        <div className="table-wrapper">
+                            <table className="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <div>Fecha auditoria</div>
-                                        </th>
-                                        <th>
-                                            <div>N° de Auditoria</div>
-                                        </th>
-                                        <th>
-                                            <div>Tipo de Auditoria</div>
-                                        </th>
-                                        <th>
-                                            <div>Auditado</div>
-                                        </th>
-                                        <th>
-                                            <div></div>
-                                        </th>
+                                        <th>Fecha auditoria</th>
+                                        <th>N° de Auditoria</th>
+                                        <th>Tipo de Auditoria</th>
+                                        <th>Auditado</th>
+                                        <th><div></div></th>
                                     </tr>
                                 </thead>
                                 <tbody>

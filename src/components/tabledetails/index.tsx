@@ -75,7 +75,7 @@ const TableDetails: React.FC<TableProps> = ({ data }) => {
                                                         hoverColor="#00004b"
                                                         hoverBorderColor="2px solid #00004b"
                                                         onClick={() => cambiarEstadoModal(!estadoModal)}/>
-                                                    </Buttongroup>
+                                            </Buttongroup>
                                         </td>
                                     </tr>
                                 ))}

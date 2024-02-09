@@ -41,20 +41,6 @@ table.fixed-header  thead tr{
 
 }
 
-#bodywrap ::-webkit-scrollbar-track {
-    background-color: #eaeaea;
-    border-left: 1px solid #ccc;
-
-
-}
-#bodywrap ::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-
-}
-#bodywrap ::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-}
-
 .add{
     font-size: 15px;
     color: black;
