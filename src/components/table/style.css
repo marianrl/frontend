@@ -1,6 +1,7 @@
 .scroll-window-wrapper{
     position:relative;
-    margin-left: 120px
+    margin-left: 120px;
+    margin-right: 20px;
 }
 
 .scroll-window table{
@@ -43,23 +44,18 @@ table.fixed-header  thead tr{
     text-align: right;
 }
 table {
-    width:100rem;
+    width:1600px;
 }
 td {
     width: 25%;
     text-align: left;
 }
 
-
-
-
-
-
 .table-responsive {
     margin: 30px 0;
 }
 .table-wrapper {
-    min-width: 1000px;
+    max-width: 1600px;
     background: #fff;
     padding: 20px 25px;
     margin-left: 120px;
@@ -143,6 +139,11 @@ table.table .avatar {
     vertical-align: middle;
     line-height: 10px;
 }
+
+.table-header{
+    background-color: #92a9fc;
+}
+
 .text-success {
     color: #10c469;
 }

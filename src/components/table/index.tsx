@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import './style.css'
 import Button from "../button";
 import Buttongroup from "../buttongroup";
 import {AiFillFileAdd} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import Modal from "../modal";
+import '../table/style.css';
 
 interface data {
     auditNumber: number;
@@ -49,7 +49,7 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType }) => {
                         </div>
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
-                                <thead>
+                                <thead className="table-header">
                                     <tr>
                                         <th>Fecha auditoria</th>
                                         <th>N° de Auditoria</th>
@@ -71,9 +71,9 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType }) => {
                                                         <Button
                                                             type="button"
                                                             label="Responder"
-                                                            backgroundColor="green"
-                                                            hoverColor="green"
-                                                            hoverBorderColor="2px solid green"
+                                                            backgroundColor="#00004b"
+                                                            hoverColor="#00004b"
+                                                            hoverBorderColor="2px solid #00004b"
                                                             onClick={() => handleClick(user.auditNumber)}/>
                                                     </Link>
                                                 </Buttongroup>
