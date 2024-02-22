@@ -4,9 +4,10 @@
     margin-right: 20px;
 }
 
-.scroll-window table{
-    margin-bottom:0;
+.table-wrapper table {
+    margin-bottom: 0;
 }
+
 .scroll-window:before{
     content:"";
     position: absolute;
@@ -155,4 +156,8 @@ table.table .avatar {
 }
 .text-danger {
     color: #ff5b5b;
+}
+
+th {
+    cursor: pointer;
 }
