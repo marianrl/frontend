@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import Table from "../../components/table";
-import {useNavigate} from "react-router-dom";
-import {auditService} from "../../services/ams/audit";
+import { useNavigate } from "react-router-dom";
+import { auditService } from "../../services/ams/audit";
+import Spinner from "../../components/Spinner";
 
 interface TipoAuditoria {
     id: number;
@@ -26,7 +27,8 @@ interface AuditData {
 const Audit: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
-    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // Estado de carga
+    const [data, setData] = useState<AuditData[]>([]);
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -37,21 +39,26 @@ const Audit: React.FC = () => {
 
     useEffect(() => {
         async function fetchData() {
-            auditService.fetchAllAudit("audit")
-                .then((response) => {
-                    const allAudit = response.data;
+            setIsLoading(true); // Establecer isLoading en true al iniciar la carga de datos
+            setTimeout(() => { // Establecer una duración mínima de 1 segundo para el estado de carga
+                auditService.fetchAllAudit("audit")
+                    .then((response) => {
+                        const allAudit = response.data;
 
-                    const filteredAudit = allAudit.filter(
-                        (audit: AuditData) => audit.idTipoAuditoria.id === 1
-                    );
+                        const filteredAudit = allAudit.filter(
+                            (audit: AuditData) => audit.idTipoAuditoria.id === 1
+                        );
 
-                    setData(filteredAudit);
-                    console.log(filteredAudit);
-                })
-                .catch(() => {
-                    setData([]);
-                    setErrorMessage('Error al procesar la solicitud');
-                });
+                        setData(filteredAudit);
+                        setIsLoading(false); // Establecer isLoading en false cuando se completó la carga de datos
+                        console.log(filteredAudit);
+                    })
+                    .catch(() => {
+                        setData([]);
+                        setIsLoading(false); // Establecer isLoading en false si hubo un error al cargar los datos
+                        setErrorMessage('Error al procesar la solicitud');
+                    });
+            }, 500); // 1000 milisegundos = 1 segundo
         }
         fetchData();
     }, []);
@@ -63,19 +70,20 @@ const Audit: React.FC = () => {
     return (
         <div className="home">
             <header>
-                <Navbar/>
+                <Navbar />
                 <div>
-                    <Header name= "Mariano Home"/>
+                    <Header name="Mariano Home" />
                 </div>
-                {errorMessage ? (
-                    <p>{errorMessage}</p>
-                ) : (
-                    <Table data={data} onAuditClick={handleAuditClick} auditType="commonAuditDetails"/>
-                )}
             </header>
+            {isLoading ? ( // Mostrar estado de carga si isLoading es true
+                <Spinner />
+            ) : errorMessage ? (
+                <p>{errorMessage}</p>
+            ) : (
+                <Table data={data} onAuditClick={handleAuditClick} auditType="commonAuditDetails" />
+            )}
         </div>
     );
 }
-
 
 export default Audit;
