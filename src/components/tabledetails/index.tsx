@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import './style.css'
 import Button from "../button";
 import Buttongroup from "../buttongroup";
 import Modal from "../modal";
+import '../tabledetails/style.css';
 
-interface data {
+interface Data {
     lastName: string;
     name: string;
-    cuil: string;
-    file: string;
+    cuil: number;
+    file: number;
     allocation: string;
     client: {client: string}
     uoc: string;
@@ -18,14 +18,39 @@ interface data {
     audit:{auditNumber:number;auditDate: string;idTipoAuditoria:{auditType:string};idAuditado:{audited:string}};
 }
 
-interface TableProps {
-    data: data[];
+interface TableDetailsProps {
+    data: Data[];
 }
 
-const TableDetails: React.FC<TableProps> = ({ data }) => {
+const TableDetails: React.FC<TableDetailsProps> = ({ data }) => {
 
     const [estadoModal, cambiarEstadoModal] = useState(false);
+    const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
 
+    const handleSort = (key: keyof Data) => {
+        setOrderBy(prevState => {
+            if (prevState && prevState.key === key) {
+                return { key, asc: !prevState.asc };
+            } else {
+                return { key, asc: true };
+            }
+        });
+    }
+
+    const sortedData = orderBy ? [...data].sort((a, b) => {
+        const aValue = orderBy.asc ? a[orderBy.key] : b[orderBy.key];
+        const bValue = orderBy.asc ? b[orderBy.key] : a[orderBy.key];
+
+        if (orderBy.key === 'cuil') {
+            // Si se está ordenando numéricamente (para cuil)
+            return orderBy.key === 'cuil' ? (aValue as number) - (bValue as number) : (aValue as string).localeCompare(bValue as string);
+        } else if (orderBy.key === 'file') {
+            // Si se está ordenando numéricamente (para file)
+            return orderBy.key === 'file' ? (aValue as number) - (bValue as number) : (aValue as string).localeCompare(bValue as string);
+        } else {
+            return (aValue as string).localeCompare(bValue as string);
+        }
+    }) : data;
 
     return (
          <div id="bodywrap">
@@ -38,29 +63,19 @@ const TableDetails: React.FC<TableProps> = ({ data }) => {
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
                         <h2>Detalle de Auditoria</h2>
-                        <div className="scroll-window">
-                            <table className="table table-striped table-hover user-list fixed-header">
-                                <thead>
+                        <div className="table-wrapper">
+                            <table className="table table-striped table-hover">
+                                <thead className="table-header">
                                 <tr>
-                                    <th>
-                                        <div>Fecha auditoria</div>
-                                    </th>
-                                    <th>
-                                        <div>N° de Auditoria</div>
-                                    </th>
-                                    <th>
-                                        <div>Tipo de Auditoria</div>
-                                    </th>
-                                    <th>
-                                        <div>Auditado</div>
-                                    </th>
-                                    <th>
-                                        <div></div>
-                                    </th>
+                                    <th onClick={() => handleSort('lastName')}>Apellido</th>
+                                    <th onClick={() => handleSort('name')}>Nombre</th>
+                                    <th onClick={() => handleSort('cuil')}>Cuil</th>
+                                    <th onClick={() => handleSort('file')}>N° Legajo</th>
+                                    <th><div></div></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {data.map((user, index) => (
+                                {sortedData.map((user, index) => (
                                     <tr key={index}>
                                         <td>{user.lastName}</td>
                                         <td>{user.name}</td>

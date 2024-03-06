@@ -145,19 +145,6 @@ table.table .avatar {
     background-color: #92a9fc;
 }
 
-.text-success {
-    color: #10c469;
-}
-.text-info {
-    color: #62c9e8;
-}
-.text-warning {
-    color: #FFC107;
-}
-.text-danger {
-    color: #ff5b5b;
-}
-
 th {
     cursor: pointer;
 }

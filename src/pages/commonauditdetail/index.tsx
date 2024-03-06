@@ -49,7 +49,7 @@ const CommonAuditDetail: React.FC = () => {
                 {errorMessage ? (
                     <p>{errorMessage}</p>
                 ) : (
-                    <TableDetails data={data} />
+                    <TableDetails data={data}/>
                 )}
             </header>
         </div>

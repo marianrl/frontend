@@ -46,12 +46,12 @@ const AfipAuditDetail: React.FC = () => {
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>
-                {errorMessage ? (
-                    <p>{errorMessage}</p>
-                ) : (
-                    <TableDetails data={data} />
-                )}
             </header>
+            {errorMessage ? (
+                <p>{errorMessage}</p>
+            ) : (
+                <TableDetails data={data}/>
+            )}
         </div>
     );
 }
