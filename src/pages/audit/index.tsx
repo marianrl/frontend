@@ -46,7 +46,7 @@ const Audit: React.FC = () => {
                         const allAudit = response.data;
 
                         const filteredAudit = allAudit.filter(
-                            (audit: AuditData) => audit.idTipoAuditoria.id === 1
+                            (audit: AuditData) => audit.idTipoAuditoria.id !== 9
                         );
 
                         setData(filteredAudit);

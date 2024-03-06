@@ -46,7 +46,7 @@ const AuditAfip: React.FC = () => {
                     const allAudit = response.data;
 
                     const filteredAudit = allAudit.filter(
-                        (audit: Audit) => audit.idTipoAuditoria.id === 2
+                        (audit: Audit) => audit.idTipoAuditoria.id === 9 //Id correspondiente a auditorias de Afip
                     );
 
                     setData(filteredAudit);
