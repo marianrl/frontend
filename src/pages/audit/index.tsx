@@ -58,7 +58,7 @@ const Audit: React.FC = () => {
                         setIsLoading(false); // Establecer isLoading en false si hubo un error al cargar los datos
                         setErrorMessage('Error al procesar la solicitud');
                     });
-            }, 500); // 1000 milisegundos = 1 segundo
+            }, 100); // 1000 milisegundos = 1 segundo
         }
         fetchData();
     }, []);

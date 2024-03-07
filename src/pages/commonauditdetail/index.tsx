@@ -4,11 +4,13 @@ import Header from "../../components/header";
 import TableDetails from "../../components/tabledetails";
 import {useNavigate, useParams} from "react-router-dom";
 import{commonInputService} from "../../services/ams/commonInput";
+import Spinner from "../../components/Spinner";
 
 const CommonAuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true); // Estado de carga
     const { auditNumber } = useParams();
     let auditNumberValue: number = 0;
 
@@ -25,16 +27,21 @@ const CommonAuditDetail: React.FC = () => {
 
     useEffect(() => {
         async function fetchData() {
+            setIsLoading(true); // Establecer isLoading en true al iniciar la carga de datos
+            setTimeout(() => { // Establecer una duración mínima de 1 segundo para el estado de carga
             commonInputService.fetchCommonAuditById('commonInput',auditNumberValue)
                 .then((response) => {
                     const allAudit = response.data;
                     setData(allAudit);
+                    setIsLoading(false); // Establecer isLoading en false cuando se completó la carga de datos
                     console.log(allAudit);
                 })
                 .catch(() => {
                     setData([]);
+                    setIsLoading(false); // Establecer isLoading en false si hubo un error al cargar los datos
                     setErrorMessage('Error al procesar la solicitud');
                 });
+            }, 100); // 1000 milisegundos = 1 segundo
         }
         fetchData();
     }, []);
@@ -46,12 +53,14 @@ const CommonAuditDetail: React.FC = () => {
                 <div>
                     <Header name= "Mariano Home"/>
                 </div>
-                {errorMessage ? (
-                    <p>{errorMessage}</p>
-                ) : (
-                    <TableDetails data={data}/>
-                )}
             </header>
+            {isLoading ? ( // Mostrar estado de carga si isLoading es true
+                    <Spinner />
+            ) : errorMessage ? (
+                <p>{errorMessage}</p>
+            ) : (
+                <TableDetails data={data} auditType={"commonAuditDetails"}/>
+            )}
         </div>
     );
 }

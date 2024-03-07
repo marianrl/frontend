@@ -50,7 +50,7 @@ const AfipAuditDetail: React.FC = () => {
             {errorMessage ? (
                 <p>{errorMessage}</p>
             ) : (
-                <TableDetails data={data}/>
+                <TableDetails data={data} auditType={"afipAuditDetails"}/>
             )}
         </div>
     );

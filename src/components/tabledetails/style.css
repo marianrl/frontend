@@ -1,3 +1,9 @@
 #bodywrap{
     height: 100vh;
 }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

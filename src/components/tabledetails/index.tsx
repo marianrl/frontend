@@ -3,6 +3,7 @@ import Button from "../button";
 import Buttongroup from "../buttongroup";
 import Modal from "../modal";
 import '../tabledetails/style.css';
+import {useNavigate} from "react-router-dom";
 
 interface Data {
     lastName: string;
@@ -20,12 +21,23 @@ interface Data {
 
 interface TableDetailsProps {
     data: Data[];
+    auditType: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const TableDetails: React.FC<TableDetailsProps> = ({ data }) => {
+const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
 
+    const navigate = useNavigate();
     const [estadoModal, cambiarEstadoModal] = useState(false);
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
+
+    const handleClick = () => {
+        if(auditType === "commonAuditDetails"){
+            navigate('/audit');
+        }
+        else {
+            navigate('/auditafip')
+        }
+    };
 
     const handleSort = (key: keyof Data) => {
         setOrderBy(prevState => {
@@ -62,7 +74,16 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data }) => {
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
-                        <h2>Detalle de Auditoria</h2>
+                        <div className="container">
+                            <h2>Detalle de Auditoria - {data.length > 0 && data[0].audit.idTipoAuditoria.auditType} - {data.length > 0 && data[0].audit.auditDate}</h2>
+                            <Button
+                                type="button"
+                                label="Volver"
+                                backgroundColor="#00004b"
+                                hoverColor="#00004b"
+                                hoverBorderColor="2px solid #00004b"
+                                onClick={() => handleClick()} />
+                        </div>
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
                                 <thead className="table-header">
