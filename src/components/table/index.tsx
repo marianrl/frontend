@@ -4,6 +4,7 @@ import Buttongroup from "../buttongroup";
 import {AiFillFileAdd} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import Modal from "../modal";
+import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import '../table/style.css';
 
 interface Data {
@@ -77,13 +78,33 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
                                 <thead className="table-header">
-                                <tr>
-                                    <th onClick={() => handleSort('auditDate')}>Fecha auditoria</th>
-                                    <th onClick={() => handleSort('auditNumber')}>N° de Auditoria</th>
-                                    <th onClick={() => handleSort('idTipoAuditoria')}>Tipo de Auditoria</th>
-                                    <th onClick={() => handleSort('idAuditado')}>Auditado</th>
-                                    <th><div></div></th>
-                                </tr>
+                                    <tr>
+                                        <th onClick={() => handleSort('auditDate')}>
+                                            Fecha auditoria
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'auditDate' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th onClick={() => handleSort('auditNumber')}>
+                                            N° de Auditoria
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'auditNumber' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th onClick={() => handleSort('idTipoAuditoria')}>
+                                            Tipo de Auditoria
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'idTipoAuditoria' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th onClick={() => handleSort('idAuditado')}>
+                                            Auditado
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'idAuditado' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th><div></div></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 {sortedData.map((user, index) => (

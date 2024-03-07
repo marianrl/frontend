@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import Button from "../button";
 import Buttongroup from "../buttongroup";
 import Modal from "../modal";
-import '../tabledetails/style.css';
+import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import {useNavigate} from "react-router-dom";
+import '../tabledetails/style.css';
 
 interface Data {
     lastName: string;
@@ -87,13 +88,33 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
                                 <thead className="table-header">
-                                <tr>
-                                    <th onClick={() => handleSort('lastName')}>Apellido</th>
-                                    <th onClick={() => handleSort('name')}>Nombre</th>
-                                    <th onClick={() => handleSort('cuil')}>Cuil</th>
-                                    <th onClick={() => handleSort('file')}>N° Legajo</th>
-                                    <th><div></div></th>
-                                </tr>
+                                    <tr>
+                                        <th onClick={() => handleSort('lastName')}>
+                                            Apellido
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'lastName' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th onClick={() => handleSort('name')}>
+                                            Nombre
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'name' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th onClick={() => handleSort('cuil')}>
+                                            Cuil
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'cuil' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th onClick={() => handleSort('file')}>
+                                            N° Legajo
+                                            <span className="icon-right">
+                                                {orderBy && orderBy.key === 'file' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                            </span>
+                                        </th>
+                                        <th><div></div></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 {sortedData.map((user, index) => (

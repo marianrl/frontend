@@ -148,3 +148,7 @@ table.table .avatar {
 th {
     cursor: pointer;
 }
+
+.icon-right {
+    float: right; /* Esto alinea el icono a la derecha */
+}
