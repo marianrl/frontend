@@ -5,6 +5,8 @@ import Modal from "../modal";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import '../tabledetails/style.css';
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
 
 interface Data {
     lastName: string;
@@ -30,6 +32,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
     const navigate = useNavigate();
     const [estadoModal, cambiarEstadoModal] = useState(false);
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
+    const [page, setPage] = useState(1);
+    const resultsPerPage = 10; //Cantidad
 
     const handleClick = () => {
         if(auditType === "commonAuditDetails"){
@@ -64,6 +68,9 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
             return (aValue as string).localeCompare(bValue as string);
         }
     }) : data;
+
+    const totalPages = Math.ceil(sortedData.length / resultsPerPage);
+    const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
 
     return (
          <div id="bodywrap">
@@ -117,7 +124,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {sortedData.map((user, index) => (
+                                {paginatedData.map((user, index) => (
                                     <tr key={index}>
                                         <td>{user.lastName}</td>
                                         <td>{user.name}</td>
@@ -142,6 +149,11 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                     </div>
                 </div>
             </div>
+             {totalPages > 1 && (
+                 <Stack spacing={2} className="pagination">
+                     <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
+                 </Stack>
+             )}
         </div>
     );
 };

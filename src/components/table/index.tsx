@@ -5,6 +5,8 @@ import {AiFillFileAdd} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import Modal from "../modal";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import '../table/style.css';
 
 interface Data {
@@ -24,6 +26,8 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
 
     const [estadoModal, cambiarEstadoModal] = useState(false);
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
+    const [page, setPage] = useState(1);
+    const resultsPerPage = 10; //Cantidad
 
     const handleClick = (auditNumber: number) => {
         onAuditClick(auditNumber);
@@ -53,6 +57,10 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
             return aValueAsString.localeCompare(bValueAsString);
         }
     }) : data;
+
+    const totalPages = Math.ceil(sortedData.length / resultsPerPage);
+    const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
+
 
     return (
         <div id="bodywrap">
@@ -107,7 +115,7 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {sortedData.map((user, index) => (
+                                {paginatedData.map((user, index) => (
                                     <tr key={index}>
                                         <td>{user.auditDate}</td>
                                         <td>{user.auditNumber}</td>
@@ -134,6 +142,11 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
                     </div>
                 </div>
             </div>
+            {totalPages > 1 && (
+                <Stack spacing={2} className="pagination">
+                    <Pagination count={totalPages} page={page} onChange={(event, value) => setPage(value)} />
+                </Stack>
+            )}
         </div>
     );
 };

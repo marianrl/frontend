@@ -152,3 +152,9 @@ th {
 .icon-right {
     float: right; /* Esto alinea el icono a la derecha */
 }
+
+.pagination {
+    float: right;
+    margin-right: 130px;
+    margin-top: 10px;
+}
