@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="header">
             <h2>Bienvenido {name}</h2>
             <div className="profile-contein">
-                <Profile name={"Mariano"}/>
+                <Profile name={name}/>
             </div>
         </div>
 

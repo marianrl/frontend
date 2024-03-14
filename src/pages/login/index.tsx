@@ -17,10 +17,6 @@ const Login: React.FC = () => {
 
     const [password, setPassword] = useState('');
 
-    const [name, setName] = useState('' );
-
-    const [lastName, setLastName] = useState('');
-
     const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
@@ -42,14 +38,9 @@ const Login: React.FC = () => {
 
         userService.fetchUserByMailAndPassword("user/authenticate", userRequest)
             .then((response) => {
-                console.log(response.status);
-                console.log(response.name);
-                console.log(response.lastName);
                 if (response.status === 200) {
                     setErrorMessage('');
-                    setName(response.name);
-                    setLastName(response.lastName);
-                    login(user, name, lastName);
+                    login(user, response.name, response.lastName);
                     navigate('/home');
                 } else if(response.status === 404){
                     setUserData(null);

@@ -44,7 +44,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
         localStorage.setItem('lastName', lastName);
 
         console.log('SessionProvider login ' + localStorage.getItem('user'));
-        console.log('NOMBRE' + localStorage.getItem('name') + localStorage.getItem('lastName'));
+        console.log('NOMBRE: ' + localStorage.getItem('name') + localStorage.getItem('lastName'));
     };
 
     // Función para cerrar sesión

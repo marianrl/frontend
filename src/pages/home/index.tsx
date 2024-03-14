@@ -15,12 +15,15 @@ const Home: React.FC = () => {
         }
     }, [ navigate]);
 
+    const name = localStorage.getItem('name');
+    const lastName = localStorage.getItem('lastName');
+
     return (
         <div className="home">
             <header>
                 <Navbar/>
                 <div>
-                    <Header name= "Mariano Home"/>
+                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
                 </div>
                 <div>
                     <Grid/>
