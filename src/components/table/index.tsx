@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from "../button";
 import Buttongroup from "../buttongroup";
-import {AiFillFileAdd} from "react-icons/ai";
-import {Link} from "react-router-dom";
+import { AiFillFileAdd } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -11,8 +11,8 @@ import '../table/style.css';
 interface Data {
     auditNumber: number;
     auditDate: string;
-    idTipoAuditoria: {auditType: string};
-    idAuditado: {id: number, audited: string}
+    idTipoAuditoria: { auditType: string };
+    idAuditado: { id: number, audited: string }
 }
 
 interface TableProps {
@@ -21,7 +21,7 @@ interface TableProps {
     auditType: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
+const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
     const resultsPerPage = 10; //Cantidad
@@ -76,60 +76,62 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
                             </Buttongroup>
                         </div>
                         <div className="table-wrapper">
-                            <table className="table table-striped table-hover">
-                                <thead className="table-header">
+                            <div className="table-responsive">
+                                <table className="table table-striped table-hover">
+                                    <thead className="table-header">
                                     <tr>
                                         <th onClick={() => handleSort('auditDate')}>
                                             Fecha auditoria
                                             <span className="icon-right">
-                                                {orderBy && orderBy.key === 'auditDate' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                                    {orderBy && orderBy.key === 'auditDate' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
                                         <th onClick={() => handleSort('auditNumber')}>
                                             N° de Auditoria
                                             <span className="icon-right">
-                                                {orderBy && orderBy.key === 'auditNumber' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                                    {orderBy && orderBy.key === 'auditNumber' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
                                         <th onClick={() => handleSort('idTipoAuditoria')}>
                                             Tipo de Auditoria
                                             <span className="icon-right">
-                                                {orderBy && orderBy.key === 'idTipoAuditoria' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                                    {orderBy && orderBy.key === 'idTipoAuditoria' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
                                         <th onClick={() => handleSort('idAuditado')}>
                                             Auditado
                                             <span className="icon-right">
-                                                {orderBy && orderBy.key === 'idAuditado' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                                    {orderBy && orderBy.key === 'idAuditado' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
                                         <th><div></div></th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                {paginatedData.map((user, index) => (
-                                    <tr key={index}>
-                                        <td>{user.auditDate}</td>
-                                        <td>{user.auditNumber}</td>
-                                        <td>{user.idTipoAuditoria.auditType}</td>
-                                        <td>{user.idAuditado.audited}</td>
-                                        <td className="text-right">
-                                            <Buttongroup>
-                                                <Link to={`/${auditType}/${user.auditNumber}`}>
-                                                    <Button
-                                                        type="button"
-                                                        label="Responder"
-                                                        backgroundColor="#00004b"
-                                                        hoverColor="#00004b"
-                                                        hoverBorderColor="2px solid #00004b"
-                                                        onClick={() => handleClick(user.auditNumber)} />
-                                                </Link>
-                                            </Buttongroup>
-                                        </td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    {paginatedData.map((user, index) => (
+                                        <tr key={index}>
+                                            <td>{user.auditDate}</td>
+                                            <td>{user.auditNumber}</td>
+                                            <td>{user.idTipoAuditoria.auditType}</td>
+                                            <td>{user.idAuditado.audited}</td>
+                                            <td>
+                                                <div className="center">
+                                                    <Link to={`/${auditType}/${user.auditNumber}`}>
+                                                        <Button
+                                                            type="button"
+                                                            label="Responder"
+                                                            backgroundColor="#00004b"
+                                                            hoverColor="#00004b"
+                                                            hoverBorderColor="2px solid #00004b"
+                                                            onClick={() => handleClick(user.auditNumber)} />
+                                                    </Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
