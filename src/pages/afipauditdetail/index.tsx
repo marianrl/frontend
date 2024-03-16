@@ -39,7 +39,7 @@ const AfipAuditDetail: React.FC = () => {
                 });
         }
         fetchData();
-    }, []);
+    }, [auditNumberValue]);
 
     return (
         <div className="home">

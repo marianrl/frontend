@@ -46,7 +46,7 @@ const CommonAuditDetail: React.FC = () => {
             }, 100); // 1000 milisegundos = 1 segundo
         }
         fetchData();
-    }, []);
+    }, [auditNumberValue]);
 
     return (
         <div className="home">

@@ -25,10 +25,10 @@ const Home: React.FC = () => {
                 <div>
                     <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
                 </div>
-                <div>
-                    <Grid/>
-                </div>
             </header>
+            <div>
+                <Grid/>
+            </div>
         </div>
     );
 }
