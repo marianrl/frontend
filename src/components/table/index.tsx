@@ -3,7 +3,6 @@ import Button from "../button";
 import Buttongroup from "../buttongroup";
 import {AiFillFileAdd} from "react-icons/ai";
 import {Link} from "react-router-dom";
-import Modal from "../modal";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -23,8 +22,6 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
-
-    const [estadoModal, cambiarEstadoModal] = useState(false);
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
     const resultsPerPage = 10; //Cantidad
@@ -64,11 +61,6 @@ const Table: React.FC<TableProps> = ({ data ,onAuditClick, auditType  }) => {
 
     return (
         <div id="bodywrap">
-            <Modal
-                estado={estadoModal}
-                cambiarEstadoModal={cambiarEstadoModal}
-            />
-
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">

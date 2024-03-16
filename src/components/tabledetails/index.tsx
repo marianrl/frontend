@@ -22,6 +22,9 @@ interface Data {
     audit:{auditNumber:number;auditDate: string;idTipoAuditoria:{auditType:string};idAuditado:{audited:string}};
 }
 
+// Define un nuevo tipo para el estado de la fila seleccionada
+type SelectedRowState = Data | null;
+
 interface TableDetailsProps {
     data: Data[];
     auditType: "commonAuditDetails" | "afipAuditDetails";
@@ -34,8 +37,14 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
     const resultsPerPage = 10; //Cantidad
+    const [selectedRow, setSelectedRow] = useState<SelectedRowState>(null); // Estado para la fila seleccionada
 
-    const handleClick = () => {
+    const handleRowClick = (rowData: Data) => {
+        setSelectedRow(rowData); // Almacena la información de la fila seleccionada en el estado
+        cambiarEstadoModal(true); // Abre el modal
+    };
+
+    const handleBackButtonClick = () => {
         if(auditType === "commonAuditDetails"){
             navigate('/audit');
         }
@@ -77,8 +86,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
              <Modal
                  estado={estadoModal}
                  cambiarEstadoModal={cambiarEstadoModal}
+                 data={selectedRow} // Pasa la información de la fila seleccionada al modal
              />
-
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
@@ -90,7 +99,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                 backgroundColor="#00004b"
                                 hoverColor="#00004b"
                                 hoverBorderColor="2px solid #00004b"
-                                onClick={() => handleClick()} />
+                                onClick={() => handleBackButtonClick()} />
                         </div>
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
@@ -138,7 +147,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                                         backgroundColor="#00004b"
                                                         hoverColor="#00004b"
                                                         hoverBorderColor="2px solid #00004b"
-                                                        onClick={() => cambiarEstadoModal(!estadoModal)}/>
+                                                        onClick={() => handleRowClick(user)}/>
                                             </Buttongroup>
                                         </td>
                                     </tr>

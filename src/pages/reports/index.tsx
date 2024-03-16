@@ -6,6 +6,8 @@ import "./style.css"
 
 const Reports: React.FC = () => {
     const navigate = useNavigate();
+    const name = localStorage.getItem('name');
+    const lastName = localStorage.getItem('lastName');
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -19,7 +21,7 @@ const Reports: React.FC = () => {
             <header>
                 <Navbar/>
                 <div>
-                    <Header name= "Mariano Home"/>
+                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
                 </div>
             </header>
             <div className="table-responsive">

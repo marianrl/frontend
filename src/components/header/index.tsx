@@ -8,7 +8,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({
     name,
 }) => {
-    // JavaScrip
     return (
         <div className="header">
             <h2>Bienvenido {name}</h2>

@@ -2,10 +2,11 @@ import React, {useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
-import Modal from "../../components/modal";
 
 const Messages: React.FC = () => {
     const navigate = useNavigate();
+    const name = localStorage.getItem('name');
+    const lastName = localStorage.getItem('lastName');
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -19,7 +20,7 @@ const Messages: React.FC = () => {
             <header>
                 <Navbar/>
                 <div>
-                    <Header name= "Mariano Home"/>
+                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
                 </div>
                 <div>
                 </div>

@@ -29,6 +29,8 @@ const Audit: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true); // Estado de carga
     const [data, setData] = useState<AuditData[]>([]);
+    const name = localStorage.getItem('name');
+    const lastName = localStorage.getItem('lastName');
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -72,7 +74,7 @@ const Audit: React.FC = () => {
             <header>
                 <Navbar />
                 <div>
-                    <Header name="Mariano Home" />
+                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'} />
                 </div>
             </header>
             {isLoading ? ( // Mostrar estado de carga si isLoading es true

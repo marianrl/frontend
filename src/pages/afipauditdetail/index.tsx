@@ -10,6 +10,8 @@ const AfipAuditDetail: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
     const { auditNumber } = useParams();
+    const name = localStorage.getItem('name');
+    const lastName = localStorage.getItem('lastName');
     let auditNumberValue: number = 0;
 
     useEffect(() => {
@@ -44,7 +46,7 @@ const AfipAuditDetail: React.FC = () => {
             <header>
                 <Navbar/>
                 <div>
-                    <Header name= "Mariano Home"/>
+                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
                 </div>
             </header>
             {errorMessage ? (
