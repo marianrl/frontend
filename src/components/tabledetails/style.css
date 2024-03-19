@@ -7,3 +7,23 @@
     justify-content: space-between;
     align-items: center;
 }
+
+table.table tr th:first-child {
+    width: 22%; /* Cambiado a porcentaje */
+}
+
+table.table tr .details-second-child {
+    width: 22%; /* Cambiado a porcentaje */
+}
+
+table.table tr .details-third-child {
+    width: 22%; /* Cambiado a porcentaje */
+}
+
+table.table tr .details-fourth-child {
+    width: 22%; /* Cambiado a porcentaje */
+}
+
+table.table tr th:last-child {
+    width: 12%; /* Cambiado a porcentaje */
+}

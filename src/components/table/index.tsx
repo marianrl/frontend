@@ -86,19 +86,19 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                                     {orderBy && orderBy.key === 'auditDate' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th onClick={() => handleSort('auditNumber')}>
+                                        <th  className="second-child" onClick={() => handleSort('auditNumber')}>
                                             N° de Auditoria
                                             <span className="icon-right">
                                                     {orderBy && orderBy.key === 'auditNumber' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th onClick={() => handleSort('idTipoAuditoria')}>
+                                        <th  className="third-child" onClick={() => handleSort('idTipoAuditoria')}>
                                             Tipo de Auditoria
                                             <span className="icon-right">
                                                     {orderBy && orderBy.key === 'idTipoAuditoria' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th onClick={() => handleSort('idAuditado')}>
+                                        <th  className="fourth-child" onClick={() => handleSort('idAuditado')}>
                                             Auditado
                                             <span className="icon-right">
                                                     {orderBy && orderBy.key === 'idAuditado' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}

@@ -13,7 +13,7 @@
 }
 
 .ContendorModal {
-    width: 500px;
+    width: 700px;
     min-height: 100px;
     background: #fff;
     position: relative;
@@ -35,6 +35,7 @@
     font-weight: 700;
     font-size: 16px;
     color: #13139F;
+    padding-inline-start: 40px;
 }
 
 .BotonCerrar {
@@ -61,7 +62,6 @@
 }
 
 .Contenido {
-    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -88,6 +88,23 @@
   &:hover {
     background: #00004b;
   }
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas de igual ancho */
+  gap: 50px;
+  margin-bottom: 20px;
+  list-style-type: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  margin-right: 10px;
 }
 
 

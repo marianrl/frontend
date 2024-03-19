@@ -111,19 +111,19 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                                 {orderBy && orderBy.key === 'lastName' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th onClick={() => handleSort('name')}>
+                                        <th className="details-second-child" onClick={() => handleSort('name')}>
                                             Nombre
                                             <span className="icon-right">
                                                 {orderBy && orderBy.key === 'name' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th onClick={() => handleSort('cuil')}>
+                                        <th className="details-third-child" onClick={() => handleSort('cuil')}>
                                             Cuil
                                             <span className="icon-right">
                                                 {orderBy && orderBy.key === 'cuil' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th onClick={() => handleSort('file')}>
+                                        <th className="details-fourth-child" onClick={() => handleSort('file')}>
                                             N° Legajo
                                             <span className="icon-right">
                                                 {orderBy && orderBy.key === 'file' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
