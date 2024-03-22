@@ -33,6 +33,18 @@ const answerService = {
         }
     },
 
+    async fetchAnswerByAuditType(endpoint: string, id: number): Promise<ApiResponse> {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/${endpoint}/${id}`);
+            return {
+                data: response.data,
+                status: response.status,
+            };
+        } catch (error) {
+            throw new Error('Error al obtener los datos de answer by Id');
+        }
+    },
+
     async createAnswer(endpoint: string, answer : Answer): Promise<ApiResponse> {
         try {
             const response = await axios.post(`${API_BASE_URL}/${endpoint}` , answer);

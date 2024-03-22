@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './style.css'
 
 interface ButtonProps {
@@ -6,12 +6,13 @@ interface ButtonProps {
     onClick: () => void;
     type: 'submit' | 'button';
     color?: string;
-    backgroundColor?:string;
+    backgroundColor?: string;
     hoverColor?: string;
     hoverBackgroundColor?: string;
-    borderColor?:string;
+    borderColor?: string;
     hoverBorderColor?: string;
-
+    disabled?: boolean;
+    style?: React.CSSProperties; // Propiedad 'style' para aplicar estilos adicionales
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,14 +25,17 @@ const Button: React.FC<ButtonProps> = ({
                                            hoverBackgroundColor,
                                            borderColor,
                                            hoverBorderColor,
+                                           disabled,
+                                           style, // Recibir la propiedad 'style' en las props
                                            ...buttonProps
-}) => {
+                                       }) => {
     const [hovered, setHovered] = useState(false);
 
     const buttonStyle = {
         color: hovered ? hoverColor : color,
         backgroundColor: hovered ? hoverBackgroundColor : backgroundColor,
         border: hovered ? hoverBorderColor : borderColor,
+        ...style // Fusionar los estilos adicionales con los estilos base
     };
 
     return (
@@ -40,7 +44,9 @@ const Button: React.FC<ButtonProps> = ({
                 style={buttonStyle}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                onClick={onClick} {...buttonProps}>
+                onClick={onClick}
+                disabled={disabled} // Usar la propiedad 'disabled' en el botón
+                {...buttonProps}>
             {label}
         </button>
     );

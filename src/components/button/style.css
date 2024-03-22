@@ -17,3 +17,16 @@
     font-weight: bold;
     border: 2px solid #00004b;
 }
+
+.button:disabled {
+    background-color: #cccccc; /* Color gris */
+    color: #999999 !important; /* Color de texto gris */
+    cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+    border: 2px solid transparent; /* Borde transparente */
+}
+
+.button:disabled:hover {
+    background-color: #cccccc; /* Color gris */
+    color: #999999; /* Color de texto gris */
+    border: 2px solid transparent; /* Borde transparente */
+}

@@ -3,23 +3,30 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const Dropdown: React.FC = () => {
-    const [age, setAge] = React.useState('');
+interface DropdownProps {
+    onSelect: (value: string) => void;
+    answer?: string;
+}
+
+const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+    const [selectedValue, setSelectedValue] = React.useState<string>('');
 
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
+        const value = event.target.value as string;
+        setSelectedValue(value);
+        onSelect(value);
     };
 
     return (
         <FormControl sx={{ m: 1, minWidth: 200 }}>
             <Select
-                value={age}
+                value={selectedValue}
                 onChange={handleChange}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
             >
-                <MenuItem value="">
-                    <em>Responder</em>
+                <MenuItem disabled value="">
+                    Responder...
                 </MenuItem>
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
