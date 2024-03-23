@@ -64,7 +64,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
-                        <h2>Auditoria vigentes</h2>
+                        <h2>{auditType === 'commonAuditDetails' ? "Auditorias internas vigentes" : "Auditorias AFIP vigentes"}</h2>
                         <div>
                             <Buttongroup>
                                 <div className="container">

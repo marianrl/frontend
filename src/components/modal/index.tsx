@@ -3,6 +3,7 @@ import './style.scss';
 import { RxCross2 } from 'react-icons/rx';
 import Dropdown from "../dropdown";
 import Button from "../button";
+import {answerService} from "../../services/ams/answer";
 
 interface Data {
     lastName: string;
@@ -14,8 +15,8 @@ interface Data {
     uoc: string;
     branch: { branch: string };
     admissionDate: string;
-    features: { auditType: { auditType: string }; answer: { answer: string } };
-    audit: { auditNumber: number; auditDate: string; idTipoAuditoria: { auditType: string }; idAuditado: { audited: string } };
+    features: { auditType: { id: number, auditType: string }; answer: { answer: string } };
+    audit: { auditNumber: number; auditDate: string; idTipoAuditoria: { id: number, auditType: string }; idAuditado: { audited: string } };
 }
 
 interface ModelProps {
@@ -27,23 +28,26 @@ interface ModelProps {
 const Modal: React.FC<ModelProps> = ({ estado, cambiarEstadoModal, data }) => {
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const [showButton, setShowButton] = useState(false); // Estado para controlar la visibilidad del botón
+    const [answers, setAnswers] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
+        const auditTypeId = data?.audit.idTipoAuditoria?.id; // Acceder al ID de manera segura
+        if (auditTypeId !== undefined) {
+            answerService.fetchAnswerByAuditType('answersByAuditType', auditTypeId)
+                .then((response) => {
+                    const allAnswers = response.data;
+                    setAnswers(allAnswers);
+                    setErrorMessage('');
+                })
+                .catch(() => {
+                    setAnswers([]);
+                    setErrorMessage('Error al procesar la solicitud');
+                    console.log(errorMessage);
+                });
+        }
         setShowButton(true); // Al montar el componente, mostrar el botón
-        //TODO
-        // answerService.fetchAnswerByAuditType('answersByAuditType',auditNumberValue)
-        //     .then((response) => {
-        //         const allAudit = response.data;
-        //         setData(allAudit);
-        //         setIsLoading(false); // Establecer isLoading en false cuando se completó la carga de datos
-        //         console.log(allAudit);
-        //     })
-        //     .catch(() => {
-        //         setData([]);
-        //         setIsLoading(false); // Establecer isLoading en false si hubo un error al cargar los datos
-        //         setErrorMessage('Error al procesar la solicitud');
-        //     });
-    }, []);
+    }, [data?.audit.idTipoAuditoria?.id, errorMessage]);
 
     const handleDropdownSelect = (option: string) => {
         setSelectedOption(option);
@@ -125,7 +129,7 @@ const Modal: React.FC<ModelProps> = ({ estado, cambiarEstadoModal, data }) => {
                                     <div className="fila">
                                         <li className="item">
                                             Respuesta:
-                                            <Dropdown onSelect={handleDropdownSelect} />
+                                            <Dropdown onSelect={handleDropdownSelect} answers={answers} />
                                         </li>
                                         <li className="item">
                                             <Button

@@ -5,10 +5,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface DropdownProps {
     onSelect: (value: string) => void;
-    answer?: string;
+    answers: { id: number, answer: string }[]; // Cambio aquí para aceptar una lista de respuestas
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
+const Dropdown: React.FC<DropdownProps> = ({ onSelect, answers }) => {
     const [selectedValue, setSelectedValue] = React.useState<string>('');
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -28,9 +28,9 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect }) => {
                 <MenuItem disabled value="">
                     Responder...
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {answers.map((answer, index) => (
+                    <MenuItem key={index} value={answer.answer}>{answer.answer}</MenuItem>
+                ))}
             </Select>
         </FormControl>
     );

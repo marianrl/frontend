@@ -18,8 +18,8 @@ interface Data {
     uoc: string;
     branch: {branch: string};
     admissionDate: string;
-    features:{auditType: {auditType: string }; answer: {answer:string}};
-    audit:{auditNumber:number;auditDate: string;idTipoAuditoria:{auditType:string};idAuditado:{audited:string}};
+    features:{auditType: {id: number, auditType: string }; answer: {answer:string}};
+    audit:{ auditNumber: number; auditDate: string; idTipoAuditoria: {id: number, auditType: string}; idAuditado:{audited:string}};
 }
 
 // Define un nuevo tipo para el estado de la fila seleccionada
