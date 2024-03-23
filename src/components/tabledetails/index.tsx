@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Button from "../button";
-import Buttongroup from "../buttongroup";
-import Modal from "../modal";
+import DetailsModal from "../detailsmodal";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import '../tabledetails/style.css';
@@ -41,7 +40,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
 
     const handleRowClick = (rowData: Data) => {
         setSelectedRow(rowData); // Almacena la información de la fila seleccionada en el estado
-        cambiarEstadoModal(true); // Abre el modal
+        cambiarEstadoModal(true); // Abre el detailsmodal
     };
 
     const handleBackButtonClick = () => {
@@ -83,10 +82,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
 
     return (
          <div id="bodywrap">
-             <Modal
+             <DetailsModal
                  estado={estadoModal}
                  cambiarEstadoModal={cambiarEstadoModal}
-                 data={selectedRow} // Pasa la información de la fila seleccionada al modal
+                 data={selectedRow} // Pasa la información de la fila seleccionada al detailsmodal
              />
             <div className="row">
                 <div className="large-10 columns">
@@ -140,7 +139,6 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                         <td>{user.cuil}</td>
                                         <td>{user.file}</td>
                                         <td className="text-right">
-                                            <Buttongroup>
                                                     <Button
                                                         type="button"
                                                         label="Ver detalle"
@@ -148,7 +146,6 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                                         hoverColor="#00004b"
                                                         hoverBorderColor="2px solid #00004b"
                                                         onClick={() => handleRowClick(user)}/>
-                                            </Buttongroup>
                                         </td>
                                     </tr>
                                 ))}

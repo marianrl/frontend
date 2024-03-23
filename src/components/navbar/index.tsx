@@ -1,23 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './style.css'
 import {BiLogOut, BiMessageDetail} from "react-icons/bi";
 import {AiOutlineAudit, AiOutlineHome} from "react-icons/ai";
 import {BsFileBarGraph} from "react-icons/bs";
 import {TbReportSearch} from "react-icons/tb";
-import {useSession} from "../sessionprovider";
 import {useNavigate} from "react-router-dom";
 import Logo from "../../img/Logo_izquierda.png";
 import Nombre from "../../img/Logo_derecha.png";
 import Buttongroup from "../buttongroup";
+import Modal from "../modal";
 
 const Navbar: React.FC = () => {
 
-    const { logout } = useSession();
     const navigate = useNavigate();
-    const handleLogout = () => {
-        logout(); // Cierra la sesión
-        navigate('/login'); // Redirige al usuario a la página de inicio de sesión
-    };
+    const [estadoModal, cambiarEstadoModal] = useState(false);
     const handleAudit = () => {
         navigate('/audit');
     };
@@ -27,8 +23,17 @@ const Navbar: React.FC = () => {
     const handleAuditAfip = () => {
         navigate('/auditafip');
     };
+
+    const handleClick = () => {
+        cambiarEstadoModal(true); // Abre el modal
+    };
+
     return (
         <div>
+            <Modal
+                estado={estadoModal}
+                cambiarEstadoModal={cambiarEstadoModal}
+            />
             <nav className="main-menu">
                 <ul>
                     <li>
@@ -80,9 +85,9 @@ const Navbar: React.FC = () => {
                 </ul>
                 <ul className="logout">
                     <li>
-                        <a href="/login" onClick={handleLogout}>
+                        <a href="#" onClick={handleClick}>
                             <i className="fa fa-power-off fa-2x"><BiLogOut/></i>
-                            <span className="nav-text">Logout</span>
+                            <span className="nav-text">Cerrar sesión</span>
                         </a>
                     </li>
                 </ul>
