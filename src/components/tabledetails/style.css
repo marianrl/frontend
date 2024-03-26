@@ -27,3 +27,18 @@ table.table tr .details-fourth-child {
 table.table tr th:last-child {
     width: 12%; /* Cambiado a porcentaje */
 }
+
+.cellContainer {
+    position: relative;
+}
+
+.leftContent {
+    float: left;
+}
+
+.rightContent {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}

@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 import '../tabledetails/style.css';
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
+import {IconContext} from "react-icons";
+import {FcCheckmark} from "react-icons/fc";
 
 interface Data {
     lastName: string;
@@ -117,7 +119,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                             </span>
                                         </th>
                                         <th className="details-third-child" onClick={() => handleSort('cuil')}>
-                                            Cuil
+                                            CUIL
                                             <span className="icon-right">
                                                 {orderBy && orderBy.key === 'cuil' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
@@ -137,15 +139,24 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                         <td>{user.lastName}</td>
                                         <td>{user.name}</td>
                                         <td>{user.cuil}</td>
-                                        <td>{user.file}</td>
-                                        <td className="text-right">
-                                                    <Button
-                                                        type="button"
-                                                        label="Ver detalle"
-                                                        backgroundColor="#00004b"
-                                                        hoverColor="#00004b"
-                                                        hoverBorderColor="2px solid #00004b"
-                                                        onClick={() => handleRowClick(user)}/>
+                                        <td className="cellContainer">
+                                            <div className="leftContent">{user.file}</div>
+                                            {user.features.auditType.auditType !== 'SIN RESPUESTA' && (
+                                                <div className="rightContent">
+                                                    <IconContext.Provider value={{ size: '30px' }}>
+                                                        <FcCheckmark />
+                                                    </IconContext.Provider>
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <Button
+                                                type="button"
+                                                label="Ver detalle"
+                                                backgroundColor="#00004b"
+                                                hoverColor="#00004b"
+                                                hoverBorderColor="2px solid #00004b"
+                                                onClick={() => handleRowClick(user)}/>
                                         </td>
                                     </tr>
                                 ))}
