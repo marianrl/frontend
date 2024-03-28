@@ -4,15 +4,15 @@ import {Features} from "./features";
 
 export interface CommonInput {
     id: number;
-    auditDate: string;
     lastName: string;
     name: string;
-    cuil: string;
-    file: string;
+    cuil: number;
+    file: number;
     allocation: string;
-    client: Client;
+    client: { client: string };
     uoc: string;
-    branch: Branch;
+    branch: { branch: string };
     admissionDate: string;
-    features: Features;
+    features: { auditType: { id: number; auditType: string }; answer: { id: number, answer: string } };
+    audit: { id: number, auditNumber: number; auditDate: string; idTipoAuditoria: { id: number; auditType: string }; idAuditado: { id: number, audited: string } };
 }

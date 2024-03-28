@@ -10,6 +10,7 @@ import {IconContext} from "react-icons";
 import {FcCheckmark} from "react-icons/fc";
 
 interface Data {
+    id: number;
     lastName: string;
     name: string;
     cuil: number;
@@ -19,8 +20,8 @@ interface Data {
     uoc: string;
     branch: {branch: string};
     admissionDate: string;
-    features:{auditType: {id: number, auditType: string }; answer: {answer:string}};
-    audit:{ auditNumber: number; auditDate: string; idTipoAuditoria: {id: number, auditType: string}; idAuditado:{audited:string}};
+    features:{auditType: {id: number, auditType: string }; answer: {id:number, answer:string}};
+    audit:{ id: number, auditNumber: number; auditDate: string; idTipoAuditoria: {id: number, auditType: string}; idAuditado:{id: number, audited:string}};
 }
 
 // Define un nuevo tipo para el estado de la fila seleccionada

@@ -44,7 +44,7 @@ const commonInputService = {
             throw new Error('Error al crear nuevas auditorias');
         }
     },
-    async updateGroup(endpoint: string, id : string, commonAudit: CommonInput): Promise<ApiResponse> {
+    async updateCommonInput(endpoint: string, id : string, commonAudit: CommonInput): Promise<ApiResponse> {
         try {
             const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, commonAudit);
             return {

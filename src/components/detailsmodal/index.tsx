@@ -3,20 +3,23 @@ import './style.scss';
 import { RxCross2 } from 'react-icons/rx';
 import Dropdown from "../dropdown";
 import Button from "../button";
-import {answerService} from "../../services/ams/answer";
+import { answerService } from "../../services/ams/answer";
+import { commonInputService } from "../../services/ams/commonInput";
+import {Answer} from "../../types/answer";
 
 interface Data {
+    id: number;
     lastName: string;
     name: string;
     cuil: number;
     file: number;
     allocation: string;
-    client: { client: string }
+    client: { client: string };
     uoc: string;
     branch: { branch: string };
     admissionDate: string;
-    features: { auditType: { id: number, auditType: string }; answer: { answer: string } };
-    audit: { auditNumber: number; auditDate: string; idTipoAuditoria: { id: number, auditType: string }; idAuditado: { audited: string } };
+    features: { auditType: { id: number; auditType: string }; answer: { id: number, answer: string } };
+    audit: { id: number, auditNumber: number; auditDate: string; idTipoAuditoria: { id: number; auditType: string }; idAuditado: { id: number, audited: string } };
 }
 
 interface DetailsModelProps {
@@ -26,9 +29,9 @@ interface DetailsModelProps {
 }
 
 const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal, data }) => {
-    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [selectedOption, setSelectedOption] = useState<Answer | null>(null);
     const [showButton, setShowButton] = useState(false); // Estado para controlar la visibilidad del botón
-    const [answers, setAnswers] = useState([]);
+    const [answers, setAnswers] = useState<Answer[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -49,14 +52,37 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
         setShowButton(true); // Al montar el componente, mostrar el botón
     }, [data?.audit.idTipoAuditoria?.id, errorMessage]);
 
-    const handleDropdownSelect = (option: string) => {
+    const handleDropdownSelect = (option: Answer) => {
         setSelectedOption(option);
         setShowButton(true); // Mostrar el botón cuando se selecciona una opción
     };
 
-    const handleButtonClick = () => {
-        cambiarEstadoModal(!estado);
-        setShowButton(false);
+
+    const handleButtonClick = async () => {
+        if (selectedOption && data) {
+            try {
+                const updatedData = {
+                    ...data,
+                    features: {
+                        ...data.features,
+                        auditType: {
+                            id: data.audit.idTipoAuditoria.id,
+                            auditType: data.audit.idTipoAuditoria.auditType
+                        },
+                        answer: {
+                            id: selectedOption.id, // Opcional: aquí podrías asignar el id correspondiente a la respuesta seleccionada, si lo necesitas
+                            answer: selectedOption.answer
+                        }
+                    }
+                };
+
+                await commonInputService.updateCommonInput('commonInput', data.id.toString(), updatedData);
+                cambiarEstadoModal(!estado);
+                setShowButton(false);
+            } catch (error) {
+                console.error('Error al actualizar el input común:', error);
+            }
+        }
     };
 
     const handleModalClose = () => {
