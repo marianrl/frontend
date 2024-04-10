@@ -155,7 +155,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                                     <div className="fila">
                                         <li className="item">
                                             Respuesta:
-                                            <Dropdown onSelect={handleDropdownSelect} answers={answers} />
+                                            <Dropdown onSelect={handleDropdownSelect} answers={answers} maxLength={12}/>
                                         </li>
                                         <li className="item">
                                             <Button
