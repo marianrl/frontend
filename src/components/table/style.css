@@ -58,11 +58,11 @@ table.table tr th:first-child {
 }
 
 table.table tr .second-child {
-    width: 10%; /* Cambiado a porcentaje */
+    width: 15%; /* Cambiado a porcentaje */
 }
 
 table.table tr .third-child {
-    width: 55%; /* Cambiado a porcentaje */
+    width: 50%; /* Cambiado a porcentaje */
 }
 
 table.table tr .fourth-child {

@@ -4,8 +4,9 @@ import { RxCross2 } from 'react-icons/rx';
 import Dropdown from "../dropdown";
 import Button from "../button";
 import { answerService } from "../../services/ams/answer";
-import { commonInputService } from "../../services/ams/commonInput";
-import {Answer} from "../../types/answer";
+import { Answer } from "../../types/answer";
+import ConfirmationModal from "../confimationmodal";
+import {commonInputService} from "../../services/ams/commonInput";
 
 interface Data {
     id: number;
@@ -30,12 +31,13 @@ interface DetailsModelProps {
 
 const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal, data }) => {
     const [selectedOption, setSelectedOption] = useState<Answer | null>(null);
-    const [showButton, setShowButton] = useState(false); // Estado para controlar la visibilidad del botón
+    const [showButton, setShowButton] = useState(false);
     const [answers, setAnswers] = useState<Answer[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
     useEffect(() => {
-        const auditTypeId = data?.audit.idTipoAuditoria?.id; // Acceder al ID de manera segura
+        const auditTypeId = data?.audit.idTipoAuditoria?.id;
         if (auditTypeId !== undefined) {
             answerService.fetchAnswerByAuditType('answersByAuditType', auditTypeId)
                 .then((response) => {
@@ -49,16 +51,15 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                     console.log(errorMessage);
                 });
         }
-        setShowButton(true); // Al montar el componente, mostrar el botón
+        setShowButton(true);
     }, [data?.audit.idTipoAuditoria?.id, errorMessage]);
 
     const handleDropdownSelect = (option: Answer) => {
         setSelectedOption(option);
-        setShowButton(true); // Mostrar el botón cuando se selecciona una opción
+        setShowButton(true);
     };
 
-
-    const handleButtonClick = async () => {
+    const handleConfirmationButtonClick = async () => {
         if (selectedOption && data) {
             try {
                 const updatedData = {
@@ -77,8 +78,6 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                 };
 
                 await commonInputService.updateCommonInput('commonInput', data.id.toString(), updatedData);
-                cambiarEstadoModal(!estado);
-                setShowButton(false);
             } catch (error) {
                 console.error('Error al actualizar el input común:', error);
             }
@@ -87,7 +86,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
 
     const handleModalClose = () => {
         cambiarEstadoModal(false);
-        setShowButton(false); // Ocultar el botón al cerrar el detailsmodal
+        setShowButton(false);
     };
 
     const isButtonDisabled = selectedOption === null;
@@ -155,7 +154,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                                     <div className="fila">
                                         <li className="item">
                                             Respuesta:
-                                            <Dropdown onSelect={handleDropdownSelect} answers={answers} maxLength={12}/>
+                                            <Dropdown onSelect={handleDropdownSelect} answers={answers} maxLength={12} />
                                         </li>
                                         <li className="item">
                                             <Button
@@ -163,7 +162,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                                                 label="Responder"
                                                 hoverColor="#00004b"
                                                 hoverBorderColor="2px solid #00004b"
-                                                onClick={handleButtonClick}
+                                                onClick={() => setShowConfirmationModal(true)}
                                                 disabled={!showButton || isButtonDisabled}
                                             />
                                         </li>
@@ -172,6 +171,15 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                             </div>
                         </div>
                     </div>
+                    {showConfirmationModal &&
+                        <ConfirmationModal
+                            estado={showConfirmationModal}
+                            cambiarEstadoConfirmationModal={setShowConfirmationModal}
+                            handleConfirmationButtonClick={handleConfirmationButtonClick}
+                            handleModalClose={handleModalClose}
+                            selectedOption={selectedOption}
+                        />
+                    }
                 </div>
             }
         </>

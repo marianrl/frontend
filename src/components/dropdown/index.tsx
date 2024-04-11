@@ -33,15 +33,12 @@ const Dropdown: React.FC<DropdownProps> = ({ onSelect, answers, maxLength }) => 
     return (
         <FormControl sx={{ m: 1, minWidth: 200 }}>
             <Select
-                value={selectedValue ? selectedValue.answer : ''}
+                value={selectedValue ? selectedValue.answer : 'Responder...'}
                 onChange={handleChange}
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
                 renderValue={(selected) => truncateText(selected as string)} // Aquí truncamos el texto seleccionado
             >
-                <MenuItem disabled value="">
-                    Responder...
-                </MenuItem>
                 {answers.map((answer, index) => (
                     <MenuItem key={index} value={answer.answer}>{answer.answer}</MenuItem>
                 ))}
