@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {CommonInput} from "../../types/commonInput";
+import {CommonInputRequest} from "../../types/commonInputRequest";
 
 
 export interface ApiResponse {
@@ -44,9 +45,9 @@ const commonInputService = {
             throw new Error('Error al crear nuevas auditorias');
         }
     },
-    async updateCommonInput(endpoint: string, id : string, commonAudit: CommonInput): Promise<ApiResponse> {
+    async updateCommonInput(endpoint: string, id : string, commonInputRequest: CommonInputRequest): Promise<ApiResponse> {
         try {
-            const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, commonAudit);
+            const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, commonInputRequest);
             return {
                 data: response.data,
                 status: response.status,

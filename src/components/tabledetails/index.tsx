@@ -20,7 +20,7 @@ interface Data {
     uoc: string;
     branch: {branch: string};
     admissionDate: string;
-    features:{auditType: {id: number, auditType: string }; answer: {id:number, answer:string}};
+    features:{id: number; auditType: {id: number, auditType: string }; answer: {id:number, answer:string}};
     audit:{ id: number, auditNumber: number; auditDate: string; idTipoAuditoria: {id: number, auditType: string}; idAuditado:{id: number, audited:string}};
 }
 
@@ -82,6 +82,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
 
     const totalPages = Math.ceil(sortedData.length / resultsPerPage);
     const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
+
+    const isButtonDisabledForUser = (user: Data): boolean => {
+        return user.features.auditType.auditType !== 'SIN RESPUESTA';
+    };
 
     return (
          <div id="bodywrap">
@@ -153,10 +157,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                         <td>
                                             <Button
                                                 type="button"
-                                                label="Ver detalle"
-                                                backgroundColor="#00004b"
+                                                label={isButtonDisabledForUser(user) ? "Respondido" : "Ver detalle"}
                                                 hoverColor="#00004b"
                                                 hoverBorderColor="2px solid #00004b"
+                                                disabled={isButtonDisabledForUser(user)}
                                                 onClick={() => handleRowClick(user)}/>
                                         </td>
                                     </tr>

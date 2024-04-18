@@ -19,7 +19,7 @@ interface Data {
     uoc: string;
     branch: { branch: string };
     admissionDate: string;
-    features: { auditType: { id: number; auditType: string }; answer: { id: number, answer: string } };
+    features: { id: number; auditType: { id: number; auditType: string }; answer: { id: number, answer: string } };
     audit: { id: number, auditNumber: number; auditDate: string; idTipoAuditoria: { id: number; auditType: string }; idAuditado: { id: number, audited: string } };
 }
 
@@ -62,22 +62,17 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
     const handleConfirmationButtonClick = async () => {
         if (selectedOption && data) {
             try {
-                const updatedData = {
+                // Crear un objeto actualizado de los datos existentes
+                const updatedDataRequest = {
                     ...data,
-                    features: {
-                        ...data.features,
-                        auditType: {
-                            id: data.audit.idTipoAuditoria.id,
-                            auditType: data.audit.idTipoAuditoria.auditType
-                        },
-                        answer: {
-                            id: selectedOption.id, // Opcional: aquí podrías asignar el id correspondiente a la respuesta seleccionada, si lo necesitas
-                            answer: selectedOption.answer
-                        }
-                    }
+                    // Asignar el featuresId a partir del selectedOption
+                    featuresId: selectedOption.id, // Suponiendo que selectedOption.id representa el featuresId
+                    // Si hay otros cambios que quieres hacer en el request, agrégalos aquí
                 };
 
-                await commonInputService.updateCommonInput('commonInput', data.id.toString(), updatedData);
+                // Llamar al servicio de actualización con los argumentos correctos
+                await commonInputService.updateCommonInput('commonInput', data.id.toString(), updatedDataRequest);
+                window.location.reload();
             } catch (error) {
                 console.error('Error al actualizar el input común:', error);
             }
