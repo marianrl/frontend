@@ -7,6 +7,7 @@ import { answerService } from "../../services/ams/answer";
 import { Answer } from "../../types/answer";
 import ConfirmationModal from "../confimationmodal";
 import {commonInputService} from "../../services/ams/commonInput";
+import {afipInputService} from "../../services/ams/afipInput";
 
 interface Data {
     id: number;
@@ -27,9 +28,10 @@ interface DetailsModelProps {
     estado: boolean;
     cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>;
     data: Data | null;
+    auditType: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal, data }) => {
+const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal, data, auditType}) => {
     const [selectedOption, setSelectedOption] = useState<Answer | null>(null);
     const [showButton, setShowButton] = useState(false);
     const [answers, setAnswers] = useState<Answer[]>([]);
@@ -71,7 +73,12 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                 };
 
                 // Llamar al servicio de actualización con los argumentos correctos
-                await commonInputService.updateCommonInput('commonInput', data.id.toString(), updatedDataRequest);
+                if(auditType === "commonAuditDetails"){
+                    await commonInputService.updateCommonInput('commonInput', data.id.toString(), updatedDataRequest);
+                }
+                else {
+                    await afipInputService.updateAfipInput('afipInput', data.id.toString(), updatedDataRequest);
+                }
                 window.location.reload();
             } catch (error) {
                 console.error('Error al actualizar el input común:', error);

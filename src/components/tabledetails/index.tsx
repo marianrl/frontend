@@ -93,6 +93,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                  estado={estadoModal}
                  cambiarEstadoModal={cambiarEstadoModal}
                  data={selectedRow} // Pasa la información de la fila seleccionada al detailsmodal
+                 auditType={auditType}
              />
             <div className="row">
                 <div className="large-10 columns">
