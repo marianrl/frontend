@@ -42,8 +42,8 @@
     position: absolute;
     top: 25px;
     right: 20px;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border: none;
     background: none;
     cursor: pointer;
@@ -54,11 +54,11 @@
         background: #f2f2f2;
     }
 }
-.Cruz{
-    width: 50%;
-    height: 50%;
+
+i.Cruz{
+    display: flex;
     text-align: center;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 .Contenido {
