@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Button from "../button";
 import DetailsModal from "../detailsmodal";
-import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
+import {MdOutlineArrowDropDown, MdOutlineArrowDropUp, MdOutlineKeyboardBackspace} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import '../tabledetails/style.css';
 import Stack from "@mui/material/Stack";
@@ -106,7 +106,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                 backgroundColor="#00004b"
                                 hoverColor="#00004b"
                                 hoverBorderColor="2px solid #00004b"
-                                onClick={() => handleBackButtonClick()} />
+                                style={{ width: '70px' }}
+                                onClick={() => handleBackButtonClick()}>
+                                <MdOutlineKeyboardBackspace />
+                            </Button>
                         </div>
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
@@ -159,10 +162,13 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                             <Button
                                                 type="button"
                                                 label={isButtonDisabledForUser(user) ? "Respondido" : "Ver detalle"}
+                                                {...(isButtonDisabledForUser(user) && { color: "#00004b" })} // Si la condición es verdadera, se agrega la prop
+                                                {...(isButtonDisabledForUser(user) && { backgroundColor: "#ffffff" })}
+                                                {...(isButtonDisabledForUser(user) && { borderColor: "2px solid #00004b" })}
                                                 hoverColor="#00004b"
                                                 hoverBorderColor="2px solid #00004b"
-                                                disabled={isButtonDisabledForUser(user)}
-                                                onClick={() => handleRowClick(user)}/>
+                                                onClick={() => handleRowClick(user)}
+                                            />
                                         </td>
                                     </tr>
                                 ))}

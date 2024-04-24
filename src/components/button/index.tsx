@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.css'
 
 interface ButtonProps {
-    label: string;
+    label?: string;
     onClick: () => void;
     type: 'submit' | 'button';
     color?: string;
@@ -13,6 +13,7 @@ interface ButtonProps {
     hoverBorderColor?: string;
     disabled?: boolean;
     style?: React.CSSProperties; // Propiedad 'style' para aplicar estilos adicionales
+    children?: React.ReactNode; // Nueva propiedad para aceptar cualquier contenido React
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -27,6 +28,7 @@ const Button: React.FC<ButtonProps> = ({
                                            hoverBorderColor,
                                            disabled,
                                            style, // Recibir la propiedad 'style' en las props
+                                           children,
                                            ...buttonProps
                                        }) => {
     const [hovered, setHovered] = useState(false);
@@ -47,8 +49,8 @@ const Button: React.FC<ButtonProps> = ({
                 onClick={onClick}
                 disabled={disabled} // Usar la propiedad 'disabled' en el botón
                 {...buttonProps}>
-            {label}
-        </button>
+            {children || label}
+        </button> // Renderiza 'children' si está presente, de lo contrario renderiza 'label'
     );
 };
 

@@ -86,6 +86,10 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
         }
     };
 
+    const isDropdownDisabledForUser = (data: Data | null): boolean => {
+        return data?.features.auditType.auditType === 'SIN RESPUESTA';
+    };
+
     const handleModalClose = () => {
         cambiarEstadoModal(false);
         setShowButton(false);
@@ -153,7 +157,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                                             <div><strong>{data ? data.audit.idTipoAuditoria.auditType : ""}</strong></div>
                                         </li>
                                     </div>
-                                    <div className="fila">
+                                    {isDropdownDisabledForUser(data) ? <div className="fila">
                                         <li className="item">
                                             Respuesta:
                                             <Dropdown onSelect={handleDropdownSelect} answers={answers} maxLength={12} />
@@ -168,7 +172,13 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
                                                 disabled={!showButton || isButtonDisabled}
                                             />
                                         </li>
+                                    </div> : <div className="fila">
+                                        <li></li>
+                                        <li className="respuesta">
+                                            <strong>Respuesta: {data?.features.answer.answer}</strong>
+                                        </li>
                                     </div>
+                                    }
                                 </ul>
                             </div>
                         </div>
