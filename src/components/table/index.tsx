@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Button from "../button";
 import Buttongroup from "../buttongroup";
-import { AiFillFileAdd } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import '../table/style.css';
+import {IoMdAdd} from "react-icons/io";
+import AddModal from "../addmodal";
 
 interface Data {
     auditNumber: number;
@@ -24,6 +25,7 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
+    const [estadoModal, cambiarEstadoModal] = useState(false);
     const resultsPerPage = 10; //Cantidad
 
     const handleClick = (auditNumber: number) => {
@@ -58,9 +60,21 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
     const totalPages = Math.ceil(sortedData.length / resultsPerPage);
     const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
 
+    const addAudit = () => {
+        cambiarEstadoModal(true); // Abre el detailsmodal
+    }
+
+    const isAudited = (user: Data): boolean => {
+        return user.idAuditado.audited === 'Si';
+    };
+
 
     return (
         <div id="bodywrap">
+            <AddModal
+                estado={estadoModal}
+                cambiarEstadoModal={cambiarEstadoModal}
+            />
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
@@ -68,10 +82,15 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                         <div>
                             <Buttongroup>
                                 <div className="container">
-                                    <a className="add" href="#">
-                                        <i><AiFillFileAdd /></i>
-                                        <span>Agregar</span>
-                                    </a>
+                                    <Button
+                                        type="button"
+                                        backgroundColor="#00004b"
+                                        hoverColor="#00004b"
+                                        hoverBorderColor="2px solid #00004b"
+                                        style={{ width: '140px', marginBottom: '10px'}}
+                                        onClick={addAudit}>
+                                        <IoMdAdd style={{ marginRight: '15px' }}/> Agregar
+                                    </Button>
                                 </div>
                             </Buttongroup>
                         </div>
@@ -119,8 +138,10 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                                     <Link to={`/${auditType}/${user.auditNumber}`}>
                                                         <Button
                                                             type="button"
-                                                            label="Responder"
-                                                            backgroundColor="#00004b"
+                                                            label={isAudited(user) ? "Auditado" : "Ver detalle"}
+                                                            {...(isAudited(user) && { color: "#00004b" })} // Si la condición es verdadera, se agrega la prop
+                                                            {...(isAudited(user) && { backgroundColor: "#ffffff" })}
+                                                            {...(isAudited(user) && { borderColor: "2px solid #00004b" })}
                                                             hoverColor="#00004b"
                                                             hoverBorderColor="2px solid #00004b"
                                                             onClick={() => handleClick(user.auditNumber)} />

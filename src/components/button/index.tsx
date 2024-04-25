@@ -37,6 +37,9 @@ const Button: React.FC<ButtonProps> = ({
         color: hovered ? hoverColor : color,
         backgroundColor: hovered ? hoverBackgroundColor : backgroundColor,
         border: hovered ? hoverBorderColor : borderColor,
+        display: 'flex', // Establece el botón como un contenedor flex
+        alignItems: 'center', // Centra verticalmente los elementos hijos
+        justifyContent: 'center', // Centra horizontalmente los elementos hijos (opcional)
         ...style // Fusionar los estilos adicionales con los estilos base
     };
 

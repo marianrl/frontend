@@ -42,3 +42,10 @@ table.table tr th:last-child {
     top: 50%;
     transform: translateY(-50%);
 }
+
+.filaTable {
+    display: grid;
+    justify-items: end;
+    grid-template-columns: 70% 30%;
+    list-style-type: none;
+}

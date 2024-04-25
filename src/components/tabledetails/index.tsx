@@ -87,6 +87,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
         return user.features.auditType.auditType !== 'SIN RESPUESTA';
     };
 
+    const handleDelete = () => {
+
+    }
+
     return (
          <div id="bodywrap">
              <DetailsModal
@@ -100,16 +104,29 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                     <div className="scroll-window-wrapper">
                         <div className="container">
                             <h2>Detalle de Auditoria - {data.length > 0 && data[0].audit.idTipoAuditoria.auditType} - {data.length > 0 && data[0].audit.auditDate}</h2>
-                            <Button
-                                type="button"
-                                label="Volver"
-                                backgroundColor="#00004b"
-                                hoverColor="#00004b"
-                                hoverBorderColor="2px solid #00004b"
-                                style={{ width: '70px' }}
-                                onClick={() => handleBackButtonClick()}>
-                                <MdOutlineKeyboardBackspace />
-                            </Button>
+                            <ul>
+                                <div>
+                                    <li className="filaTable">
+                                        <Button
+                                            type="button"
+                                            label="Eliminar"
+                                            backgroundColor="#960909"
+                                            hoverColor="#960909"
+                                            hoverBorderColor="2px solid #960909"
+                                            onClick={handleDelete}
+                                        />
+                                        <Button
+                                            type="button"
+                                            backgroundColor="#00004b"
+                                            hoverColor="#00004b"
+                                            hoverBorderColor="2px solid #00004b"
+                                            style={{ width: '70px' , marginLeft: '20px'}}
+                                            onClick={() => handleBackButtonClick()}>
+                                            <MdOutlineKeyboardBackspace />
+                                        </Button>
+                                    </li>
+                                </div>
+                            </ul>
                         </div>
                         <div className="table-wrapper">
                             <table className="table table-striped table-hover">
