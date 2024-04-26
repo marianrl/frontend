@@ -32,15 +32,19 @@ const auditService = {
             throw new Error('Error al obtener las Auditorias por ID');
         }
     },
-    async createAudit(endpoint: string, auditInput: Audit): Promise<ApiResponse> {
+    async createAudit(endpoint: string, auditInput: number): Promise<ApiResponse> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, auditInput);
+            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, auditInput, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             return {
                 data: response.data,
                 status: response.status,
             };
         } catch (error) {
-            throw new Error('Error al crear nuevas auditorias');
+            throw new Error('Error al crear nuevas auditorías');
         }
     },
     async updateGroup(endpoint: string, id : string, afipAudit: Audit): Promise<ApiResponse> {
