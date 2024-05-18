@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AfipInput} from "../../types/afipInput";
-import {AfipInputRequest} from "../../types/afipInputRequest";
+import {InputRequest} from "../../types/inputRequest";
 
 export interface ApiResponse {
     // Define la estructura de la respuesta de la API si es necesario
@@ -44,7 +44,7 @@ const afipInputService = {
             throw new Error('Error al crear nuevas auditorias');
         }
     },
-    async updateAfipInput(endpoint: string, id : string, afipInputRequest: AfipInputRequest): Promise<ApiResponse> {
+    async updateAfipInput(endpoint: string, id : string, afipInputRequest: InputRequest): Promise<ApiResponse> {
         try {
             const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, afipInputRequest);
             return {

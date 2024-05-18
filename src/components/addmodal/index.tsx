@@ -66,7 +66,10 @@ const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal }) => {
                                                 Tipo de Auditoria:
                                             </li>
                                             <li>
-                                                <AuditTypeDropdown onSelect={handleDropdownSelect} auditTypes={audits} maxLength={12} />
+                                                <AuditTypeDropdown
+                                                    onSelect={handleDropdownSelect}
+                                                    auditTypes={audits.filter(audit => audit.auditType !== "SIN RESPUESTA")}
+                                                    maxLength={12} />
                                             </li>
                                         </div>
                                     </ul>

@@ -47,6 +47,8 @@
   grid-template-columns: 1fr 1fr; /* Dos columnas de igual ancho */
   margin-bottom: 20px;
   list-style-type: none;
+  align-items: center; /* Centrar verticalmente los elementos en cada fila */
+  justify-content: center; /* Centrar horizontalmente los elementos en cada columna */
 }
 
 .item {

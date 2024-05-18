@@ -8,6 +8,7 @@ import { Answer } from "../../types/answer";
 import ConfirmationModal from "../confimationmodal";
 import {commonInputService} from "../../services/ams/commonInput";
 import {afipInputService} from "../../services/ams/afipInput";
+import {InputRequest} from "../../types/inputRequest";
 
 interface Data {
     id: number;
@@ -64,12 +65,21 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
     const handleConfirmationButtonClick = async () => {
         if (selectedOption && data) {
             try {
+                console.log(data.audit.idTipoAuditoria.id);
+
                 // Crear un objeto actualizado de los datos existentes
-                const updatedDataRequest = {
-                    ...data,
+                const updatedDataRequest : InputRequest = {
+                    id: data.id,
+                    lastName: data.lastName,
+                    name: data.name,
+                    cuil: data.cuil,
+                    file: data.file,
+                    allocation: data.allocation,
+                    uoc: data.uoc,
+                    admissionDate: data.admissionDate,
                     // Asignar el featuresId a partir del selectedOption
-                    featuresId: selectedOption.id, // Suponiendo que selectedOption.id representa el featuresId
-                    // Si hay otros cambios que quieres hacer en el request, agrégalos aquí
+                    answerId: selectedOption.id, // Suponiendo que selectedOption.id representa el featuresId
+                    auditTypeId: data.audit.idTipoAuditoria.id
                 };
 
                 // Llamar al servicio de actualización con los argumentos correctos

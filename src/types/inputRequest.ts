@@ -1,4 +1,4 @@
-export interface AfipInputRequest {
+export interface InputRequest {
     id: number;
     lastName: string;
     name: string;
@@ -7,5 +7,6 @@ export interface AfipInputRequest {
     allocation: string;
     uoc: string;
     admissionDate: string;
-    featuresId: number;
+    answerId: number;
+    auditTypeId: number;
 }
