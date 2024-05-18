@@ -56,7 +56,7 @@ const commonInputService = {
             throw new Error('Error al crear las auditorias');
         }
     },
-    async deleteGroup(endpoint: string, id : string): Promise<ApiResponse> {
+    async deleteCommonInput(endpoint: string, id : number): Promise<ApiResponse> {
         try {
             const response = await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`);
             return {

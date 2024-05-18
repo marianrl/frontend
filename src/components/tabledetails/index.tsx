@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import {IconContext} from "react-icons";
 import {FcCheckmark} from "react-icons/fc";
+import DeleteConfirmationModal from "../deleteconfirmationmodal";
+import {auditService} from "../../services/ams/audit";
 
 interface Data {
     id: number;
@@ -40,6 +42,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
     const [page, setPage] = useState(1);
     const resultsPerPage = 10; //Cantidad
     const [selectedRow, setSelectedRow] = useState<SelectedRowState>(null); // Estado para la fila seleccionada
+    const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
     const handleRowClick = (rowData: Data) => {
         setSelectedRow(rowData); // Almacena la información de la fila seleccionada en el estado
@@ -87,9 +90,27 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
         return user.features.auditType.auditType !== 'SIN RESPUESTA';
     };
 
-    const handleDelete = () => {
+    const handleDeleteConfirmationButtonClick = async () => {
+        if (data[0]) {
+            try {
+                const auditIdToDelete: number = data[0].id;
+                // Llamar al servicio de actualización con los argumentos correctos'
+                await auditService.deleteAudit('audit', auditIdToDelete);
+                if(auditType === "commonAuditDetails"){
+                    navigate('/audit');
+                }
+                else {
+                    navigate('/auditafip');
+                }
+            } catch (error) {
+                console.error('Error al eliminar la auditoria:', error);
+            }
+        }
+    };
 
-    }
+    const handleModalClose = () => {
+        cambiarEstadoModal(false);
+    };
 
     return (
          <div id="bodywrap">
@@ -99,6 +120,15 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                  data={selectedRow} // Pasa la información de la fila seleccionada al detailsmodal
                  auditType={auditType}
              />
+             {showDeleteConfirmationModal && <DeleteConfirmationModal
+                 estado={showDeleteConfirmationModal}
+                 cambiarEstadoDeleteConfirmationModal={setShowDeleteConfirmationModal}
+                 handleDeleteConfirmationButtonClick={handleDeleteConfirmationButtonClick}
+                 handleModalClose={handleModalClose}
+                 auditType={data[0].audit.idTipoAuditoria.auditType}
+                 auditDate={data[0].audit.auditDate}
+             />
+             }
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
@@ -113,7 +143,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                                             backgroundColor="#960909"
                                             hoverColor="#960909"
                                             hoverBorderColor="2px solid #960909"
-                                            onClick={handleDelete}
+                                            onClick={() => setShowDeleteConfirmationModal(true)}
                                         />
                                         <Button
                                             type="button"

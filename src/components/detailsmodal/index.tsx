@@ -65,7 +65,6 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal,
     const handleConfirmationButtonClick = async () => {
         if (selectedOption && data) {
             try {
-                console.log(data.audit.idTipoAuditoria.id);
 
                 // Crear un objeto actualizado de los datos existentes
                 const updatedDataRequest : InputRequest = {
