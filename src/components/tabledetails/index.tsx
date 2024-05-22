@@ -10,6 +10,8 @@ import {IconContext} from "react-icons";
 import {FcCheckmark} from "react-icons/fc";
 import DeleteConfirmationModal from "../deleteconfirmationmodal";
 import {auditService} from "../../services/ams/audit";
+import {commonInputService} from "../../services/ams/commonInput";
+import {afipInputService} from "../../services/ams/afipInput";
 
 interface Data {
     id: number;
@@ -93,13 +95,17 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
     const handleDeleteConfirmationButtonClick = async () => {
         if (data[0]) {
             try {
-                const auditIdToDelete: number = data[0].id;
-                // Llamar al servicio de actualización con los argumentos correctos'
-                await auditService.deleteAudit('audit', auditIdToDelete);
+                const auditIdToDelete: number = data[0].audit.auditNumber;
+
                 if(auditType === "commonAuditDetails"){
+                    await commonInputService.deleteCommonInput('commonInput', auditIdToDelete)
+                    await auditService.deleteAudit('audit', auditIdToDelete);
+
                     navigate('/audit');
                 }
                 else {
+                    await afipInputService.deleteAfipInput('afipInput', auditIdToDelete)
+                    await auditService.deleteAudit('audit', auditIdToDelete);
                     navigate('/auditafip');
                 }
             } catch (error) {
