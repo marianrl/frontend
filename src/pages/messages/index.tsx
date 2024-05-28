@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
+import Grid from "../../components/grid";
 
 const Messages: React.FC = () => {
     const navigate = useNavigate();
@@ -16,13 +17,14 @@ const Messages: React.FC = () => {
     }, [ navigate]);
 
     return (
-        <div className="home">
+        <div className="global-background-color">
             <header>
                 <Navbar/>
                 <div>
                     <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
                 </div>
-                <div>
+                <div className="prueba">
+                    <Grid />
                 </div>
             </header>
         </div>

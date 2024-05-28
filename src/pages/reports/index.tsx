@@ -16,7 +16,7 @@ const Reports: React.FC = () => {
     }, [ navigate]);
 
     return (
-        <div className="home">
+        <div className="global-background-color">
             <Navbar/>
             <div>
                 <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>

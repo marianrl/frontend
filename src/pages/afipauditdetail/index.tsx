@@ -42,7 +42,7 @@ const AfipAuditDetail: React.FC = () => {
     }, [auditNumberValue]);
 
     return (
-        <div className="home">
+        <div className="global-background-color">
             <header>
                 <Navbar/>
                 <div>

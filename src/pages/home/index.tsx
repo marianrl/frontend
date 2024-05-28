@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
-import './style.css'
 import Grid from "../../components/grid";
 
 const Home: React.FC = () => {
@@ -19,7 +18,7 @@ const Home: React.FC = () => {
     const lastName = localStorage.getItem('lastName');
 
     return (
-        <div className="home">
+        <div className="global-background-color">
             <header>
                 <Navbar/>
                 <div>
