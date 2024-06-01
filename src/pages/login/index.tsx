@@ -41,7 +41,7 @@ const Login: React.FC = () => {
                 if (response.status === 200) {
                     setErrorMessage('');
                     login(user, response.name, response.lastName);
-                    navigate('/home');
+                    navigate('/dashboard');
                 } else if(response.status === 404){
                     setUserData(null);
                     setErrorMessage('Usuario o contraseña incorrecta');

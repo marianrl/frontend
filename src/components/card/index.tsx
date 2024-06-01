@@ -1,32 +1,15 @@
 import React from 'react';
 import './style.css'
-import { FcCheckmark } from "react-icons/fc";
-import { FaExclamation } from "react-icons/fa";
-import {IconContext} from "react-icons";
 
 interface CardProps {
-    title: string;
-    text: string;
-    showAlertIcon: boolean;
+    children: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ title, text, showAlertIcon }) => {
+const Card: React.FC<CardProps> = ({children}) => {
     return (
         <div className="overviewCard">
-            <div className="overviewCard-icon">
-                {showAlertIcon ?
-                <IconContext.Provider value={{size: '45px', color: 'red'}}>
-                    <FaExclamation/>
-                </IconContext.Provider> :
-                <IconContext.Provider value={{size: '45px'}}>
-                    <FcCheckmark/>
-                </IconContext.Provider>}
-            </div>
-            <div className="overviewCard-description">
-                <h3 className="overviewCard-title text-light">
-                    {title}
-                </h3>
-                <p className="overviewCard-subtitle">{text}</p>
+            <div>
+                {children}
             </div>
         </div>
     );

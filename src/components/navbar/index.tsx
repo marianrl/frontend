@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
         navigate('/audit');
     };
     const handleHome = () => {
-        navigate('/home');
+        navigate('/dashboard');
     };
     const handleAuditAfip = () => {
         navigate('/auditafip');
@@ -53,9 +53,9 @@ const Navbar: React.FC = () => {
                 </ul>
                 <ul className="menu-block">
                     <li>
-                        <a href="/home" onClick={handleHome}>
+                        <a href="/dashboard" onClick={handleHome}>
                             <i className="fa fa-home fa-2x"><AiOutlineHome/></i>
-                            <span className="nav-text">Inicio</span>
+                            <span className="nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li className="has-subnav">

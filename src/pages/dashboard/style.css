@@ -1,0 +1,28 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Máximo de dos columnas */
+    gap: 10px;
+    padding: 10px;
+    margin-left: 150px; /* Añade margen izquierdo */
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-title {
+    margin-left: 150px; /* Ajusta el margen para que coincida con el grid-container */
+}
+
+.dashboard-background-color{
+    background-color: #eaedf1;
+    height: 100vh;
+}
+
+@media (max-width: 1300px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+}

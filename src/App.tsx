@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Login from "./pages/login";
-import Home from "./pages/home"
+import Dashboard from "./pages/dashboard"
 import {SessionProvider} from "./components/sessionprovider";
 import Audit from "./pages/audit";
 import Reports from "./pages/reports"
@@ -18,7 +18,7 @@ const App: React.FC = () => {
               <SessionProvider>
                   <Routes>
                       <Route path="/login" element={<Login/>} />
-                      <Route path="/home" element={ <Home />} />
+                      <Route path="/dashboard" element={ <Dashboard />} />
                       <Route path="/audit" element={<Audit />} />
                       <Route path="/messages" element={<Messages/>} />
                       <Route path="/auditafip" element={<AuditAfip/>} />
