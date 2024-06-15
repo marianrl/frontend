@@ -4,11 +4,13 @@ import Header from "../../components/header";
 import TableDetails from "../../components/tabledetails";
 import {useNavigate, useParams} from "react-router-dom";
 import{commonInputService} from "../../services/ams/commonInput";
+import NotificationModal from "../../components/notificationmodal";
 
 const AfipAuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
+    const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
     const { auditNumber } = useParams();
     const name = localStorage.getItem('name');
     const lastName = localStorage.getItem('lastName');
@@ -41,14 +43,23 @@ const AfipAuditDetail: React.FC = () => {
         fetchData();
     }, [auditNumberValue]);
 
+    const handleToggleNotificationModal = () => {
+        setNotificationModalOpen(prev => !prev);
+    };
+
+
     return (
         <div className="global-background-color">
             <header>
                 <Navbar/>
                 <div>
-                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
+                    <Header
+                        name={name && lastName ? `${name} ${lastName}` : 'Guest'}
+                        onToggleNotificationModal={handleToggleNotificationModal}
+                    />
                 </div>
             </header>
+            <NotificationModal className="notification-modal" isOpen={isNotificationModalOpen} onClose={() => setNotificationModalOpen(false)} />
             {errorMessage ? (
                 <p>{errorMessage}</p>
             ) : (

@@ -5,12 +5,14 @@ import TableDetails from "../../components/tabledetails";
 import {useNavigate, useParams} from "react-router-dom";
 import{commonInputService} from "../../services/ams/commonInput";
 import Spinner from "../../components/Spinner";
+import NotificationModal from "../../components/notificationmodal";
 
 const CommonAuditDetail: React.FC = () => {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true); // Estado de carga
+    const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
     const { auditNumber } = useParams();
     let auditNumberValue: number = 0;
     const name = localStorage.getItem('name');
@@ -48,14 +50,23 @@ const CommonAuditDetail: React.FC = () => {
         fetchData();
     }, [auditNumberValue]);
 
+    const handleToggleNotificationModal = () => {
+        setNotificationModalOpen(prev => !prev);
+    };
+
+
     return (
         <div className="global-background-color">
             <header>
                 <Navbar/>
                 <div>
-                    <Header name= {name && lastName ? name + ' ' + lastName : 'Guest'}/>
+                    <Header
+                        name={name && lastName ? `${name} ${lastName}` : 'Guest'}
+                        onToggleNotificationModal={handleToggleNotificationModal}
+                    />
                 </div>
             </header>
+            <NotificationModal className="notification-modal" isOpen={isNotificationModalOpen} onClose={() => setNotificationModalOpen(false)} />
             {isLoading ? ( // Mostrar estado de carga si isLoading es true
                     <Spinner />
             ) : errorMessage ? (
