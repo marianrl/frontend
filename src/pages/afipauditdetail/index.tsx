@@ -63,7 +63,7 @@ const AfipAuditDetail: React.FC = () => {
             {errorMessage ? (
                 <p>{errorMessage}</p>
             ) : (
-                <TableDetails data={data} auditType={"afipAuditDetails"}/>
+                <TableDetails data={data} auditType={"afipAuditDetails"} auditId={auditNumberValue}/>
             )}
         </div>
     );

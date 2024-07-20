@@ -46,6 +46,6 @@ table.table tr th:last-child {
 .filaTable {
     display: grid;
     justify-items: end;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 42% 42% 16%;
     list-style-type: none;
 }

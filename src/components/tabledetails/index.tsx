@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import {IconContext} from "react-icons";
 import {FcCheckmark} from "react-icons/fc";
+import { RiFileExcel2Line } from "react-icons/ri";
 import DeleteConfirmationModal from "../deleteconfirmationmodal";
 import {auditService} from "../../services/ams/audit";
 import {commonInputService} from "../../services/ams/commonInput";
@@ -34,9 +35,10 @@ type SelectedRowState = Data | null;
 interface TableDetailsProps {
     data: Data[];
     auditType: "commonAuditDetails" | "afipAuditDetails";
+    auditId: number;
 }
 
-const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
+const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId }) => {
 
     const navigate = useNavigate();
     const [estadoModal, cambiarEstadoModal] = useState(false);
@@ -93,20 +95,30 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
     };
 
     const handleDeleteConfirmationButtonClick = async () => {
-        if (data[0]) {
+        if (data !== null) {
             try {
-                const auditIdToDelete: number = data[0].audit.auditNumber;
+                if(data[0]){
+                    if(auditType === "commonAuditDetails"){
+                        await commonInputService.deleteCommonInput('commonInput', auditId)
+                        await auditService.deleteAudit('audit', auditId);
 
-                if(auditType === "commonAuditDetails"){
-                    await commonInputService.deleteCommonInput('commonInput', auditIdToDelete)
-                    await auditService.deleteAudit('audit', auditIdToDelete);
-
-                    navigate('/audit');
+                        navigate('/audit');
+                    }
+                    else {
+                        await afipInputService.deleteAfipInput('afipInput', auditId)
+                        await auditService.deleteAudit('audit', auditId);
+                        navigate('/auditafip');
+                    }
                 }
                 else {
-                    await afipInputService.deleteAfipInput('afipInput', auditIdToDelete)
-                    await auditService.deleteAudit('audit', auditIdToDelete);
-                    navigate('/auditafip');
+                    if(auditType === "commonAuditDetails"){
+                        await auditService.deleteAudit('audit', auditId);
+                        navigate('/audit');
+                    }
+                    else {
+                        await auditService.deleteAudit('audit', auditId);
+                        navigate('/auditafip');
+                    }
                 }
             } catch (error) {
                 console.error('Error al eliminar la auditoria:', error);
@@ -131,8 +143,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                  cambiarEstadoDeleteConfirmationModal={setShowDeleteConfirmationModal}
                  handleDeleteConfirmationButtonClick={handleDeleteConfirmationButtonClick}
                  handleModalClose={handleModalClose}
-                 auditType={data[0].audit.idTipoAuditoria.auditType}
-                 auditDate={data[0].audit.auditDate}
+                 auditType={data.length > 0 ? data[0].audit.idTipoAuditoria.auditType : '--'}
+                 auditDate={data.length > 0 ? data[0].audit.auditDate : '--'}
              />
              }
             <div className="row">
@@ -143,6 +155,14 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType }) => {
                             <ul>
                                 <div>
                                     <li className="filaTable">
+                                        <Button
+                                            type="button"
+                                            backgroundColor="#004217"
+                                            hoverColor="#004217"
+                                            hoverBorderColor="2px solid #004217"
+                                            onClick={() => setShowDeleteConfirmationModal(true)}>
+                                            <RiFileExcel2Line style={{marginRight: '10px'}}/> Importar
+                                        </Button>
                                         <Button
                                             type="button"
                                             label="Eliminar"

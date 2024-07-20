@@ -1,16 +1,11 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import FontDownloadRoundedIcon from '@mui/icons-material/FontDownloadRounded';
+import FormatItalicRoundedIcon from '@mui/icons-material/FormatItalicRounded';
 
 interface NotificationModalProps {
     className?: string;
@@ -18,37 +13,11 @@ interface NotificationModalProps {
     onClose: () => void;
 }
 
-const NotificationModal: React.FC<NotificationModalProps> = ({ className, isOpen, onClose }) => {
-    const modalRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-                onClose();
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isOpen, onClose]);
-
-    const [open, setOpen] = React.useState(true);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
+const NotificationModal: React.FC<NotificationModalProps> = ({ className, isOpen }) => {
 
     return (
         <div style={{ display: isOpen ? 'block' : 'none' }}>
             <List
-                ref={modalRef}
                 className={className}
                 sx={{
                     width: '100%',
@@ -71,33 +40,34 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ className, isOpen
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <SendIcon />
+                        <FormatItalicRoundedIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Sent mail" />
+                    <ListItemText primary="Sueldos - 27/06/2024" />
                 </ListItemButton>
                 <ListItemButton>
                     <ListItemIcon>
-                        <DraftsIcon />
+                        <FontDownloadRoundedIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Drafts" />
+                    <ListItemText primary="Cruce AFIP - 27/06/2024" />
                 </ListItemButton>
-                <ListItemButton onClick={handleClick}>
+                <ListItemButton>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <FormatItalicRoundedIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Inbox" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
+                    <ListItemText primary="Bajas facturables - 26/06/2024" />
                 </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
-                            <ListItemText primary="Starred" />
-                        </ListItemButton>
-                    </List>
-                </Collapse>
+                <ListItemButton>
+                    <ListItemIcon>
+                        <FormatItalicRoundedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Sueldos - 26/06/2024" />
+                </ListItemButton>
+                <ListItemButton>
+                    <ListItemIcon>
+                        <FontDownloadRoundedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Cruce AFIP - 25/06/2024" />
+                </ListItemButton>
             </List>
         </div>
     );
