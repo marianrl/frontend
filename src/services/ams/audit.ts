@@ -5,6 +5,7 @@ export interface ApiResponse {
     // Define la estructura de la respuesta de la API si es necesario
     data: any;
     status: number;
+    auditId?: number;
 }
 
 const API_BASE_URL = 'http://localhost:8080/api/v1';
@@ -39,9 +40,12 @@ const auditService = {
                     'Content-Type': 'application/json'
                 }
             });
+            // Asegúrate de que la respuesta contiene el ID de la nueva auditoría
+            const auditId = response.data.id;
             return {
                 data: response.data,
                 status: response.status,
+                auditId: auditId // Incluye el ID en el objeto de retorno
             };
         } catch (error) {
             throw new Error('Error al crear nuevas auditorías');

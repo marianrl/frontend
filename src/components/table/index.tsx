@@ -10,6 +10,7 @@ import {IoMdAdd} from "react-icons/io";
 import AddModal from "../addmodal";
 
 interface Data {
+    id: number;
     auditNumber: number;
     auditDate: string;
     idTipoAuditoria: { auditType: string };
@@ -61,7 +62,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
     const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
 
     const addAudit = () => {
-        cambiarEstadoModal(true); // Abre el detailsmodal
+        cambiarEstadoModal(true); // Abre addmodal
     }
 
     const isAudited = (user: Data): boolean => {
@@ -74,6 +75,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
             <AddModal
                 estado={estadoModal}
                 cambiarEstadoModal={cambiarEstadoModal}
+                auditType={auditType}
             />
             <div className="row">
                 <div className="large-10 columns">
@@ -108,7 +110,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                         <th  className="second-child" onClick={() => handleSort('auditNumber')}>
                                             N° de Auditoria
                                             <span className="icon-right">
-                                                    {orderBy && orderBy.key === 'auditNumber' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
+                                                    {orderBy && orderBy.key === 'id' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
                                         <th  className="third-child" onClick={() => handleSort('idTipoAuditoria')}>
@@ -130,12 +132,12 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                     {paginatedData.map((user, index) => (
                                         <tr key={index}>
                                             <td>{user.auditDate}</td>
-                                            <td>{user.auditNumber}</td>
+                                            <td>{user.id}</td>
                                             <td>{user.idTipoAuditoria.auditType}</td>
                                             <td>{user.idAuditado.audited}</td>
                                             <td>
                                                 <div className="center">
-                                                    <Link to={`/${auditType}/${user.auditNumber}`}>
+                                                    <Link to={`/${auditType}/${user.id}`}>
                                                         <Button
                                                             type="button"
                                                             label={isAudited(user) ? "Auditado" : "Ver detalle"}
@@ -144,7 +146,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                                             {...(isAudited(user) && { borderColor: "2px solid #00004b" })}
                                                             hoverColor="#00004b"
                                                             hoverBorderColor="2px solid #00004b"
-                                                            onClick={() => handleClick(user.auditNumber)} />
+                                                            onClick={() => handleClick(user.id)} />
                                                     </Link>
                                                 </div>
                                             </td>

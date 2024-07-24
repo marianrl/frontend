@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './style.css'
-import {BiLogOut, BiMessageDetail} from "react-icons/bi";
+import {BiLogOut} from "react-icons/bi";
+import { CiSearch } from "react-icons/ci";
 import {AiOutlineAudit, AiOutlineHome} from "react-icons/ai";
 import {BsFileBarGraph} from "react-icons/bs";
 import {TbReportSearch} from "react-icons/tb";
@@ -60,8 +61,8 @@ const Navbar: React.FC = () => {
                     </li>
                     <li className="has-subnav">
                         <a href="/messages">
-                            <i className="fa fa-globe fa-2x"><BiMessageDetail/></i>
-                            <span className="nav-text">Mensajes</span>
+                            <i className="fa fa-globe fa-2x"><CiSearch /></i>
+                            <span className="nav-text">Busqueda</span>
                         </a>
                     </li>
                     <li className="has-subnav">

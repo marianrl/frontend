@@ -5,13 +5,16 @@ import AuditTypeDropdown from "../audittypedropdown";
 import {auditTypeService} from "../../services/ams/auditType";
 import {AuditType} from "../../types/auditType";
 import {auditService} from "../../services/ams/audit";
+import {useNavigate} from "react-router-dom";
 
 interface AddModelProps {
     estado: boolean;
     cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>;
+    auditType: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal }) => {
+const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal , auditType}) => {
+    const navigate = useNavigate();
     const [audits, setAudits] = useState<AuditType[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedOption, setSelectedOption] = useState<AuditType | null>(null);
@@ -34,8 +37,15 @@ const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal }) => {
     const handleButtonClick = async () => {
         if (selectedOption) {
             try{
-                await auditService.createAudit('audit', selectedOption.id);
-                window.location.reload();
+                const response = await auditService.createAudit('audit', selectedOption.id);
+                const auditId = response.auditId; // Obtén el ID de la respuesta
+                if(auditType === "commonAuditDetails") {
+                    navigate(`/commonAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
+                }
+                else {
+                    navigate(`/afipAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
+                }
+
             }
             catch(error) {
                 console.error('Error al obtener los AuditType:', error);
@@ -68,7 +78,10 @@ const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal }) => {
                                             <li>
                                                 <AuditTypeDropdown
                                                     onSelect={handleDropdownSelect}
-                                                    auditTypes={audits.filter(audit => audit.auditType !== "SIN RESPUESTA")}
+                                                    auditTypes={
+                                                    auditType === "commonAuditDetails" ?
+                                                        audits.filter(audit => audit.auditType !== "SIN RESPUESTA" && audit.auditType !== "CRUCE DE AFIP") :
+                                                        audits.filter(audit => audit.auditType === "CRUCE DE AFIP")}
                                                     maxLength={12} />
                                             </li>
                                         </div>

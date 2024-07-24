@@ -101,7 +101,6 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId })
                     if(auditType === "commonAuditDetails"){
                         await commonInputService.deleteCommonInput('commonInput', auditId)
                         await auditService.deleteAudit('audit', auditId);
-
                         navigate('/audit');
                     }
                     else {
