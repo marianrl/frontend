@@ -47,16 +47,16 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
         const aValue = orderBy.asc ? a[orderBy.key] : b[orderBy.key];
         const bValue = orderBy.asc ? b[orderBy.key] : a[orderBy.key];
 
-        if (orderBy.key === 'auditDate' || orderBy.key === 'auditNumber') {
-            // Si se está ordenando numéricamente (para auditNumber) o alfabéticamente (para auditDate)
-            return orderBy.key === 'auditNumber' ? (aValue as number) - (bValue as number) : (aValue as string).localeCompare(bValue as string);
+        if (orderBy.key === 'auditDate' || orderBy.key === 'id') { // Cambié 'auditNumber' por 'id'
+            // Si se está ordenando numéricamente (para id) o alfabéticamente (para auditDate)
+            return orderBy.key === 'id' ? (aValue as number) - (bValue as number) : (aValue as string).localeCompare(bValue as string);
         } else {
             // Si se está ordenando alfabéticamente, convertimos los valores a cadenas y utilizamos localeCompare
             const aValueAsString = orderBy.key === 'idTipoAuditoria' ? (aValue as { auditType: string }).auditType : (aValue as { id: number, audited: string }).audited;
             const bValueAsString = orderBy.key === 'idTipoAuditoria' ? (bValue as { auditType: string }).auditType : (bValue as { id: number, audited: string }).audited;
             return aValueAsString.localeCompare(bValueAsString);
         }
-    }) : data;
+    }) : [...data].sort((a, b) => b.id - a.id); // Ordena por 'id' de mayor a menor
 
     const totalPages = Math.ceil(sortedData.length / resultsPerPage);
     const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
@@ -107,7 +107,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                                     {orderBy && orderBy.key === 'auditDate' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                             </span>
                                         </th>
-                                        <th  className="second-child" onClick={() => handleSort('auditNumber')}>
+                                        <th  className="second-child" onClick={() => handleSort('id')}>
                                             N° de Auditoria
                                             <span className="icon-right">
                                                     {orderBy && orderBy.key === 'id' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
