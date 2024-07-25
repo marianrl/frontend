@@ -72,7 +72,7 @@ const CommonAuditDetail: React.FC = () => {
             ) : errorMessage ? (
                 <p>{errorMessage}</p>
             ) : (
-                <TableDetails data={data} auditType={"commonAuditDetails"} auditId={auditNumberValue}/>
+                <TableDetails data={data} CommonOrAfipAudit={"commonAuditDetails"} auditId={auditNumberValue}/>
             )}
         </div>
     );

@@ -34,11 +34,11 @@ type SelectedRowState = Data | null;
 
 interface TableDetailsProps {
     data: Data[];
-    auditType: "commonAuditDetails" | "afipAuditDetails";
+    CommonOrAfipAudit: "commonAuditDetails" | "afipAuditDetails";
     auditId: number;
 }
 
-const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId }) => {
+const TableDetails: React.FC<TableDetailsProps> = ({ data, CommonOrAfipAudit, auditId }) => {
 
     const navigate = useNavigate();
     const [estadoModal, cambiarEstadoModal] = useState(false);
@@ -54,7 +54,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId })
     };
 
     const handleBackButtonClick = () => {
-        if(auditType === "commonAuditDetails"){
+        if(CommonOrAfipAudit === "commonAuditDetails"){
             navigate('/audit');
         }
         else {
@@ -98,7 +98,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId })
         if (data !== null) {
             try {
                 if(data[0]){
-                    if(auditType === "commonAuditDetails"){
+                    if(CommonOrAfipAudit === "commonAuditDetails"){
                         await commonInputService.deleteCommonInput('commonInput', auditId)
                         await auditService.deleteAudit('audit', auditId);
                         navigate('/audit');
@@ -110,7 +110,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId })
                     }
                 }
                 else {
-                    if(auditType === "commonAuditDetails"){
+                    if(CommonOrAfipAudit === "commonAuditDetails"){
                         await auditService.deleteAudit('audit', auditId);
                         navigate('/audit');
                     }
@@ -135,7 +135,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId })
                  estado={estadoModal}
                  cambiarEstadoModal={cambiarEstadoModal}
                  data={selectedRow} // Pasa la información de la fila seleccionada al detailsmodal
-                 auditType={auditType}
+                 auditType={CommonOrAfipAudit}
              />
              {showDeleteConfirmationModal && <DeleteConfirmationModal
                  estado={showDeleteConfirmationModal}
@@ -150,7 +150,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, auditType, auditId })
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
                         <div className="container">
-                            <h2>Detalle de Auditoria - {data.length > 0 && data[0].audit.idTipoAuditoria.auditType} - {data.length > 0 && data[0].audit.auditDate}</h2>
+                            <h2>
+                                Detalle de Auditoria - {data.length > 0 ? data[0].audit.idTipoAuditoria.auditType : 'Nueva auditoria'} -
+                                {data.length > 0 ? data[0].audit.auditDate : ''}
+                            </h2>
                             <ul>
                                 <div>
                                     <li className="filaTable">
