@@ -8,7 +8,8 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import {IconContext} from "react-icons";
 import {FcCheckmark} from "react-icons/fc";
-import { RiFileExcel2Line } from "react-icons/ri";
+import { RiFileExcel2Line, RiDeleteBin6Fill } from "react-icons/ri";
+import { FaCheck } from "react-icons/fa6";
 import DeleteConfirmationModal from "../deleteconfirmationmodal";
 import {auditService} from "../../services/ams/audit";
 import {commonInputService} from "../../services/ams/commonInput";
@@ -159,6 +160,14 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, CommonOrAfipAudit, au
                                     <li className="filaTable">
                                         <Button
                                             type="button"
+                                            backgroundColor="#92a9fc"
+                                            hoverColor="#92a9fc"
+                                            hoverBorderColor="2px solid #92a9fc"
+                                            onClick={() => setShowDeleteConfirmationModal(true)}>
+                                            <FaCheck style={{marginRight: '10px'}}/> Aprobar
+                                        </Button>
+                                        <Button
+                                            type="button"
                                             backgroundColor="#004217"
                                             hoverColor="#004217"
                                             hoverBorderColor="2px solid #004217"
@@ -171,14 +180,15 @@ const TableDetails: React.FC<TableDetailsProps> = ({ data, CommonOrAfipAudit, au
                                             backgroundColor="#960909"
                                             hoverColor="#960909"
                                             hoverBorderColor="2px solid #960909"
-                                            onClick={() => setShowDeleteConfirmationModal(true)}
-                                        />
+                                            onClick={() => setShowDeleteConfirmationModal(true)}>
+                                            <RiDeleteBin6Fill style={{marginRight: '10px'}}/> Eliminar
+                                        </Button>
                                         <Button
                                             type="button"
                                             backgroundColor="#00004b"
                                             hoverColor="#00004b"
                                             hoverBorderColor="2px solid #00004b"
-                                            style={{ width: '70px' , marginLeft: '20px'}}
+                                            style={{ width: '70px' , marginLeft: '70px'}}
                                             onClick={() => handleBackButtonClick()}>
                                             <MdOutlineKeyboardBackspace />
                                         </Button>
