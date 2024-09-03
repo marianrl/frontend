@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import Grid from "../../components/grid";
 import NotificationModal from "../../components/notificationmodal";
+import Navbar from "../../components/navbar";
 
-const Messages: React.FC = () => {
+const Search: React.FC = () => {
     const navigate = useNavigate();
     const name = localStorage.getItem('name');
     const lastName = localStorage.getItem('lastName');
@@ -43,4 +43,4 @@ const Messages: React.FC = () => {
 }
 
 
-export default Messages;
+export default Search;

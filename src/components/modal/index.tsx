@@ -9,7 +9,7 @@ interface DetailsModelProps {
     cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal }) => {
+const Modal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal }) => {
 
     const { logout } = useSession();
     const navigate = useNavigate();
@@ -72,4 +72,4 @@ const DetailsModal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal 
     );
 }
 
-export default DetailsModal;
+export default Modal;

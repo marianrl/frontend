@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import Table from "../../components/table";
 import { useNavigate } from "react-router-dom";
 import { auditService } from "../../services/ams/audit";
 import Spinner from "../../components/Spinner";
 import NotificationModal from "../../components/notificationmodal";
+import Navbar from "../../components/navbar";
 
 interface TipoAuditoria {
     id: number;
@@ -68,7 +68,7 @@ const AuditAfip: React.FC = () => {
     }, []);
 
     const handleAuditClick = (auditNumber: number) => {
-        navigate(`/afipAuditDetails/${auditNumber}`);
+        navigate(`/audit/afipAuditDetails/${auditNumber}`);
     };
 
     const handleToggleNotificationModal = () => {
@@ -78,7 +78,7 @@ const AuditAfip: React.FC = () => {
     return (
         <div className="global-background-color">
             <header>
-                <Navbar />
+                <Navbar/>
                 <div>
                     <Header
                         name={name && lastName ? `${name} ${lastName}` : 'Guest'}
@@ -92,7 +92,7 @@ const AuditAfip: React.FC = () => {
             ) : errorMessage ? (
                 <p>{errorMessage}</p>
             ) : (
-                <Table data={data} onAuditClick={handleAuditClick} auditType="afipAuditDetails" />
+                <Table data={data} onAuditClick={handleAuditClick} auditType="auditafip" auditTypeDetails="afipAuditDetails"/>
             )}
         </div>
     );

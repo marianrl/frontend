@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './style.css'
 import {BiLogOut} from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
+import { RiAdminFill } from "react-icons/ri";
 import {AiOutlineAudit, AiOutlineHome} from "react-icons/ai";
 import {BsFileBarGraph} from "react-icons/bs";
 import {TbReportSearch} from "react-icons/tb";
@@ -26,7 +27,7 @@ const Navbar: React.FC = () => {
     };
 
     const handleClick = () => {
-        cambiarEstadoModal(true); // Abre el modal
+        cambiarEstadoModal(true);
     };
 
     return (
@@ -55,31 +56,31 @@ const Navbar: React.FC = () => {
                 <ul className="menu-block">
                     <li>
                         <a href="/dashboard" onClick={handleHome}>
-                            <i className="fa fa-home fa-2x"><AiOutlineHome/></i>
+                            <i className="fa fa-2x"><AiOutlineHome/></i>
                             <span className="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    <li className="has-subnav">
-                        <a href="/messages">
-                            <i className="fa fa-globe fa-2x"><CiSearch /></i>
+                    <li>
+                        <a href="/search">
+                            <i className="fa fa-2x"><CiSearch /></i>
                             <span className="nav-text">Busqueda</span>
                         </a>
                     </li>
-                    <li className="has-subnav">
+                    <li>
                         <a href="/auditafip" onClick={handleAuditAfip}>
-                            <i className="fa fa-comments fa-2x"><AiOutlineAudit/></i>
+                            <i className="fa fa-2x"><AiOutlineAudit/></i>
                             <span className="nav-text">Auditorias AFIP</span>
                         </a>
                     </li>
-                    <li className="has-subnav">
+                    <li>
                         <a href="/audit" onClick={handleAudit}>
-                            <i className="fa fa-camera-retro fa-2x"><BsFileBarGraph/></i>
+                            <i className="fa fa-2x"><BsFileBarGraph/></i>
                             <span className="nav-text">Auditorias Internas</span>
                         </a>
                     </li>
                     <li>
                         <a href="/reports">
-                            <i className="fa fa-film fa-2x"><TbReportSearch/></i>
+                            <i className="fa fa-2x"><TbReportSearch/></i>
                             <span className="nav-text">Reportes</span>
                         </a>
                     </li>
@@ -87,7 +88,13 @@ const Navbar: React.FC = () => {
                 <ul className="logout">
                     <li>
                         <a href="#" onClick={handleClick}>
-                            <i className="fa fa-power-off fa-2x"><BiLogOut/></i>
+                            <i className="fa fa-2x"><RiAdminFill /></i>
+                            <span className="nav-text">Admin</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onClick={handleClick}>
+                            <i className="fa fa-2x"><BiLogOut/></i>
                             <span className="nav-text">Cerrar sesión</span>
                         </a>
                     </li>

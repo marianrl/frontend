@@ -20,10 +20,11 @@ interface Data {
 interface TableProps {
     data: Data[];
     onAuditClick: (auditNumber: number) => void;
-    auditType: "commonAuditDetails" | "afipAuditDetails";
+    auditType: "audit" | "auditafip";
+    auditTypeDetails: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
+const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType, auditTypeDetails }) => {
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
     const [estadoModal, cambiarEstadoModal] = useState(false);
@@ -75,12 +76,12 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
             <AddModal
                 estado={estadoModal}
                 cambiarEstadoModal={cambiarEstadoModal}
-                auditType={auditType}
+                auditType={auditTypeDetails}
             />
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
-                        <h2>{auditType === 'commonAuditDetails' ? "Auditorias internas vigentes" : "Auditorias AFIP vigentes"}</h2>
+                        <h2>{auditTypeDetails === 'commonAuditDetails' ? "Auditorias internas vigentes" : "Auditorias AFIP vigentes"}</h2>
                         <div>
                             <Buttongroup>
                                 <div className="container">
@@ -137,7 +138,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType }) => {
                                             <td>{user.idAuditado.audited}</td>
                                             <td>
                                                 <div className="center">
-                                                    <Link to={`/${auditType}/${user.id}`}>
+                                                    <Link to={`/${auditType}/${auditTypeDetails}/${user.id}`}>
                                                         <Button
                                                             type="button"
                                                             label={isAudited(user) ? "Auditado" : "Ver detalle"}

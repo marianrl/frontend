@@ -40,10 +40,10 @@ const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal , auditT
                 const response = await auditService.createAudit('audit', selectedOption.id);
                 const auditId = response.auditId; // Obtén el ID de la respuesta
                 if(auditType === "commonAuditDetails") {
-                    navigate(`/commonAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
+                    navigate(`/audit/commonAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
                 }
                 else {
-                    navigate(`/afipAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
+                    navigate(`/auditafip/afipAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
                 }
 
             }

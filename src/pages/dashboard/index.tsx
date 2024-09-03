@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import SimpleLineGraph from "../../components/simplelinegraph";
 import Card from "../../components/card";
@@ -9,6 +8,7 @@ import SimpleBarGraph from "../../components/simplebargraph";
 import DoublePieGraph from "../../components/doublepiegraph";
 import SimplePieGraph from "../../components/simplepiegraph";
 import NotificationModal from "../../components/notificationmodal";
+import Navbar from "../../components/navbar";
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
@@ -30,7 +30,6 @@ const Dashboard: React.FC = () => {
     return (
         <div className="dashboard-background-color">
             <header>
-                <Navbar/>
                 <div>
                     <Header
                         name={name && lastName ? `${name} ${lastName}` : 'Guest'}
@@ -38,6 +37,7 @@ const Dashboard: React.FC = () => {
                     />
                 </div>
             </header>
+            <Navbar/>
             <NotificationModal className="notification-modal" isOpen={isNotificationModalOpen} onClose={() => setNotificationModalOpen(false)} />
             <h2 className="dashboard-title">Dashboard</h2>
             <div className="grid-container">

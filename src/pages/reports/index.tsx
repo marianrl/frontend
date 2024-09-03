@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import NotificationModal from "../../components/notificationmodal";
+import Navbar from "../../components/navbar";
 
 const Reports: React.FC = () => {
     const navigate = useNavigate();
