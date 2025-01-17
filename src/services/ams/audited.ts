@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from "../../config/axiosconfig";
 import {Audited} from "../../types/audited";
 
 export interface ApiResponse {
@@ -11,7 +11,7 @@ const API_BASE_URL = 'http://localhost:8080/api/v1';
 const auditedService = {
     async fetchAllAudited(endpoint: string): Promise<ApiResponse> {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${endpoint}`);
+            const response = await apiClient.get(`${API_BASE_URL}/${endpoint}`);
             return {
                 data: response.data,
                 status: response.status,
@@ -23,7 +23,7 @@ const auditedService = {
 
     async fetchAuditedById(endpoint: string, id: number): Promise<ApiResponse> {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${endpoint}/${id}`);
+            const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
                 data: response.data,
                 status: response.status,
@@ -35,7 +35,7 @@ const auditedService = {
 
     async createAudited(endpoint: string, audited : Audited): Promise<ApiResponse> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}` , audited);
+            const response = await apiClient.post(`${API_BASE_URL}/${endpoint}` , audited);
             return {
                 data: response.data,
                 status: response.status,
@@ -47,7 +47,7 @@ const auditedService = {
 
     async updateAudited(endpoint: string, id : number, audited : Audited): Promise<ApiResponse> {
         try {
-            const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, audited);
+            const response = await apiClient.put(`${API_BASE_URL}/${endpoint}/${id}`, audited);
             return {
                 data: response.data,
                 status: response.status,
@@ -60,7 +60,7 @@ const auditedService = {
 
     async deleteAudited(endpoint: string, id : number): Promise<ApiResponse> {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`);
+            const response = await apiClient.delete(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
                 data: response.data,
                 status: response.status,

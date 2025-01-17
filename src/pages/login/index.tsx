@@ -29,29 +29,45 @@ const Login: React.FC = () => {
         setPassword(event.target.value);
     };
 
-
-    const handleClick = () => {
-        const userRequest:UserRequest ={
-            mail: user,
-            password: password
+    const parseJwt = (token: string) => {
+        try {
+            return JSON.parse(atob(token.split('.')[1])); // Decodifica el payload
+        } catch (e) {
+            return null;
         }
+    };
 
-        userService.fetchUserByMailAndPassword("user/authenticate", userRequest)
-            .then((response) => {
-                if (response.status === 200) {
-                    setErrorMessage('');
-                    login(user, response.name, response.lastName);
-                    navigate('/dashboard');
-                } else if(response.status === 404){
-                    setUserData(null);
-                    setErrorMessage('Usuario o contraseña incorrecta');
+    const handleClick = async () => {
+        const userRequest: UserRequest = {
+            mail: user,
+            password: password,
+        };
+    
+        try {
+            const response = await userService.fetchUserByMailAndPassword("user/authenticate", userRequest);
+    
+            if (response.status === 200 && response.token) {
+                setErrorMessage('');
+    
+                // Guardar el token
+                localStorage.setItem('authToken', response.token);
+    
+                // Decodificar el token para obtener los datos del usuario
+                const decodedToken = parseJwt(response.token);
+                if (decodedToken) {
+                    login(user, decodedToken.name, decodedToken.lastName);
                 }
-            })
-            .catch(() => {
-                setUserData(null);
-                setErrorMessage('Error al procesar la solicitud');
-        });
-    }
+    
+                navigate('/dashboard');
+            } else {
+                setErrorMessage('Usuario o contraseña incorrecta');
+            }
+        } catch (error) {
+            console.log("Mensaje: " + error)
+            setUserData(null);
+            setErrorMessage('Error al procesar la solicitud');
+        }
+    };
 
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();

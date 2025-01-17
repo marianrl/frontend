@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from "../../config/axiosconfig";
 import { User } from "../../types/user";
 import { UserRequest } from "../../types/user_request";
 
@@ -14,7 +14,7 @@ const API_BASE_URL = 'http://localhost:8080/api/v1';
 const userService = {
     async fetchAllUser(endpoint: string): Promise<ApiResponse> {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${endpoint}`);
+            const response = await apiClient.get(`${API_BASE_URL}/${endpoint}`);
             return {
                 status: response.status,
                 name: response.data.name,
@@ -27,7 +27,7 @@ const userService = {
 
     async fetchUserById(endpoint: string, id: number): Promise<ApiResponse> {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${endpoint}/${id}`);
+            const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
                 status: response.status,
                 name: response.data.name,
@@ -38,22 +38,25 @@ const userService = {
         }
     },
 
-    async fetchUserByMailAndPassword(endpoint: string, userRequest: UserRequest): Promise<ApiResponse> {
+    async fetchUserByMailAndPassword(endpoint: string, userRequest: UserRequest): Promise<{ status: number; token: string }> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, userRequest);
+            const response = await apiClient.post(endpoint, userRequest);
             return {
                 status: response.status,
-                name: response.data.name,
-                lastName: response.data.lastName,
+                token: response.data.token, // Retornar el token generado por el backend
             };
-        } catch (error) {
+        } catch (error: any) {
+            if (error.response && error.response.status === 401) {
+                throw new Error('Usuario o contraseña incorrecta');
+            }
+            console.log("services error: " + error)
             throw new Error('Error al procesar la solicitud');
         }
     },
 
     async createUser(endpoint: string, user: User): Promise<ApiResponse> {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${endpoint}`, user);
+            const response = await apiClient.post(`${API_BASE_URL}/${endpoint}`, user);
             return {
                 status: response.status,
                 name: response.data.name,
@@ -66,7 +69,7 @@ const userService = {
 
     async updateUser(endpoint: string, id: number, user: User): Promise<ApiResponse> {
         try {
-            const response = await axios.put(`${API_BASE_URL}/${endpoint}/${id}`, user);
+            const response = await apiClient.put(`${API_BASE_URL}/${endpoint}/${id}`, user);
             return {
                 status: response.status,
                 name: response.data.name,
@@ -79,7 +82,7 @@ const userService = {
 
     async deleteUser(endpoint: string, id: number): Promise<ApiResponse> {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`);
+            const response = await apiClient.delete(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
                 status: response.status,
                 name: response.data.name,
