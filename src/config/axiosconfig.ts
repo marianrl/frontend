@@ -24,13 +24,23 @@ apiClient.interceptors.request.use(
 
 // Configura un interceptor para manejar errores de respuesta
 apiClient.interceptors.response.use(
-    (response) => response,
+    (response) => response, // Si la respuesta es exitosa, simplemente devuélvela
     (error) => {
-        if (error.response && error.response.status === 401) {
-            // Redirigir al login si el token es inválido o ha expirado
-            console.error('No autorizado, redirigiendo al login...');
-            localStorage.removeItem('authToken'); // Eliminar token si es inválido
-            window.location.href = '/login'; // Ajusta la ruta según tu app
+        if (error.response) {
+            const { status } = error.response;
+            if (status === 401) {
+                // Redirigir al login si el token es inválido o ha expirado
+                console.error('No autorizado, redirigiendo al login...');
+                localStorage.removeItem('authToken'); // Eliminar el token almacenado
+                window.location.href = '/login'; // Redirigir a la página de login
+            } else if (status === 403) {
+                // Opcional: manejar el caso en que el usuario no tenga permisos
+                console.error('Acceso denegado.');
+                window.location.href = '/login'; // Redirigir a la página de login
+            }
+        } else {
+            // Manejo de errores de red o configuración
+            console.error('Error de red o configuración:', error.message);
         }
         return Promise.reject(error);
     }
