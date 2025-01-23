@@ -44,29 +44,34 @@ const Login: React.FC = () => {
         };
     
         try {
-            const response = await userService.fetchUserByMailAndPassword("user/authenticate", userRequest);
-    
-            if (response.status === 200 && response.token) {
+            // Llamar a la función y solo verificar el estado
+            const status = await userService.fetchUserByMailAndPassword("user/authenticate", userRequest);
+        
+            if (status === 200) {
                 setErrorMessage('');
-    
-                // Guardar el token
-                localStorage.setItem('authToken', response.token);
-    
-                // Decodificar el token para obtener los datos del usuario
-                const decodedToken = parseJwt(response.token);
-                if (decodedToken) {
-                    login(user, decodedToken.name, decodedToken.lastName);
+        
+                // Leer el token almacenado en localStorage
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    // Decodificar el token para obtener los datos del usuario
+                    const decodedToken = parseJwt(token);
+                    if (decodedToken) {
+                        login(user, decodedToken.name, decodedToken.lastName);
+                    }
+        
+                    // Redirigir al dashboard
+                    navigate('/dashboard');
+                } else {
+                    setErrorMessage('Token no encontrado en localStorage.');
                 }
-    
-                navigate('/dashboard');
             } else {
                 setErrorMessage('Usuario o contraseña incorrecta');
             }
-        } catch (error) {
-            console.log("Mensaje: " + error)
+        } catch (error: any) {
+            console.error("Error en el login:", error.message);
             setUserData(null);
             setErrorMessage('Error al procesar la solicitud');
-        }
+        }        
     };
 
     const handleFormSubmit = (event: React.FormEvent) => {

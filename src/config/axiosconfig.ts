@@ -12,7 +12,8 @@ apiClient.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('authToken'); // Obtén el token almacenado
         if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+            config.headers['Authorization'] = token;
+            console.log('AXIOSCONFIG ' + config.headers['Authorization']);
         }
         return config;
     },

@@ -38,18 +38,23 @@ const userService = {
         }
     },
 
-    async fetchUserByMailAndPassword(endpoint: string, userRequest: UserRequest): Promise<{ status: number; token: string }> {
+    async fetchUserByMailAndPassword(endpoint: string, userRequest: UserRequest): Promise<number> {
         try {
             const response = await apiClient.post(endpoint, userRequest);
-            return {
-                status: response.status,
-                token: response.data.token, // Retornar el token generado por el backend
-            };
+    
+            // Almacenar el token en localStorage
+            const token = response.data.token;
+            if (token) {
+                localStorage.setItem('authToken', `Bearer ${token}`);
+                console.log('LOCAL STORAGE ' + localStorage.getItem('authToken'))
+            }
+    
+            return response.status; // Devuelve solo el estado, ya que el token ya se almacenó
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 throw new Error('Usuario o contraseña incorrecta');
             }
-            console.log("services error: " + error)
+            console.error("Error en fetchUserByMailAndPassword:", error);
             throw new Error('Error al procesar la solicitud');
         }
     },
