@@ -60,7 +60,7 @@ const data: DataItem[] = [
 
 const SimpleLineGraph: React.FC<SimpleLineGraphProps> = ({ width = "100%", height = "100%" }) => {
     return (
-        <ResponsiveContainer width={width} height={height} minHeight="150px">
+        <ResponsiveContainer width={width} height={height} minHeight="282px" minWidth="825px">
             <LineChart
                 width={500}
                 height={300}

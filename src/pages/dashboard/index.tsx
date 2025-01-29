@@ -5,19 +5,46 @@ import SimpleLineGraph from "../../components/simplelinegraph";
 import Card from "../../components/card";
 import './style.css';
 import SimpleBarGraph from "../../components/simplebargraph";
-import DoublePieGraph from "../../components/doublepiegraph";
 import SimplePieGraph from "../../components/simplepiegraph";
 import NotificationModal from "../../components/notificationmodal";
 import Navbar from "../../components/navbar";
+import CustomizedTable from '../../components/dashboardtable';
+import { auditService } from '../../services/ams/audit';
+import { Audit } from '../../types/audit';
+import { GoDotFill } from "react-icons/go";
+import Spinner from '../../components/Spinner';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
+    const [audits, setAudits] = useState<Audit[]>([]);  // Estado para los últimos 5 audits
+    const [isLoading, setIsLoading] = useState(true); // Estado de carga
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
             navigate("/login");
         }
+
+        const fetchLast5Audits = async () => {
+            try {
+                setIsLoading(true);
+                const response = await auditService.fetchAllAudit('audit');
+                const allAudit = response.data;
+
+                // Ordena por auditDate de forma descendente (más reciente primero)
+                const sortedAudits = allAudit.sort((a: Audit, b: Audit) => {
+                    return new Date(b.auditDate).getTime() - new Date(a.auditDate).getTime();
+                });
+
+                // Devuelve los 5 más recientes
+                setAudits(sortedAudits.slice(0, 5));
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Error al obtener las auditorías:', error);
+            }
+        };
+
+        fetchLast5Audits();
     }, [navigate]);
 
     const name = localStorage.getItem('name');
@@ -28,7 +55,7 @@ const Dashboard: React.FC = () => {
     };
 
     return (
-        <div className="dashboard-background-color">
+        <div className="global-background-color">
             <header>
                 <div>
                     <Header
@@ -40,41 +67,57 @@ const Dashboard: React.FC = () => {
             <Navbar/>
             <NotificationModal className="notification-modal" isOpen={isNotificationModalOpen} onClose={() => setNotificationModalOpen(false)} />
             <h2 className="dashboard-title">Dashboard</h2>
-            <div className="grid-container">
-                <div className="grid-item-right">
-                    <Card>
-                        <h2>Titulo</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        <SimpleLineGraph width={826} height={250}/>
-                    </Card>
-                </div>
-                <div className="grid-item-left">
-                    <Card>
-                        <h2>Titulo</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        <SimpleLineGraph width={700} height={250}/>
-                    </Card>
-                </div>
-                <div className="grid-item-right">
-                    <div style={{display: "flex", gap: "30px"}}>
+            {isLoading ? ( <Spinner />
+            ) : (<div className="grid-container">
+                    <div className="grid-item-right">
                         <Card>
-                            <h2>Titulo</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                            <SimplePieGraph width={300} height={300} radius={120}/>
+                            <h2>Auditorias Mensuales</h2>
+                            <p>Cantidad de auditorias creadas en el ultimo mes</p>
+                            <SimpleLineGraph/>
                         </Card>
+                    </div>
+                    <div className="grid-item-left">
                         <Card>
-                            <h2>Titulo</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                            <DoublePieGraph width={300} height={300} outerRadius={100} innerRadius={80}/>
+                            <h2>Últimas Auditorías</h2>
+                            <CustomizedTable rows={audits} />  {/* Aquí pasamos los 5 audits */}
+                        </Card>
+                    </div>
+                    <div className="grid-item-right">
+                        <div style={{display: "flex", gap: "30px", minHeight: "435px", width:"849px"}}>
+                            <Card>
+                                <div style={{width: "400px"}}>
+                                    <h2>Auditorias internas</h2>
+                                    <div style={{display: "flex", gap: "10px"}}>
+                                        <GoDotFill color="#0088FE" size="20px"/> Auditadas
+                                        <GoDotFill color="#FF8042" size="20px"/>Sin Auditar
+                                    </div>
+                                    <div style={{ display: "flex", justifyContent: "center" }}>
+                                        <SimplePieGraph width={300} height={300} radius={120}/>
+                                    </div>
+                                </div>
+                            </Card>
+                            <Card>
+                                <div style={{width: "400px"}}>
+                                    <h2>Auditorias de AFIP</h2>
+                                    <div style={{display: "flex", gap: "10px"}}>
+                                        <GoDotFill color="#0088FE" size="20px"/> Auditadas
+                                        <GoDotFill color="#FF8042" size="20px"/>Sin Auditar
+                                    </div>
+                                    <div style={{ display: "flex", justifyContent: "center" }}>
+                                        <SimplePieGraph width={300} height={300} radius={120}/>
+                                    </div>
+                                </div>
+                            </Card>
+                        </div>
+                    </div>
+                    <div className="grid-item-left">
+                        <Card>
+                            <h2>Volumen de auditorias</h2>
+                            <SimpleBarGraph width={700} height={340}/>
                         </Card>
                     </div>
                 </div>
-                <div className="grid-item-left">
-                    <Card>
-                        <SimpleBarGraph width={700} height={410}/>
-                    </Card>
-                </div>
-            </div>
+            )}
         </div>
     );
 }
