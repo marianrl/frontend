@@ -1,84 +1,106 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState } from 'react';
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+import { auditService } from '../../services/ams/audit';
+
+interface Audit {
+    id: number;
+    fecha: string; // Fecha en formato ISO
+    idTipoAuditoria: {
+        id: number;
+    };
+}
 
 interface DataItem {
-    name: string;
-    uv: number;
-    pv: number;
-    amt: number;
+    month: string;
+    Internas: number;
+    Afip: number;
 }
 
-interface SimpleLineGraphProps {
-    width?: string | number;
-    height?: string | number;
-}
-
-const data: DataItem[] = [
-    {
-        name: 'Page A',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Page C',
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Page D',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Page E',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Page F',
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Page G',
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-    },
+const MonthsEnum = [
+    'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
+    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
 ];
 
-const SimpleLineGraph: React.FC<SimpleLineGraphProps> = ({ width = "100%", height = "100%" }) => {
+const getLast12Months = () => {
+    const currentDate = new Date(); // Ultima fecha conocida
+    const months = [];
+
+    for (let i = 11; i >= 0; i--) {
+        const date = new Date(currentDate);
+        date.setMonth(date.getMonth() - i);
+        months.push({
+            key: `${date.getFullYear()}-${date.getMonth() + 1}`,
+            month: MonthsEnum[date.getMonth()]
+        });
+    }
+
+    return months;
+};
+
+const SimpleLineGraph: React.FC = () => {
+    const [data, setData] = useState<DataItem[]>([]);
+
+    useEffect(() => {
+        const fetchAudits = async () => {
+            try {
+                const response = await auditService.fetchAllAudit('audit');
+                processData(response.data);
+            } catch (error) {
+                console.error('Error al obtener las Auditorias', error);
+            }
+        };
+
+        fetchAudits();
+    }, []);
+
+    const processData = (audits: Audit[]) => {
+        const last12Months = getLast12Months();
+        const dataMap = new Map<string, { Internas: number; Afip: number }>();
+
+        last12Months.forEach(({ key, month }) => {
+            dataMap.set(key, { Internas: 0, Afip: 0 });
+        });
+
+        audits.forEach(audit => {
+            const date = new Date(audit.fecha);
+            const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
+
+            if (dataMap.has(key)) {
+                const current = dataMap.get(key)!;
+                if (audit.idTipoAuditoria.id === 9) {
+                    current.Afip++;
+                } else {
+                    current.Internas++;
+                }
+                dataMap.set(key, current);
+            }
+        });
+
+        const processedData = last12Months.map(({ key, month }) => ({
+            month,
+            Internas: dataMap.get(key)?.Internas || 0,
+            Afip: dataMap.get(key)?.Afip || 0,
+        }));
+
+        setData(processedData);
+        console.log("CONSOLE LOG  " + data);
+    };
+
     return (
-        <ResponsiveContainer width={width} height={height} minHeight="282px" minWidth="825px">
+        <ResponsiveContainer width="100%" height="100%" minHeight="282px" minWidth="825px">
             <LineChart
-                width={500}
-                height={300}
                 data={data}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="month" />
+                <YAxis allowDecimals={false} />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="Afip" stroke="#8884d8" />
+                <Line type="monotone" dataKey="Internas" stroke="#82ca9d" />
             </LineChart>
         </ResponsiveContainer>
     );

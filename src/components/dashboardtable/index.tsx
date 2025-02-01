@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-import { Audit } from '../../types/audit'; // Importamos la interfaz Audit
+import { Audit } from '../../types/audit'; 
 
 interface CustomizedTableProps {
     rows: Audit[];

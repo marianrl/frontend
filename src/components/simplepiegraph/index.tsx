@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
-
-interface DataItem {
-    name: string;
-    value: number;
-}
+import { auditService } from '../../services/ams/audit';
+import { Audit } from '../../types/audit';
 
 interface SimplePieGraphProps {
     width: number;
     height: number;
     radius: number;
+    type: 'comunes' | 'afip';
 }
 
 interface CustomizedLabelProps {
@@ -21,14 +19,7 @@ interface CustomizedLabelProps {
     percent: number;
 }
 
-const data: DataItem[] = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-];
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#00C49F', '#0088FE'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: CustomizedLabelProps) => {
@@ -43,7 +34,34 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 
-const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ width, height, radius }) => {
+const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ width, height, radius, type }) => {
+    const [audits, setAudits] = useState<Audit[]>([]);
+
+    useEffect(() => {
+        const fetchAudits = async () => {
+            try {
+                const response = await auditService.fetchAllAudit('audit');
+                setAudits(response.data);
+            } catch (error) {
+                console.error('Error al obtener las Auditorias', error);
+            }
+        };
+
+        fetchAudits();
+    }, []);
+
+    const filteredAudits = audits.filter(audit =>
+        type === 'afip' ? audit.idTipoAuditoria.id === 9 : audit.idTipoAuditoria.id !== 9
+    );
+
+    const auditedCount = filteredAudits.filter(audit => audit.idAuditado.audited === 'Si').length;
+    const nonAuditedCount = filteredAudits.filter(audit => audit.idAuditado.audited === 'No').length;
+
+    const data = [
+        { name: 'Auditados', value: auditedCount },
+        { name: 'No Auditados', value: nonAuditedCount }
+    ];
+
     return (
         <ResponsiveContainer width={width} height={height}>
             <PieChart width={width} height={height}>
@@ -64,6 +82,6 @@ const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ width, height, radius }
             </PieChart>
         </ResponsiveContainer>
     );
-}
+};
 
 export default SimplePieGraph;

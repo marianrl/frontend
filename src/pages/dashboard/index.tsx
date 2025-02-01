@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
                     <div className="grid-item-right">
                         <Card>
                             <h2>Auditorias Mensuales</h2>
-                            <p>Cantidad de auditorias creadas en el ultimo mes</p>
+                            <p>Cantidad de auditorias creadas en el ultimo año</p>
                             <SimpleLineGraph/>
                         </Card>
                     </div>
@@ -88,11 +88,11 @@ const Dashboard: React.FC = () => {
                                 <div style={{width: "400px"}}>
                                     <h2>Auditorias internas</h2>
                                     <div style={{display: "flex", gap: "10px"}}>
-                                        <GoDotFill color="#0088FE" size="20px"/> Auditadas
-                                        <GoDotFill color="#FF8042" size="20px"/>Sin Auditar
+                                        <GoDotFill color="#00C49F" size="20px"/> Auditadas
+                                        <GoDotFill color="#0088FE" size="20px"/>Sin Auditar 
                                     </div>
                                     <div style={{ display: "flex", justifyContent: "center" }}>
-                                        <SimplePieGraph width={300} height={300} radius={120}/>
+                                        <SimplePieGraph width={300} height={300} radius={120} type='comunes'/>
                                     </div>
                                 </div>
                             </Card>
@@ -100,11 +100,11 @@ const Dashboard: React.FC = () => {
                                 <div style={{width: "400px"}}>
                                     <h2>Auditorias de AFIP</h2>
                                     <div style={{display: "flex", gap: "10px"}}>
-                                        <GoDotFill color="#0088FE" size="20px"/> Auditadas
-                                        <GoDotFill color="#FF8042" size="20px"/>Sin Auditar
+                                        <GoDotFill color="#00C49F" size="20px"/> Auditadas
+                                        <GoDotFill color="#0088FE" size="20px"/>Sin Auditar
                                     </div>
                                     <div style={{ display: "flex", justifyContent: "center" }}>
-                                        <SimplePieGraph width={300} height={300} radius={120}/>
+                                        <SimplePieGraph width={300} height={300} radius={120} type='afip'/>
                                     </div>
                                 </div>
                             </Card>
