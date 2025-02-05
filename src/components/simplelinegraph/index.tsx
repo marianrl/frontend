@@ -3,14 +3,7 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import { auditService } from '../../services/ams/audit';
-
-interface Audit {
-    id: number;
-    fecha: string; // Fecha en formato ISO
-    idTipoAuditoria: {
-        id: number;
-    };
-}
+import { Audit } from '../../types/audit'
 
 interface DataItem {
     month: string;
@@ -31,7 +24,7 @@ const getLast12Months = () => {
         const date = new Date(currentDate);
         date.setMonth(date.getMonth() - i);
         months.push({
-            key: `${date.getFullYear()}-${date.getMonth() + 1}`,
+            key: `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`,
             month: MonthsEnum[date.getMonth()]
         });
     }
@@ -56,18 +49,25 @@ const SimpleLineGraph: React.FC = () => {
     }, []);
 
     const processData = (audits: Audit[]) => {
+        console.log("Auditorías recibidas:", audits);
+    
         const last12Months = getLast12Months();
         const dataMap = new Map<string, { Internas: number; Afip: number }>();
-
-        last12Months.forEach(({ key, month }) => {
+    
+        last12Months.forEach(({ key }) => {
             dataMap.set(key, { Internas: 0, Afip: 0 });
         });
+    
+        console.log("Claves generadas por getLast12Months:", Array.from(dataMap.keys()));
 
         audits.forEach(audit => {
-            const date = new Date(audit.fecha);
-            const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
+            const date = new Date(audit.auditDate);
+            const key = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+
+            console.log(`Clave del audit: ${key}, Fecha: ${audit.auditDate}`);
 
             if (dataMap.has(key)) {
+                console.log(`Match encontrado para la clave: ${key}`);
                 const current = dataMap.get(key)!;
                 if (audit.idTipoAuditoria.id === 9) {
                     current.Afip++;
@@ -77,16 +77,17 @@ const SimpleLineGraph: React.FC = () => {
                 dataMap.set(key, current);
             }
         });
-
+    
         const processedData = last12Months.map(({ key, month }) => ({
             month,
             Internas: dataMap.get(key)?.Internas || 0,
             Afip: dataMap.get(key)?.Afip || 0,
         }));
-
+    
         setData(processedData);
-        console.log("CONSOLE LOG  " + data);
+        console.log("CONSOLE LOG", processedData);
     };
+    
 
     return (
         <ResponsiveContainer width="100%" height="100%" minHeight="282px" minWidth="825px">
