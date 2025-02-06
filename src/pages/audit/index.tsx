@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Header from "../../components/header";
+import Header from "../../components/general/header";
 import Table from "../../components/table";
 import { useNavigate } from "react-router-dom";
 import { auditService } from "../../services/ams/audit";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/general/Spinner";
 import NotificationModal from "../../components/notificationmodal";
 import Navbar from "../../components/navbar";
 

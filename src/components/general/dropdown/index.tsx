@@ -2,7 +2,7 @@ import React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Answer } from "../../types/answer";
+import { Answer } from "../../../types/answer";
 
 interface DropdownProps {
     onSelect: (value: Answer) => void;

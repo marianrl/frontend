@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/header";
-import Grid from "../../components/grid";
+import Header from "../../components/general/header";
+import Grid from "../../components/general/grid";
 import NotificationModal from "../../components/notificationmodal";
 import Navbar from "../../components/navbar";
 

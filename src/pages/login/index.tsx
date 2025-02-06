@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Logo from "../../img/Logo.png";
-import Button from "../../components/button";
+import Button from "../../components/general/button";
 import InputWrapper from "../../components/inputfield";
 import {userService, ApiResponse} from "../../services/ams/user";
 import {UserRequest} from "../../types/user_request";

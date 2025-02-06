@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
-import { auditService } from '../../services/ams/audit';
-import { Audit } from '../../types/audit'
+import { auditService } from '../../../services/ams/audit';
+import { Audit } from '../../../types/audit'
 
 interface DataItem {
     month: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import Button from "../button";
+import Button from "../general/button";
 import {useSession} from "../sessionprovider";
 import {useNavigate} from "react-router-dom";
 

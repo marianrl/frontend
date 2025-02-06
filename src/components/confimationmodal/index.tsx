@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import Button from "../button";
+import Button from "../general/button";
 import {Answer} from "../../types/answer";
 
 interface ConfirmationModelProps {

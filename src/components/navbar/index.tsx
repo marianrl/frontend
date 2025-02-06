@@ -9,7 +9,7 @@ import {TbReportSearch} from "react-icons/tb";
 import {useNavigate} from "react-router-dom";
 import Logo from "../../img/Logo_izquierda.png";
 import Nombre from "../../img/Logo_derecha.png";
-import Buttongroup from "../buttongroup";
+import Buttongroup from "../general/buttongroup";
 import Modal from "../modal";
 
 const Navbar: React.FC = () => {

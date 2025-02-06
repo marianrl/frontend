@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Button from "../button";
-import Buttongroup from "../buttongroup";
+import Button from "../general/button";
+import Buttongroup from "../general/buttongroup";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import Pagination from '@mui/material/Pagination';

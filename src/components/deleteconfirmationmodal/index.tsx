@@ -1,7 +1,7 @@
 // ConfirmationModal.js
 import React from 'react';
 import './style.scss';
-import Button from "../button";
+import Button from "../general/button";
 
 interface DeleteConfirmationModelProps {
     estado: boolean;

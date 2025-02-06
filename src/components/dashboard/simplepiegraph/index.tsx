@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
-import { auditService } from '../../services/ams/audit';
-import { Audit } from '../../types/audit';
+import { auditService } from '../../../services/ams/audit';
+import { Audit } from '../../../types/audit';
 
 interface SimplePieGraphProps {
     type: 'comunes' | 'afip';

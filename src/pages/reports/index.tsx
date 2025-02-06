@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/header";
+import Header from "../../components/general/header";
 import NotificationModal from "../../components/notificationmodal";
 import Navbar from "../../components/navbar";
 

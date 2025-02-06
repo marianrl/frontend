@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { RxCross2 } from 'react-icons/rx';
-import Dropdown from "../dropdown";
-import Button from "../button";
+import Dropdown from "../../components/general/dropdown";
+import Button from "../general/button";
 import { answerService } from "../../services/ams/answer";
 import { Answer } from "../../types/answer";
 import ConfirmationModal from "../confimationmodal";

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/header";
-import SimpleLineGraph from "../../components/simplelinegraph";
-import Card from "../../components/card";
+import Header from "../../components/general/header";
+import SimpleLineGraph from "../../components/dashboard/simplelinegraph";
+import Card from "../../components/general/card";
 import './style.css';
-import SimpleBarGraph from "../../components/simplebargraph";
-import SimplePieGraph from "../../components/simplepiegraph";
+import SimpleBarGraph from "../../components/dashboard/simplebargraph";
+import SimplePieGraph from "../../components/dashboard/simplepiegraph";
 import NotificationModal from "../../components/notificationmodal";
 import Navbar from "../../components/navbar";
-import CustomizedTable from '../../components/dashboardtable';
+import CustomizedTable from '../../components/dashboard/dashboardtable';
 import { auditService } from '../../services/ams/audit';
 import { Audit } from '../../types/audit';
 import { GoDotFill } from "react-icons/go";
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/general/Spinner';
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();

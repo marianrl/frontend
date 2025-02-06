@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
-import EyeIcon from "../icons/eyeicon";
+import EyeIcon from "../general/icons/eyeicon";
 import './style.css'
 
 interface TextBoxProps {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Button from "../button";
+import Button from "../general/button";
 import DetailsModal from "../detailsmodal";
 import {MdOutlineArrowDropDown, MdOutlineArrowDropUp, MdOutlineKeyboardBackspace} from "react-icons/md";
 import {useNavigate} from "react-router-dom";

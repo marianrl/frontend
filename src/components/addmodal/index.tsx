@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './style.scss';
-import Button from "../button";
+import Button from "../general/button";
 import AuditTypeDropdown from "../audittypedropdown";
 import {auditTypeService} from "../../services/ams/auditType";
 import {AuditType} from "../../types/auditType";
