@@ -30,6 +30,10 @@ const Navbar: React.FC = () => {
         cambiarEstadoModal(true);
     };
 
+    const handleAdminClick = () => {
+        
+    };
+
     return (
         <div>
             <Modal
@@ -87,7 +91,7 @@ const Navbar: React.FC = () => {
                 </ul>
                 <ul className="logout">
                     <li>
-                        <a href="#" onClick={handleClick}>
+                        <a href="/admin" onClick={handleAdminClick}>
                             <i className="fa fa-2x"><RiAdminFill /></i>
                             <span className="nav-text">Admin</span>
                         </a>

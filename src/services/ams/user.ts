@@ -5,6 +5,7 @@ import { UserRequest } from "../../types/user_request";
 export interface ApiResponse {
     // Define la estructura de la respuesta de la API si es necesario
     status: number;
+    data: User[];
     name: string;
     lastName: string;
 }
@@ -16,6 +17,7 @@ const userService = {
         try {
             const response = await apiClient.get(`${API_BASE_URL}/${endpoint}`);
             return {
+                data: response.data,
                 status: response.status,
                 name: response.data.name,
                 lastName: response.data.lastName
@@ -29,6 +31,7 @@ const userService = {
         try {
             const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
+                data: response.data,
                 status: response.status,
                 name: response.data.name,
                 lastName: response.data.lastName
@@ -63,6 +66,7 @@ const userService = {
         try {
             const response = await apiClient.post(`${API_BASE_URL}/${endpoint}`, user);
             return {
+                data: response.data,
                 status: response.status,
                 name: response.data.name,
                 lastName: response.data.lastName
@@ -76,6 +80,7 @@ const userService = {
         try {
             const response = await apiClient.put(`${API_BASE_URL}/${endpoint}/${id}`, user);
             return {
+                data: response.data,
                 status: response.status,
                 name: response.data.name,
                 lastName: response.data.lastName
@@ -89,6 +94,7 @@ const userService = {
         try {
             const response = await apiClient.delete(`${API_BASE_URL}/${endpoint}/${id}`);
             return {
+                data: response.data,
                 status: response.status,
                 name: response.data.name,
                 lastName: response.data.lastName

@@ -28,7 +28,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType, auditTypeD
     const [orderBy, setOrderBy] = useState<{ key: keyof Data, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
     const [estadoModal, cambiarEstadoModal] = useState(false);
-    const resultsPerPage = 10; //Cantidad
+    const resultsPerPage = 10;
 
     const handleClick = (auditNumber: number) => {
         onAuditClick(auditNumber);
@@ -48,7 +48,7 @@ const Table: React.FC<TableProps> = ({ data, onAuditClick, auditType, auditTypeD
         const aValue = orderBy.asc ? a[orderBy.key] : b[orderBy.key];
         const bValue = orderBy.asc ? b[orderBy.key] : a[orderBy.key];
 
-        if (orderBy.key === 'auditDate' || orderBy.key === 'id') { // Cambié 'auditNumber' por 'id'
+        if (orderBy.key === 'auditDate' || orderBy.key === 'id') {
             // Si se está ordenando numéricamente (para id) o alfabéticamente (para auditDate)
             return orderBy.key === 'id' ? (aValue as number) - (bValue as number) : (aValue as string).localeCompare(bValue as string);
         } else {
