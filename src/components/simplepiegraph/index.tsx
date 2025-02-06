@@ -4,9 +4,6 @@ import { auditService } from '../../services/ams/audit';
 import { Audit } from '../../types/audit';
 
 interface SimplePieGraphProps {
-    width: number;
-    height: number;
-    radius: number;
     type: 'comunes' | 'afip';
 }
 
@@ -34,7 +31,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 
-const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ width, height, radius, type }) => {
+const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ type }) => {
     const [audits, setAudits] = useState<Audit[]>([]);
 
     useEffect(() => {
@@ -63,15 +60,15 @@ const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ width, height, radius, 
     ];
 
     return (
-        <ResponsiveContainer width={width} height={height}>
-            <PieChart width={width} height={height}>
+        <ResponsiveContainer>
+            <PieChart>
                 <Pie
                     data={data}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
                     label={renderCustomizedLabel}
-                    outerRadius={radius}
+                    outerRadius={120}
                     fill="#8884d8"
                     dataKey="value"
                 >

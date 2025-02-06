@@ -8,7 +8,7 @@ import { Audit } from '../../types/audit'
 interface DataItem {
     month: string;
     Internas: number;
-    Afip: number;
+    AFIP: number;
 }
 
 const MonthsEnum = [
@@ -49,28 +49,22 @@ const SimpleLineGraph: React.FC = () => {
     }, []);
 
     const processData = (audits: Audit[]) => {
-        console.log("Auditorías recibidas:", audits);
     
         const last12Months = getLast12Months();
-        const dataMap = new Map<string, { Internas: number; Afip: number }>();
+        const dataMap = new Map<string, { Internas: number; AFIP: number }>();
     
         last12Months.forEach(({ key }) => {
-            dataMap.set(key, { Internas: 0, Afip: 0 });
+            dataMap.set(key, { Internas: 0, AFIP: 0 });
         });
-    
-        console.log("Claves generadas por getLast12Months:", Array.from(dataMap.keys()));
 
         audits.forEach(audit => {
             const date = new Date(audit.auditDate);
             const key = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
 
-            console.log(`Clave del audit: ${key}, Fecha: ${audit.auditDate}`);
-
             if (dataMap.has(key)) {
-                console.log(`Match encontrado para la clave: ${key}`);
                 const current = dataMap.get(key)!;
                 if (audit.idTipoAuditoria.id === 9) {
-                    current.Afip++;
+                    current.AFIP++;
                 } else {
                     current.Internas++;
                 }
@@ -81,11 +75,10 @@ const SimpleLineGraph: React.FC = () => {
         const processedData = last12Months.map(({ key, month }) => ({
             month,
             Internas: dataMap.get(key)?.Internas || 0,
-            Afip: dataMap.get(key)?.Afip || 0,
+            AFIP: dataMap.get(key)?.AFIP || 0,
         }));
     
         setData(processedData);
-        console.log("CONSOLE LOG", processedData);
     };
     
 
@@ -100,7 +93,7 @@ const SimpleLineGraph: React.FC = () => {
                 <YAxis allowDecimals={false} />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Afip" stroke="#8884d8" />
+                <Line type="monotone" dataKey="AFIP" stroke="#8884d8" />
                 <Line type="monotone" dataKey="Internas" stroke="#82ca9d" />
             </LineChart>
         </ResponsiveContainer>

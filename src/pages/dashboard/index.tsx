@@ -79,7 +79,7 @@ const Dashboard: React.FC = () => {
                     <div className="grid-item-left">
                         <Card>
                             <h2>Últimas Auditorías</h2>
-                            <CustomizedTable rows={audits} />  {/* Aquí pasamos los 5 audits */}
+                            <CustomizedTable rows={audits} />
                         </Card>
                     </div>
                     <div className="grid-item-right">
@@ -92,7 +92,9 @@ const Dashboard: React.FC = () => {
                                         <GoDotFill color="#0088FE" size="20px"/>Sin Auditar 
                                     </div>
                                     <div style={{ display: "flex", justifyContent: "center" }}>
-                                        <SimplePieGraph width={300} height={300} radius={120} type='comunes'/>
+                                        <div style={{width: "300px", height: "300px"}}>
+                                            <SimplePieGraph type='comunes'/>
+                                        </div>
                                     </div>
                                 </div>
                             </Card>
@@ -104,7 +106,9 @@ const Dashboard: React.FC = () => {
                                         <GoDotFill color="#0088FE" size="20px"/>Sin Auditar
                                     </div>
                                     <div style={{ display: "flex", justifyContent: "center" }}>
-                                        <SimplePieGraph width={300} height={300} radius={120} type='afip'/>
+                                        <div style={{width: "300px", height: "300px"}}>
+                                            <SimplePieGraph type='afip'/>
+                                        </div>
                                     </div>
                                 </div>
                             </Card>
@@ -112,8 +116,12 @@ const Dashboard: React.FC = () => {
                     </div>
                     <div className="grid-item-left">
                         <Card>
-                            <h2>Volumen de auditorias</h2>
-                            <SimpleBarGraph width={700} height={340}/>
+                            <div style={{width: "700px", height: "392px"}}>
+                                <h2>Volumen anual de auditorias</h2>
+                                <div style={{width: "660px", height: "330px"}}>
+                                    <SimpleBarGraph/>
+                                </div>
+                            </div>
                         </Card>
                     </div>
                 </div>
