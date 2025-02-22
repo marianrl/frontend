@@ -1,32 +1,25 @@
-// ConfirmationModal.js
 import React from 'react';
-import './style.scss';
 import Button from "../general/button";
 
-interface DeleteConfirmationModalProps {
+interface DeleteUserModalProps {
     estado: boolean;
-    cambiarEstadoDeleteConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
-    handleModalClose: React.Dispatch<React.SetStateAction<boolean>>;
+    cambiarEstadoDeleteUserModal: React.Dispatch<React.SetStateAction<boolean>>;
+    handleDeleteModalClose: React.Dispatch<React.SetStateAction<boolean>>;
     handleDeleteConfirmationButtonClick: () => void;
-    auditType: string | null;
-    auditDate: string | null;
+    name: string;
+    surname: string;
 }
 
-const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
+const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
          estado,
-         cambiarEstadoDeleteConfirmationModal,
-         handleModalClose,
+         cambiarEstadoDeleteUserModal,
          handleDeleteConfirmationButtonClick,
-         auditType,
-         auditDate}) => {
+         name,
+         surname}) => {
 
-    const handleDeleteConfirmationModalClose = () => {
-        cambiarEstadoDeleteConfirmationModal(false);
+    const handleDeleteUserModalClose = () => {
+        cambiarEstadoDeleteUserModal(false);
     };
-
-    const handleDetailsModalClose = () => {
-        handleModalClose(false);
-    }
 
     return (
         <>
@@ -34,9 +27,9 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
                 <div className="Overlay">
                     <div className="ConfirmationModalContainer">
                         <div className="ConfirmationContenidoModal">
-                            <h1 className="ConfirmationTituloModalCerrar">Se eliminara la siguiente auditoria: </h1>
+                            <h1 className="ConfirmationTituloModalCerrar">Se eliminara el siguiente usuario: </h1>
                             <p className="Centrar">
-                                {auditType} - {auditDate}
+                            {surname}, {name} 
                             </p>
                             <p className="Disclosure">
                                 <strong>(Tenga en cuenta que esta accion no puede ser revertida)</strong>
@@ -52,8 +45,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
                                             hoverBorderColor="2px solid #fc5151"
                                             onClick={() => {
                                                 handleDeleteConfirmationButtonClick();
-                                                handleDeleteConfirmationModalClose();
-                                                handleDetailsModalClose();
+                                                handleDeleteUserModalClose();
                                             }}
                                         />
                                     </li>
@@ -68,7 +60,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
                                                 hoverColor="#ffffff"
                                                 hoverBorderColor="2px solid #00004b"
                                                 hoverBackgroundColor="#00004b"
-                                                onClick={handleDeleteConfirmationModalClose}
+                                                onClick={handleDeleteUserModalClose}
                                             />
                                         </div>
                                     </li>
@@ -82,4 +74,4 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
     );
 }
 
-export default DeleteConfirmationModal;
+export default DeleteUserModal;

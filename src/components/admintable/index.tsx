@@ -4,9 +4,10 @@ import Buttongroup from "../general/buttongroup";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import '../table/style.css';
+import './style.css';
 import { IoMdAdd } from "react-icons/io";
 import { User } from '../../types/user';
+import DeleteUserModal from '../deleteusermodal';
 
 interface TableProps {
     data: User[];
@@ -15,7 +16,9 @@ interface TableProps {
 const AdminTable: React.FC<TableProps> = ({ data }) => {
     const [orderBy, setOrderBy] = useState<{ key: keyof User, asc: boolean } | null>(null);
     const [page, setPage] = useState(1);
-    const [estadoModal, cambiarEstadoModal] = useState(false);
+    const [estadoDeleteModal, cambiarEstadoDeleteModal] = useState(false);
+    const [estadoAddModal, cambiarEstadoAddModal] = useState(false);
+    const [estadoEditModal, cambiarEstadoEditModal] = useState(false);
     const resultsPerPage = 10; 
 
     const handleSort = (key: keyof User) => {
@@ -44,13 +47,29 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
     const totalPages = Math.ceil(sortedData.length / resultsPerPage);
     const paginatedData = sortedData.slice((page - 1) * resultsPerPage, page * resultsPerPage);
 
-    //TODO CREAR UN MODAL PARA AGREGAR USERS
-    //TODO CREAR BOTONES DE MODIFICAR Y ELIMINAR
-    //TODO CREAR MODAL PARA MODIFICAR USER
-    //TODO CREAR MODAL PARA ELIMINAR USER
+    const handleAddClick = (user : number) => {}
+
+    const handleEditClick = (user : number) => {}
+
+    const handleDeleteClick = () => {}
+
+    const handleDeleteConfirmationButtonClick = async () => {}
+
+    const handleDeleteModalClose = () => {
+        cambiarEstadoDeleteModal(false);
+    }
+
     return (
         <div id="bodywrap">
             {/* <AddModal estado={estadoModal} cambiarEstadoModal={cambiarEstadoModal} /> */}
+            {cambiarEstadoDeleteModal && 
+            <DeleteUserModal 
+                estado={estadoDeleteModal} 
+                cambiarEstadoDeleteUserModal={cambiarEstadoDeleteModal} 
+                handleDeleteModalClose={handleDeleteModalClose}
+                handleDeleteConfirmationButtonClick={handleDeleteConfirmationButtonClick}
+                name=""
+                surname=""/>}
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
@@ -62,47 +81,49 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
                                     backgroundColor="#00004b"
                                     hoverColor="#00004b"
                                     hoverBorderColor="2px solid #00004b"
-                                    style={{ width: '140px', marginBottom: '10px' }}
-                                    onClick={() => cambiarEstadoModal(true)}>
-                                    <IoMdAdd style={{ marginRight: '15px' }} /> Crear usuario nuevo
+                                    style={{ width: '180px', marginBottom: '10px' }}
+                                    onClick={() => cambiarEstadoAddModal(true)}>
+                                    <IoMdAdd style={{ marginRight: '15px' }} /> Crear usuario
                                 </Button>
                             </div>
                         </Buttongroup>
-                        <div className="table-wrapper">
-                            <div className="table-responsive">
-                                <table className="table table-striped table-hover">
-                                    <thead className="table-header">
+                        <div className="admin-table-wrapper">
+                            <div className="admin-table-responsive">
+                                <table className="admin-table admin-table-striped admin-table-hover">
+                                    <thead className="admin-table-header">
                                         <tr>
-                                            <th onClick={() => handleSort('id')}>
+                                            <th className="first-column" onClick={() => handleSort('id')}>
                                                 ID
                                                 <span className="icon-right">
                                                     {orderBy?.key === 'id' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                                 </span>
                                             </th>
-                                            <th onClick={() => handleSort('name')}>
+                                            <th className="second-column" onClick={() => handleSort('name')}>
                                                 Nombre
                                                 <span className="icon-right">
                                                     {orderBy?.key === 'name' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                                 </span>
                                             </th>
-                                            <th onClick={() => handleSort('lastName')}>
+                                            <th className="third-column" onClick={() => handleSort('lastName')}>
                                                 Apellido
                                                 <span className="icon-right">
                                                     {orderBy?.key === 'lastName' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                                 </span>
                                             </th>
-                                            <th onClick={() => handleSort('mail')}>
+                                            <th className="fourth-column" onClick={() => handleSort('mail')}>
                                                 Correo
                                                 <span className="icon-right">
                                                     {orderBy?.key === 'mail' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                                 </span>
                                             </th>
-                                            <th onClick={() => handleSort('role')}>
+                                            <th className="fifth-column" onClick={() => handleSort('role')}>
                                                 Rol
                                                 <span className="icon-right">
                                                     {orderBy?.key === 'role' ? (orderBy.asc ? <MdOutlineArrowDropDown /> : <MdOutlineArrowDropUp />) : null}
                                                 </span>
                                             </th>
+                                            <th className="sixth-column"></th>
+                                            <th className="seventh-column"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,6 +134,23 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
                                                 <td>{user.lastName}</td>
                                                 <td>{user.mail}</td>
                                                 <td>{user.role.role}</td>
+                                                <td>
+                                                    <Button
+                                                                type="button"
+                                                                label="Modificar"
+                                                                hoverColor="#00004b"
+                                                                hoverBorderColor="2px solid #00004b"
+                                                                onClick={() => handleEditClick} />
+                                                </td>
+                                                <td>
+                                                    <Button
+                                                                    type="button"
+                                                                    label="Eliminar"
+                                                                    backgroundColor="#ab0707"
+                                                                    hoverColor="#ab0707"
+                                                                    hoverBorderColor="2px solid #ab0707"
+                                                                    onClick={() => cambiarEstadoDeleteModal(true)} />
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
