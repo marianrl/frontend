@@ -8,6 +8,7 @@ import './style.css';
 import { IoMdAdd } from "react-icons/io";
 import { User } from '../../types/user';
 import DeleteUserModal from '../deleteusermodal';
+import { userService } from '../../services/ams/user';
 
 interface TableProps {
     data: User[];
@@ -19,6 +20,9 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
     const [estadoDeleteModal, cambiarEstadoDeleteModal] = useState(false);
     const [estadoAddModal, cambiarEstadoAddModal] = useState(false);
     const [estadoEditModal, cambiarEstadoEditModal] = useState(false);
+    const [estadoUserId, cambiarEstadoUserId] = useState(0);
+    const [estadoUserName, cambiarEstadoUserName] = useState('');
+    const [estadoUserSurname, cambiarEstadoUserSurname] = useState('');
     const resultsPerPage = 10; 
 
     const handleSort = (key: keyof User) => {
@@ -51,12 +55,36 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
 
     const handleEditClick = (user : number) => {}
 
-    const handleDeleteClick = () => {}
+    const handleDeleteClick = (lastName: string, name: string, id: number) => {
+        cambiarEstadoDeleteModal(true);
+        cambiarEstadoUserSurname(lastName);
+        cambiarEstadoUserName(name);
+        cambiarEstadoUserId(id);
+    }
 
-    const handleDeleteConfirmationButtonClick = async () => {}
+    const handleDeleteConfirmationButtonClick = async (id: number) => {
+        if (id !== null && id !== 0){
+            try {
+                await userService.deleteUser('user',id);
+                cambiarEstadoDeleteModal(false);
+                cambiarEstadosUserDefault();
+                window.location.reload();
+            }
+            catch(error) {
+                console.error('Error al eliminar el user:', error);
+            }
+        }
+    }
 
     const handleDeleteModalClose = () => {
         cambiarEstadoDeleteModal(false);
+        cambiarEstadosUserDefault();
+    }
+
+    const cambiarEstadosUserDefault = () => {
+        cambiarEstadoUserSurname('');
+        cambiarEstadoUserName('');
+        cambiarEstadoUserId(0);
     }
 
     return (
@@ -67,9 +95,9 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
                 estado={estadoDeleteModal} 
                 cambiarEstadoDeleteUserModal={cambiarEstadoDeleteModal} 
                 handleDeleteModalClose={handleDeleteModalClose}
-                handleDeleteConfirmationButtonClick={handleDeleteConfirmationButtonClick}
-                name=""
-                surname=""/>}
+                handleDeleteConfirmationButtonClick={() => handleDeleteConfirmationButtonClick(estadoUserId)}
+                name={estadoUserName}
+                surname={estadoUserSurname}/>}
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
@@ -136,20 +164,20 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
                                                 <td>{user.role.role}</td>
                                                 <td>
                                                     <Button
-                                                                type="button"
-                                                                label="Modificar"
-                                                                hoverColor="#00004b"
-                                                                hoverBorderColor="2px solid #00004b"
-                                                                onClick={() => handleEditClick} />
+                                                        type="button"
+                                                        label="Modificar"
+                                                        hoverColor="#00004b"
+                                                        hoverBorderColor="2px solid #00004b"
+                                                        onClick={() => handleEditClick} />
                                                 </td>
                                                 <td>
                                                     <Button
-                                                                    type="button"
-                                                                    label="Eliminar"
-                                                                    backgroundColor="#ab0707"
-                                                                    hoverColor="#ab0707"
-                                                                    hoverBorderColor="2px solid #ab0707"
-                                                                    onClick={() => cambiarEstadoDeleteModal(true)} />
+                                                        type="button"
+                                                        label="Eliminar"
+                                                        backgroundColor="#ab0707"
+                                                        hoverColor="#ab0707"
+                                                        hoverBorderColor="2px solid #ab0707"
+                                                        onClick={() => handleDeleteClick(user.lastName, user.name, user.id)} />
                                                 </td>
                                             </tr>
                                         ))}

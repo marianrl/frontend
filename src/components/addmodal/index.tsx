@@ -7,13 +7,13 @@ import {AuditType} from "../../types/auditType";
 import {auditService} from "../../services/ams/audit";
 import {useNavigate} from "react-router-dom";
 
-interface AddModelProps {
+interface AddModalProps {
     estado: boolean;
     cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>;
     auditType: "commonAuditDetails" | "afipAuditDetails";
 }
 
-const AddModal: React.FC<AddModelProps> = ({ estado, cambiarEstadoModal , auditType}) => {
+const AddModal: React.FC<AddModalProps> = ({ estado, cambiarEstadoModal , auditType}) => {
     const navigate = useNavigate();
     const [audits, setAudits] = useState<AuditType[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
