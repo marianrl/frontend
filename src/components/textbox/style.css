@@ -1,56 +1,56 @@
 /* Customtextbox.css */
 .custom-textbox {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 5px;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  position: relative;
 }
 
 .custom-textbox label {
-    text-align: left;
-    font-size: 14px;
-    margin-bottom: 4px;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .custom-textbox input {
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
 }
 
 .custom-textbox input:focus {
-    outline: none;
-    border-color: #1976d2;
+  outline: none;
+  border-color: #1976d2;
 }
 
 .custom-textbox input::placeholder {
-    color: #999;
+  color: #999;
 }
 
 .custom-textbox input:hover {
-    border-color: #999;
+  border-color: #999;
 }
 
 /* Estilos específicos para el icono del ojo */
 .custom-textbox span {
-    position: absolute;
-    top: 57%;
-    right: 8px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #999;
+  position: absolute;
+  top: 57%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
 }
 
 .custom-textbox span svg {
-    font-size: 18px;
-    vertical-align: middle;
-    transition: color 0.3s ease;
+  font-size: 18px;
+  vertical-align: middle;
+  transition: color 0.3s ease;
 }
 
 .custom-textbox span:hover svg {
-    color: #1976d2;
+  color: #1976d2;
 }

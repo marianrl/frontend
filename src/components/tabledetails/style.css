@@ -1,51 +1,51 @@
-#bodywrap{
-    height: 100vh;
+#bodywrap {
+  height: 100vh;
 }
 
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 table.table tr th:first-child {
-    width: 22%; /* Cambiado a porcentaje */
+  width: 22%; /* Cambiado a porcentaje */
 }
 
 table.table tr .details-second-child {
-    width: 22%; /* Cambiado a porcentaje */
+  width: 22%; /* Cambiado a porcentaje */
 }
 
 table.table tr .details-third-child {
-    width: 22%; /* Cambiado a porcentaje */
+  width: 22%; /* Cambiado a porcentaje */
 }
 
 table.table tr .details-fourth-child {
-    width: 22%; /* Cambiado a porcentaje */
+  width: 22%; /* Cambiado a porcentaje */
 }
 
 table.table tr th:last-child {
-    width: 12%; /* Cambiado a porcentaje */
+  width: 12%; /* Cambiado a porcentaje */
 }
 
 .cellContainer {
-    position: relative;
+  position: relative;
 }
 
 .leftContent {
-    float: left;
+  float: left;
 }
 
 .rightContent {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .filaTable {
-    display: grid;
-    justify-items: end;
-    grid-template-columns: 28% 28% 28% 16%;
-    list-style-type: none;
+  display: grid;
+  justify-items: end;
+  grid-template-columns: 28% 28% 28% 16%;
+  list-style-type: none;
 }

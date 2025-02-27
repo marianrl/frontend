@@ -1,155 +1,155 @@
 .scroll-window-wrapper {
-    position: relative;
-    margin-left: 150px;
-    margin-right: 50px;
+  position: relative;
+  margin-left: 150px;
+  margin-right: 50px;
 }
 
 .admin-table-wrapper table {
-    margin-bottom: 0;
-    width: 100%;
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .admin-table-responsive {
-    overflow-x: auto;
-    margin: 30px 0;
+  overflow-x: auto;
+  margin: 30px 0;
 }
 
 .admin-table-wrapper {
-    background: #fff;
-    padding: 20px 25px;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .admin-table-wrapper .btn {
-    float: right;
-    color: #333;
-    background-color: #fff;
-    border-radius: 3px;
-    border: none;
-    outline: none !important;
-    margin-left: 10px;
+  float: right;
+  color: #333;
+  background-color: #fff;
+  border-radius: 3px;
+  border: none;
+  outline: none !important;
+  margin-left: 10px;
 }
 
 .admin-table-wrapper .btn:hover {
-    color: #333;
-    background: #f2f2f2;
+  color: #333;
+  background: #f2f2f2;
 }
 
 .admin-table-wrapper .btn.btn-primary {
-    color: #fff;
-    background: #03A9F4;
+  color: #fff;
+  background: #03a9f4;
 }
 
 .admin-table-wrapper .btn.btn-primary:hover {
-    background: #03a3e7;
+  background: #03a3e7;
 }
 
 .admin-table.admin-table tr th,
 .admin-table.admin-table tr td {
-    border-color: #e9e9e9;
-    padding: 12px 15px;
-    vertical-align: middle;
+  border-color: #e9e9e9;
+  padding: 12px 15px;
+  vertical-align: middle;
 }
 
 .first-column {
-    width: 10%;
+  width: 10%;
 }
 
 .second-column {
-    width: 20%; 
+  width: 20%;
 }
 
 .third-column {
-    width: 20%; 
+  width: 20%;
 }
 
 .fourth-column {
-    width: 20%; 
+  width: 20%;
 }
 
 .fifth-column {
-    width: 10%;
+  width: 10%;
 }
 
 .sixth-column {
-    width: 10%;
+  width: 10%;
 }
 
 .seventh-column {
-    width: 10%;
+  width: 10%;
 }
 
 .admin-table.admin-table-striped tbody tr:nth-of-type(odd) {
-    background-color: #fcfcfc;
+  background-color: #fcfcfc;
 }
 
 .admin-table.admin-table-striped.admin-table-hover tbody tr:hover {
-    background: #f5f5f5;
+  background: #f5f5f5;
 }
 
 .admin-table.admin-table th i {
-    font-size: 13px;
-    margin: 0 5px;
-    cursor: pointer;
+  font-size: 13px;
+  margin: 0 5px;
+  cursor: pointer;
 }
 
 .admin-table.admin-table td a {
-    font-weight: bold;
-    color: #566787;
-    display: inline-block;
-    text-decoration: none;
+  font-weight: bold;
+  color: #566787;
+  display: inline-block;
+  text-decoration: none;
 }
 .admin-table.admin-table td a:hover {
-    color: #2196F3;
+  color: #2196f3;
 }
 
 .admin-table.admin-table td a.view {
-    width: 30px;
-    height: 30px;
-    color: #2196F3;
-    border: 2px solid;
-    border-radius: 30px;
-    text-align: center;
+  width: 30px;
+  height: 30px;
+  color: #2196f3;
+  border: 2px solid;
+  border-radius: 30px;
+  text-align: center;
 }
 
 .admin-table.admin-table td a.view i {
-    font-size: 22px;
-    margin: 2px 0 0 1px;
+  font-size: 22px;
+  margin: 2px 0 0 1px;
 }
 
 .admin-table.admin-table .avatar {
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 10px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .status {
-    font-size: 30px;
-    margin: 2px 2px 0 0;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 10px;
+  font-size: 30px;
+  margin: 2px 2px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 10px;
 }
 
 .admin-table-header {
-    background-color: #92a9fc;
+  background-color: #92a9fc;
 }
 
 th {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .icon-right {
-    float: right; /* Esto alinea el icono a la derecha */
+  float: right; /* Esto alinea el icono a la derecha */
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .pagination {
-    float: right;
-    margin-right: 130px;
-    margin-top: 10px;
+  float: right;
+  margin-right: 130px;
+  margin-top: 10px;
 }

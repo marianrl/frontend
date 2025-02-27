@@ -1,36 +1,39 @@
-import React, {ChangeEvent, useState} from 'react';
-import EyeIcon from "../general/icons/eyeicon";
-import './style.css'
+import React, { ChangeEvent, useState } from 'react';
+import EyeIcon from '../general/icons/eyeicon';
+import './style.css';
 
 interface TextBoxProps {
-    label?: string;
-    placeholder?: string;
-    type?: 'text' | 'password';
+  label?: string;
+  placeholder?: string;
+  type?: 'text' | 'password';
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
-    label,
-    placeholder,
-    type = 'text',
+  label,
+  placeholder,
+  type = 'text',
 }) => {
-    const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!isPasswordVisible);
-    };
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
-    return (
-        <div className="custom-textbox">
-            {label && <label>{label}</label>}
-            <input
-                type={isPasswordVisible ? 'text' : type}
-                placeholder={placeholder}
-            />
-            {type === 'password' && (
-                <EyeIcon isVisible={isPasswordVisible} toggleVisibility={togglePasswordVisibility} />
-            )}
-        </div>
-    );
+  return (
+    <div className="custom-textbox">
+      {label && <label>{label}</label>}
+      <input
+        type={isPasswordVisible ? 'text' : type}
+        placeholder={placeholder}
+      />
+      {type === 'password' && (
+        <EyeIcon
+          isVisible={isPasswordVisible}
+          toggleVisibility={togglePasswordVisibility}
+        />
+      )}
+    </div>
+  );
 };
 
 export default TextBox;

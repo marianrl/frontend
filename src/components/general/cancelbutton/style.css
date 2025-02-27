@@ -1,18 +1,18 @@
 .cancel-button {
-    background-color: #ab0707;
-    color: white;
-    padding: 10px 20px;
-    border: 2px solid transparent;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+  background-color: #ab0707;
+  color: white;
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .cancel-button:hover {
-    background-color: white;
-    color: #ab0707;
-    font-weight: bold;
-    border: 2px solid #ab0707;
+  background-color: white;
+  color: #ab0707;
+  font-weight: bold;
+  border: 2px solid #ab0707;
 }

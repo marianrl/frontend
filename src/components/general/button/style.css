@@ -1,32 +1,32 @@
 .button {
-    width: 200px;
-    background-color: #00004b;
-    color: white;
-    padding: 10px 20px;
-    border: 2px solid transparent;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+  width: 200px;
+  background-color: #00004b;
+  color: white;
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: white;
-    color: #00004b;
-    font-weight: bold;
-    border: 2px solid #00004b;
+  background-color: white;
+  color: #00004b;
+  font-weight: bold;
+  border: 2px solid #00004b;
 }
 
 .button:disabled {
-    background-color: #cccccc; /* Color gris */
-    color: #999999 !important; /* Color de texto gris */
-    cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
-    border: 2px solid transparent; /* Borde transparente */
+  background-color: #cccccc; /* Color gris */
+  color: #999999 !important; /* Color de texto gris */
+  cursor: not-allowed; /* Cambia el cursor a 'no permitido' */
+  border: 2px solid transparent; /* Borde transparente */
 }
 
 .button:disabled:hover {
-    background-color: #cccccc; /* Color gris */
-    color: #999999; /* Color de texto gris */
-    border: 2px solid transparent; /* Borde transparente */
+  background-color: #cccccc; /* Color gris */
+  color: #999999; /* Color de texto gris */
+  border: 2px solid transparent; /* Borde transparente */
 }

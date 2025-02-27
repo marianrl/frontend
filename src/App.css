@@ -45,21 +45,20 @@
 }
 
 .background-image img {
-  max-width: 100%
+  max-width: 100%;
 }
 
-.title{
+.title {
   color: #00004b;
 }
 
-.errorMessage{
+.errorMessage {
   font-size: 13px;
   color: #a30202;
   font-weight: bold;
 }
 
-.global-background-color{
+.global-background-color {
   background-color: #eaedf1;
   height: 100%;
 }
-

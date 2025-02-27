@@ -1,14 +1,14 @@
-.header{
-    background-color: #ffffff;
-    padding-left: 150px;
-    display: flex;
+.header {
+  background-color: #ffffff;
+  padding-left: 150px;
+  display: flex;
 }
-.profile-contein{
-    margin: 20px 40px 25px auto;
+.profile-contein {
+  margin: 20px 40px 25px auto;
 }
 
 .header-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

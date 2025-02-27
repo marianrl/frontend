@@ -1,5 +1,4 @@
 export interface Audited {
-    id: number;
-    audited: string;
+  id: number;
+  audited: string;
 }
-

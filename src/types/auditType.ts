@@ -1,4 +1,4 @@
 export interface AuditType {
-    id: number;
-    auditType: string;
+  id: number;
+  auditType: string;
 }

@@ -1,53 +1,53 @@
 .switch-container {
-    display: flex;
-    align-items: center;
-    margin: 20px 10px;
+  display: flex;
+  align-items: center;
+  margin: 20px 10px;
 }
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 30px; /* Reducir el ancho */
-    height: 17px; /* Reducir la altura */
+  position: relative;
+  display: inline-block;
+  width: 30px; /* Reducir el ancho */
+  height: 17px; /* Reducir la altura */
 }
 
 .switch input {
-    display: none;
+  display: none;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 17px; /* Ajustar el radio de borde */
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 17px; /* Ajustar el radio de borde */
 }
 
 .slider:before {
-    position: absolute;
-    content: '';
-    height: 13px; /* Ajustar la altura */
-    width: 13px; /* Ajustar el ancho */
-    left: 2px; /* Ajustar la posición */
-    bottom: 2px; /* Ajustar la posición */
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
+  position: absolute;
+  content: "";
+  height: 13px; /* Ajustar la altura */
+  width: 13px; /* Ajustar el ancho */
+  left: 2px; /* Ajustar la posición */
+  bottom: 2px; /* Ajustar la posición */
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
 input:checked + .slider {
-    background-color: #13139F;
+  background-color: #13139f;
 }
 
 input:checked + .slider:before {
-    transform: translateX(13px); /* Ajustar la posición */
+  transform: translateX(13px); /* Ajustar la posición */
 }
 
 p {
-    margin: 5px 10px 5px;
-    font-size: 17px;
+  margin: 5px 10px 5px;
+  font-size: 17px;
 }
