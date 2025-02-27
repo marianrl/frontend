@@ -9,6 +9,8 @@ import { IoMdAdd } from "react-icons/io";
 import { User } from '../../types/user';
 import DeleteUserModal from '../deleteusermodal';
 import { userService } from '../../services/ams/user';
+import AdminDropdown from '../general/admindropdown';
+import AddUserModal from '../addusermodal';
 
 interface TableProps {
     data: User[];
@@ -62,6 +64,9 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
         cambiarEstadoUserId(id);
     }
 
+    const handleAddConfirmationButtonClick = async () => {
+    }
+
     const handleDeleteConfirmationButtonClick = async (id: number) => {
         if (id !== null && id !== 0){
             try {
@@ -90,14 +95,20 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
     return (
         <div id="bodywrap">
             {/* <AddModal estado={estadoModal} cambiarEstadoModal={cambiarEstadoModal} /> */}
-            {cambiarEstadoDeleteModal && 
-            <DeleteUserModal 
+            {cambiarEstadoDeleteModal && <DeleteUserModal 
                 estado={estadoDeleteModal} 
                 cambiarEstadoDeleteUserModal={cambiarEstadoDeleteModal} 
                 handleDeleteModalClose={handleDeleteModalClose}
                 handleDeleteConfirmationButtonClick={() => handleDeleteConfirmationButtonClick(estadoUserId)}
                 name={estadoUserName}
-                surname={estadoUserSurname}/>}
+                surname={estadoUserSurname}/>
+            }
+            {estadoAddModal && <AddUserModal
+                estado= {estadoAddModal}
+                cambiarEstadoAddUserModal={cambiarEstadoAddModal}
+                handleAddConfirmationButtonClick={() => handleAddConfirmationButtonClick()}
+                />
+            }
             <div className="row">
                 <div className="large-10 columns">
                     <div className="scroll-window-wrapper">
