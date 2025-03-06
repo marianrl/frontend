@@ -67,7 +67,6 @@ const DetailsModal: React.FC<DetailsModelProps> = ({
         .catch(() => {
           setAnswers([]);
           setErrorMessage('Error al procesar la solicitud');
-          console.log(errorMessage);
         });
     }
     setShowButton(true);

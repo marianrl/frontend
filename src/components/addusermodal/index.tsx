@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../general/button';
-import { userService } from '../../services/ams/user';
-import { User } from '../../types/user';
 import AdminDropdown from '../general/admindropdown';
+import { Role } from '../../types/role';
+import { roleService } from '../../services/ams/role';
 
 interface AddUserModalProps {
   estado: boolean;
@@ -16,29 +16,41 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   handleAddConfirmationButtonClick,
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedOption, setSelectedOption] = useState<Role | null>(null);
+  const [showButton, setShowButton] = useState(false);
+  const [userRoles, setUsersRoles] = useState<Role[]>([]);
 
-  const user: User = {
-    id: 0,
-    name: '',
-    lastName: '',
-    mail: '',
-    password: '',
-    role: { id: 999, role: '' },
-  };
-
-  const handleButtonClick = async () => {
-    try {
-      const response = await userService.createUser('user', user);
-    } catch (error) {
-      console.error('Error al crear el user:', error);
+  useEffect(() => {
+    async function getAllRoles() {
+      try {
+        const response = await roleService.fetchAllRoles('role');
+        const roles = response?.data || []; // Si es undefined o null, asigna []
+        setUsersRoles(roles);
+        setErrorMessage('');
+      } catch (error) {
+        setUsersRoles([]); // Asegura que siempre sea un array
+        setErrorMessage('Error al procesar la solicitud');
+      }
     }
-  };
+    getAllRoles();
+  }, []);
+
+  // const handleButtonClick = async () => {
+  //   try {
+  //     const response = await userService.createUser('user', );
+  //   } catch (error) {
+  //     console.error('Error al crear el user: ', error);
+  //   }
+  // };
 
   const handleAddUserModalClose = () => {
     cambiarEstadoAddUserModal(false);
   };
 
-  const handleDropdownSelect = () => {};
+  const handleDropdownSelect = (option: Role) => {
+    setSelectedOption(option); // Correcto
+    setShowButton(true);
+  };
 
   return (
     <>
@@ -50,11 +62,53 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
               <div>
                 <ul>
                   <div className="filaModal">
+                    <li>Nombre: </li>
+                    <li>
+                      <AdminDropdown
+                        onSelect={handleDropdownSelect}
+                        roles={userRoles}
+                        maxLength={12}
+                      />
+                    </li>
+                  </div>
+                  <div className="filaModal">
+                    <li>Apellido: </li>
+                    <li>
+                      <AdminDropdown
+                        onSelect={handleDropdownSelect}
+                        roles={userRoles}
+                        maxLength={12}
+                      />
+                    </li>
+                  </div>
+                  <div className="filaModal">
+                    <li>Mail: </li>
+                    <li>
+                      <AdminDropdown
+                        onSelect={handleDropdownSelect}
+                        roles={userRoles}
+                        maxLength={12}
+                      />
+                    </li>
+                  </div>
+                  <div className="filaModal">
+                    <li>Contraseña: </li>
+                    <li>
+                      <AdminDropdown
+                        onSelect={handleDropdownSelect}
+                        roles={userRoles}
+                        maxLength={12}
+                      />
+                    </li>
+                  </div>
+                  <div className="filaModal">
                     <li>Tipo de Rol:</li>
                     <li>
-                      {/* <AdminDropdown
-                                                
-                                                /> */}
+                      <AdminDropdown
+                        onSelect={handleDropdownSelect}
+                        roles={userRoles}
+                        maxLength={12}
+                      />
                     </li>
                   </div>
                 </ul>

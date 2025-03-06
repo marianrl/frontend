@@ -2,27 +2,27 @@ import React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { User } from '../../../types/user';
+import { Role } from '../../../types/role';
 
 interface AdminDropdownProps {
-  onSelect: (value: User) => void;
-  users: User[];
+  onSelect: (value: Role) => void;
+  roles: Role[];
   maxLength: number;
 }
 
 const AdminDropdown: React.FC<AdminDropdownProps> = ({
   onSelect,
-  users,
+  roles,
   maxLength,
 }) => {
-  const [selectedValue, setSelectedValue] = React.useState<User | null>(null);
+  const [selectedRole, setSelectedRole] = React.useState<Role | null>(null);
 
   const handleChange = (event: SelectChangeEvent) => {
     const value = event.target.value as string;
-    const selectedUser = users.find((user) => user.role.role === value);
-    if (selectedUser) {
-      setSelectedValue(selectedUser);
-      onSelect(selectedUser);
+    const selectedRole = roles.find((role) => role.role === value);
+    if (selectedRole) {
+      setSelectedRole(selectedRole);
+      onSelect(selectedRole);
     }
   };
 
@@ -37,17 +37,21 @@ const AdminDropdown: React.FC<AdminDropdownProps> = ({
   return (
     <FormControl sx={{ m: 1, minWidth: 200 }}>
       <Select
-        value={selectedValue ? selectedValue.role.role : 'Rol.. '}
+        value={selectedRole ? selectedRole.role : 'Rol.. '}
         onChange={handleChange}
         displayEmpty
         inputProps={{ 'aria-label': 'Without label' }}
         renderValue={(selected) => truncateText(selected as string)}
       >
-        {users.map((user, index) => (
-          <MenuItem key={index} value={user.role.role}>
-            {user.role.role}
-          </MenuItem>
-        ))}
+        {roles?.length ? (
+          roles.map((role, index) => (
+            <MenuItem key={index} value={role.role}>
+              {role.role}
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem disabled>Cargando roles...</MenuItem>
+        )}
       </Select>
     </FormControl>
   );
