@@ -9,15 +9,10 @@ import { useSession } from '../../components/sessionprovider';
 
 const Login: React.FC = () => {
   const { login } = useSession();
-
   const [, setUserData] = useState<ApiResponse | null>(null);
-
   const [user, setUser] = useState('');
-
   const [password, setPassword] = useState('');
-
   const [errorMessage, setErrorMessage] = useState('');
-
   const navigate = useNavigate();
 
   const handleUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {

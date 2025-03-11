@@ -1,5 +1,6 @@
 import apiClient from '../../config/axiosconfig';
 import { User } from '../../types/user';
+import { UserMailRequest } from '../../types/user_mail_request';
 import { UserRequest } from '../../types/user_request';
 
 export interface ApiResponse {
@@ -62,6 +63,16 @@ const userService = {
       }
       console.error('Error en fetchUserByMailAndPassword:', error);
       throw new Error('Error al procesar la solicitud');
+    }
+  },
+
+  async userExists(endpoint: string, mail: UserMailRequest): Promise<boolean> {
+    try {
+      const response = await apiClient.post(endpoint, mail);
+
+      return response.data;
+    } catch (error) {
+      throw new Error('Error al buscar el Usuarios');
     }
   },
 
