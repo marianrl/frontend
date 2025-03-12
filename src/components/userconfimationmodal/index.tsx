@@ -1,25 +1,26 @@
 import React from 'react';
-import './style.scss';
 import Button from '../general/button';
-import { Answer } from '../../types/answer';
+import { User } from '../../types/user';
 
-interface ConfirmationModelProps {
+interface UserConfirmationModelProps {
   estado: boolean;
   cambiarEstadoConfirmationModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleModalClose: React.Dispatch<React.SetStateAction<boolean>>;
   handleConfirmationButtonClick: () => void;
-  selectedOption: Answer | null;
+  text: string;
+  confirmLabel: string;
+  cancelLabel: string;
 }
 
-const ConfirmationModal: React.FC<ConfirmationModelProps> = ({
+const UserConfirmationModal: React.FC<UserConfirmationModelProps> = ({
   estado,
+  text,
+  confirmLabel,
+  cancelLabel,
   cambiarEstadoConfirmationModal,
   handleModalClose,
   handleConfirmationButtonClick,
-  selectedOption,
 }) => {
-  const answer = selectedOption?.answer;
-
   const handleConfirmationModalClose = () => {
     cambiarEstadoConfirmationModal(false);
   };
@@ -34,21 +35,13 @@ const ConfirmationModal: React.FC<ConfirmationModelProps> = ({
         <div className="Overlay">
           <div className="ConfirmationModalContainer">
             <div className="ConfirmationContenidoModal">
-              <h1 className="ConfirmationTituloModalCerrar">
-                Su respuesta sera:{' '}
-              </h1>
-              <p className="Centrar">{answer}</p>
-              <p className="Disclosure">
-                <strong>
-                  (Tenga en cuenta que su respuesta no podrá ser modificada)
-                </strong>
-              </p>
+              <h1 className="ConfirmationTituloModalCerrar">{text}</h1>
               <ul>
                 <div className="filaModal">
                   <li>
                     <Button
                       type="button"
-                      label="Confirmar"
+                      label={confirmLabel}
                       backgroundColor="#fc5151"
                       hoverColor="#fc5151"
                       hoverBorderColor="2px solid #fc5151"
@@ -63,7 +56,7 @@ const ConfirmationModal: React.FC<ConfirmationModelProps> = ({
                     <div>
                       <Button
                         type="button"
-                        label="Cancelar"
+                        label={cancelLabel}
                         borderColor="2px solid #00004b"
                         color="#00004b"
                         backgroundColor="#ffffff"
@@ -84,4 +77,4 @@ const ConfirmationModal: React.FC<ConfirmationModelProps> = ({
   );
 };
 
-export default ConfirmationModal;
+export default UserConfirmationModal;

@@ -5,7 +5,7 @@ import Dropdown from '../../components/general/dropdown';
 import Button from '../general/button';
 import { answerService } from '../../services/ams/answer';
 import { Answer } from '../../types/answer';
-import ConfirmationModal from '../confimationmodal';
+import ConfirmationModal from '../answerconfimationmodal';
 import { commonInputService } from '../../services/ams/commonInput';
 import { afipInputService } from '../../services/ams/afipInput';
 import { InputRequest } from '../../types/inputRequest';

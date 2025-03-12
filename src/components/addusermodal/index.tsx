@@ -7,26 +7,27 @@ import InputWrapper from '../inputfield';
 import { userService } from '../../services/ams/user';
 import { User } from '../../types/user';
 import { UserMailRequest } from '../../types/user_mail_request';
+import UserConfirmationModal from '../userconfimationmodal';
 
 interface AddUserModalProps {
-  estado: boolean;
   cambiarEstadoAddUserModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleAddConfirmationButtonClick: () => void;
 }
 
 const AddUserModal: React.FC<AddUserModalProps> = ({
-  estado,
   cambiarEstadoAddUserModal,
   handleAddConfirmationButtonClick,
 }) => {
-  const [errorMessage, setErrorMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState<Role | null>(null);
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [userRoles, setUsersRoles] = useState<Role[]>([]);
-  const [mailError, setMailError] = useState(''); // Estado para error de email
+  const [mailError, setMailError] = useState('');
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showWrongMailMessageModal, setShowWrongMailMessageModal] =
+    useState(false);
 
   useEffect(() => {
     async function getAllRoles() {
@@ -34,10 +35,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         const response = await roleService.fetchAllRoles('role');
         const roles = response?.data || [];
         setUsersRoles(roles);
-        setErrorMessage('');
       } catch (error) {
         setUsersRoles([]);
-        setErrorMessage('Error al procesar la solicitud');
       }
     }
     getAllRoles();
@@ -56,7 +55,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     setMailError(validateEmail(value) ? '' : 'Formato de correo inválido');
   };
 
-  const handleButtonClick = async () => {
+  const handleConfirmationButtonClick = async () => {
     if (!selectedOption || mailError) {
       console.error('Debe seleccionar un rol y proporcionar un email válido');
       return;
@@ -81,11 +80,28 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         const response = await userService.createUser('user', newUser);
         console.log('Usuario creado con éxito:', response);
         handleAddConfirmationButtonClick();
+        setShowConfirmationModal(false);
         cambiarEstadoAddUserModal(false);
+        window.location.reload();
+      } else {
+        setShowWrongMailMessageModal(true);
       }
     } catch (error) {
       console.error('Error al crear el usuario: ', error);
     }
+  };
+
+  const handleOpenConfirmationModal = () => {
+    setShowConfirmationModal(true);
+  };
+
+  const handleConfimationModalClose = () => {
+    setShowConfirmationModal(false);
+  };
+
+  const handleCloseShowWrongMailMessageModal = () => {
+    setShowWrongMailMessageModal(false);
+    setShowConfirmationModal(false);
   };
 
   const isFormValid =
@@ -167,7 +183,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
                     hoverColor=" #32a852"
                     hoverBackgroundColor=""
                     hoverBorderColor="2px solid #32a852"
-                    onClick={handleButtonClick}
+                    onClick={handleOpenConfirmationModal}
                     disabled={!isFormValid}
                   />
                 </li>
@@ -191,6 +207,28 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
           </div>
         </div>
       </div>
+      {showConfirmationModal && (
+        <UserConfirmationModal
+          estado={showConfirmationModal}
+          text="Desea crear este usuario?"
+          confirmLabel="Crear"
+          cancelLabel="Cancelar"
+          cambiarEstadoConfirmationModal={setShowConfirmationModal}
+          handleConfirmationButtonClick={handleConfirmationButtonClick}
+          handleModalClose={handleConfimationModalClose}
+        />
+      )}
+      {showWrongMailMessageModal && (
+        <UserConfirmationModal
+          estado={showWrongMailMessageModal}
+          text="El mail ingresado ya existe"
+          confirmLabel="Aceptar"
+          cancelLabel="Cancelar"
+          cambiarEstadoConfirmationModal={setShowWrongMailMessageModal}
+          handleConfirmationButtonClick={handleCloseShowWrongMailMessageModal}
+          handleModalClose={handleCloseShowWrongMailMessageModal}
+        />
+      )}
     </div>
   );
 };

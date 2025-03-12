@@ -63,8 +63,6 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
     page * resultsPerPage
   );
 
-  const handleAddClick = (user: number) => {};
-
   const handleEditClick = (user: number) => {};
 
   const handleDeleteClick = (lastName: string, name: string, id: number) => {
@@ -117,7 +115,6 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
       )}
       {estadoAddModal && (
         <AddUserModal
-          estado={estadoAddModal}
           cambiarEstadoAddUserModal={cambiarEstadoAddModal}
           handleAddConfirmationButtonClick={() =>
             handleAddConfirmationButtonClick()
