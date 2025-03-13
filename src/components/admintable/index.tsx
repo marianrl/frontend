@@ -9,8 +9,9 @@ import { IoMdAdd } from 'react-icons/io';
 import { User } from '../../types/user';
 import DeleteUserModal from '../deleteusermodal';
 import { userService } from '../../services/ams/user';
-import AdminDropdown from '../general/admindropdown';
 import AddUserModal from '../addusermodal';
+import EditUserModal from '../editusermodal';
+import { Role } from '../../types/role';
 
 interface TableProps {
   data: User[];
@@ -28,6 +29,9 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
   const [estadoUserId, cambiarEstadoUserId] = useState(0);
   const [estadoUserName, cambiarEstadoUserName] = useState('');
   const [estadoUserSurname, cambiarEstadoUserSurname] = useState('');
+  const [EstadoUserMail, cambiarEstadoUserMail] = useState('');
+  const [EstadoUserPassword, cambiarEstadoUserPassword] = useState('');
+  const [EstadoUserRole, cambiarEstadoUserRole] = useState<Role>();
   const resultsPerPage = 10;
 
   const handleSort = (key: keyof User) => {
@@ -63,7 +67,22 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
     page * resultsPerPage
   );
 
-  const handleEditClick = (user: number) => {};
+  const handleEditClick = (
+    id: number,
+    name: string,
+    lastName: string,
+    mail: string,
+    password: string,
+    role: Role
+  ) => {
+    cambiarEstadoEditModal(true);
+    cambiarEstadoUserId(id);
+    cambiarEstadoUserName(name);
+    cambiarEstadoUserSurname(lastName);
+    cambiarEstadoUserMail(mail);
+    cambiarEstadoUserPassword(password);
+    cambiarEstadoUserRole(role);
+  };
 
   const handleDeleteClick = (lastName: string, name: string, id: number) => {
     cambiarEstadoDeleteModal(true);
@@ -71,8 +90,6 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
     cambiarEstadoUserName(name);
     cambiarEstadoUserId(id);
   };
-
-  const handleAddConfirmationButtonClick = async () => {};
 
   const handleDeleteConfirmationButtonClick = async (id: number) => {
     if (id !== null && id !== 0) {
@@ -100,7 +117,6 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
 
   return (
     <div id="bodywrap">
-      {/* <AddModal estado={estadoModal} cambiarEstadoModal={cambiarEstadoModal} /> */}
       {cambiarEstadoDeleteModal && (
         <DeleteUserModal
           estado={estadoDeleteModal}
@@ -114,11 +130,17 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
         />
       )}
       {estadoAddModal && (
-        <AddUserModal
-          cambiarEstadoAddUserModal={cambiarEstadoAddModal}
-          handleAddConfirmationButtonClick={() =>
-            handleAddConfirmationButtonClick()
-          }
+        <AddUserModal cambiarEstadoAddUserModal={cambiarEstadoAddModal} />
+      )}
+      {estadoEditModal && (
+        <EditUserModal
+          cambiarEstadoAddUserModal={cambiarEstadoEditModal}
+          idToUpdate={estadoUserId}
+          lastNameToUpdate={estadoUserSurname}
+          nameToUpdate={estadoUserName}
+          mailToUpdate={EstadoUserMail}
+          passwordToUpdate={EstadoUserPassword}
+          roleToUpdate={EstadoUserRole}
         />
       )}
       <div className="row">
@@ -237,7 +259,16 @@ const AdminTable: React.FC<TableProps> = ({ data }) => {
                             label="Modificar"
                             hoverColor="#00004b"
                             hoverBorderColor="2px solid #00004b"
-                            onClick={() => handleEditClick}
+                            onClick={() =>
+                              handleEditClick(
+                                user.id,
+                                user.name,
+                                user.lastName,
+                                user.mail,
+                                user.password,
+                                user.role
+                              )
+                            }
                           />
                         </td>
                         <td>

@@ -8,6 +8,7 @@ interface InputWrapperProps {
   type?: 'text' | 'password';
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 const InputWrapper: React.FC<InputWrapperProps> = ({
@@ -17,6 +18,7 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
   placeholder,
   value,
   onChange,
+  disabled = false,
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -33,6 +35,7 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
         required
         value={value}
         onChange={onChange}
+        disabled={disabled}
       />
       {label && <label className="label">{label}</label>}
       {type === 'password' && (
@@ -41,6 +44,7 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
             type="checkbox"
             checked={isPasswordVisible}
             onChange={togglePasswordVisibility}
+            disabled={disabled}
           />
           <label className="showPassword">Mostrar contraseña</label>
         </div>
