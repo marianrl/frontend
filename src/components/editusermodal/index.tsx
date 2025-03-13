@@ -152,6 +152,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
                       onSelect={setSelectedOption}
                       roles={userRoles}
                       maxLength={12}
+                      value={selectedOption}
                     />
                   </li>
                 </div>

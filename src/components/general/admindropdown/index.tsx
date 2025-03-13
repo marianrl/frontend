@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -8,14 +8,20 @@ interface AdminDropdownProps {
   onSelect: (value: Role) => void;
   roles: Role[];
   maxLength: number;
+  value?: Role | null;
 }
 
 const AdminDropdown: React.FC<AdminDropdownProps> = ({
   onSelect,
   roles,
   maxLength,
+  value,
 }) => {
   const [selectedRole, setSelectedRole] = React.useState<Role | null>(null);
+
+  useEffect(() => {
+    setSelectedRole(value || null);
+  }, [value]);
 
   const handleChange = (event: SelectChangeEvent) => {
     const value = event.target.value as string;
