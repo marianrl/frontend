@@ -53,14 +53,6 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           <li>
-            <a href="/search">
-              <i className="fa fa-2x">
-                <CiSearch />
-              </i>
-              <span className="nav-text">Busqueda</span>
-            </a>
-          </li>
-          <li>
             <a href="/auditafip" onClick={handleAuditAfip}>
               <i className="fa fa-2x">
                 <AiOutlineAudit />

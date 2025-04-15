@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../general/button';
 import DetailsModal from '../detailsmodal';
 import {
@@ -18,6 +18,8 @@ import DeleteConfirmationModal from '../deleteconfirmationmodal';
 import { auditService } from '../../services/ams/audit';
 import { commonInputService } from '../../services/ams/commonInput';
 import { afipInputService } from '../../services/ams/afipInput';
+import { cloudmersiveService } from '../../services/integrations/cloudmersive';
+import Spinner from '../general/Spinner';
 
 interface Data {
   id: number;
@@ -69,6 +71,23 @@ const TableDetails: React.FC<TableDetailsProps> = ({
   const [selectedRow, setSelectedRow] = useState<SelectedRowState>(null); // Estado para la fila seleccionada
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
     useState(false);
+  const [fileInput, setFileInput] = useState<HTMLInputElement | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx';
+    input.style.display = 'none';
+    document.body.appendChild(input);
+    setFileInput(input);
+
+    return () => {
+      if (input && document.body.contains(input)) {
+        document.body.removeChild(input);
+      }
+    };
+  }, []);
 
   const handleRowClick = (rowData: Data) => {
     setSelectedRow(rowData); // Almacena la información de la fila seleccionada en el estado
@@ -156,6 +175,28 @@ const TableDetails: React.FC<TableDetailsProps> = ({
     cambiarEstadoModal(false);
   };
 
+  const handleImportClick = () => {
+    if (fileInput) {
+      fileInput.onchange = async (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          try {
+            setIsLoading(true);
+            const response = await cloudmersiveService.convertExcelToJson(file);
+            console.log('Excel converted to JSON:', response.data);
+            // ACA DEBE IR LA LOGICA DE MAPEO DE LA RESPUESTA A LA TABLA
+          } catch (error) {
+            console.error('Error converting Excel to JSON:', error);
+          } finally {
+            setIsLoading(false);
+            //window.location.reload();
+          }
+        }
+      };
+      fileInput.click();
+    }
+  };
+
   return (
     <div id="bodywrap">
       <DetailsModal
@@ -206,7 +247,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({
                       backgroundColor="#004217"
                       hoverColor="#004217"
                       hoverBorderColor="2px solid #004217"
-                      onClick={() => setShowDeleteConfirmationModal(true)}
+                      onClick={handleImportClick}
+                      disabled={isLoading}
                     >
                       <RiFileExcel2Line style={{ marginRight: '10px' }} />{' '}
                       Importar
@@ -236,6 +278,17 @@ const TableDetails: React.FC<TableDetailsProps> = ({
                 </div>
               </ul>
             </div>
+            {isLoading && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  margin: '20px 0',
+                }}
+              >
+                <Spinner />
+              </div>
+            )}
             <div className="table-wrapper">
               <table className="table table-striped table-hover">
                 <thead className="table-header">

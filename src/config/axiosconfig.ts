@@ -34,9 +34,15 @@ apiClient.interceptors.response.use(
         localStorage.removeItem('authToken'); // Eliminar el token almacenado
         window.location.href = '/login'; // Redirigir a la página de login
       } else if (status === 403) {
-        // Opcional: manejar el caso en que el usuario no tenga permisos
-        console.error('Acceso denegado.');
-        window.location.href = '/login'; // Redirigir a la página de login
+        // Solo redirigir si es un error de autenticación, no de permisos
+        if (error.response.data?.message?.includes('JWT')) {
+          console.error('Token inválido, redirigiendo al login...');
+          localStorage.removeItem('authToken');
+          window.location.href = '/login';
+        } else {
+          // Si es un error de permisos, solo mostrar el error
+          console.error('Acceso denegado:', error.response.data);
+        }
       }
     } else {
       // Manejo de errores de red o configuración
