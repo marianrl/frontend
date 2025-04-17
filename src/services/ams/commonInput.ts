@@ -1,5 +1,5 @@
 import apiClient from '../../config/axiosconfig';
-import { CommonInput } from '../../types/commonInput';
+import { CreateInputRequest } from '../../types/createInputRequest';
 import { InputRequest } from '../../types/inputRequest';
 
 export interface ApiResponse {
@@ -36,14 +36,14 @@ const commonInputService = {
       throw new Error('Error al obtener las Auditorias por ID');
     }
   },
-  async createCommonAudit(
+  async createCommonInputs(
     endpoint: string,
-    commonAudit: CommonInput
+    commonAudits: CreateInputRequest[]
   ): Promise<ApiResponse> {
     try {
       const response = await apiClient.post(
         `${API_BASE_URL}/${endpoint}`,
-        commonAudit
+        commonAudits
       );
       return {
         data: response.data,

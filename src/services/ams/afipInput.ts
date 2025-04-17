@@ -1,5 +1,6 @@
 import apiClient from '../../config/axiosconfig';
 import { AfipInput } from '../../types/afipInput';
+import { CreateInputRequest } from '../../types/createInputRequest';
 import { InputRequest } from '../../types/inputRequest';
 
 export interface ApiResponse {
@@ -11,7 +12,7 @@ export interface ApiResponse {
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
 const afipInputService = {
-  async fetchAllFeatures(endpoint: string): Promise<ApiResponse> {
+  async fetchAllAfipInputs(endpoint: string): Promise<ApiResponse> {
     try {
       const response = await apiClient.get(`${API_BASE_URL}/${endpoint}`);
       return {
@@ -22,7 +23,7 @@ const afipInputService = {
       throw new Error('Error al obtener las Auditorias');
     }
   },
-  async fetchFeaturesById(endpoint: string, id: string): Promise<ApiResponse> {
+  async fetchAfipInputById(endpoint: string, id: string): Promise<ApiResponse> {
     try {
       const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
       return {
@@ -33,20 +34,32 @@ const afipInputService = {
       throw new Error('Error al obtener las Auditorias por ID');
     }
   },
-  async createFeatures(
+  async createAfipInputs(
     endpoint: string,
-    afipInput: AfipInput
+    afipInputs: CreateInputRequest[]
   ): Promise<ApiResponse> {
     try {
+      console.log('Sending data to backend:', afipInputs);
       const response = await apiClient.post(
         `${API_BASE_URL}/${endpoint}`,
-        afipInput
+        afipInputs,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       return {
         data: response.data,
         status: response.status,
       };
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error in createAfipInputs:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+        console.error('Error headers:', error.response.headers);
+      }
       throw new Error('Error al crear nuevas auditorias');
     }
   },

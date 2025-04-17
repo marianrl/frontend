@@ -20,6 +20,7 @@ import { commonInputService } from '../../services/ams/commonInput';
 import { afipInputService } from '../../services/ams/afipInput';
 import { cloudmersiveService } from '../../services/integrations/cloudmersive';
 import Spinner from '../general/Spinner';
+import { CreateInputRequest } from '../../types/createInputRequest';
 
 interface Data {
   id: number;
@@ -184,12 +185,50 @@ const TableDetails: React.FC<TableDetailsProps> = ({
             setIsLoading(true);
             const response = await cloudmersiveService.convertExcelToJson(file);
             console.log('Excel converted to JSON:', response.data);
-            // ACA DEBE IR LA LOGICA DE MAPEO DE LA RESPUESTA A LA TABLA
+
+            // Map the Excel response to CreateInputRequest
+            const mappedData: CreateInputRequest[] = response.data.map(
+              (item: any) => {
+                // Convert date from MM/DD/YYYY to YYYY-MM-DD
+                const [month, day, year] = item.fecha_ingreso.split('/');
+                const formattedDate = `${year}-${month.padStart(
+                  2,
+                  '0'
+                )}-${day.padStart(2, '0')}`;
+
+                return {
+                  lastName: item.apellido,
+                  name: item.nombre,
+                  cuil: item.cuil,
+                  file: item.legajo,
+                  allocation: item.asignacion,
+                  uoc: item.uoc,
+                  admissionDate: formattedDate,
+                  client: parseInt(item.cliente),
+                  branch: parseInt(item.sucursal),
+                  auditId: auditId,
+                };
+              }
+            );
+
+            console.log('mappedData', mappedData);
+
+            // Call the appropriate service based on CommonOrAfipAudit
+            if (CommonOrAfipAudit === 'commonAuditDetails') {
+              await commonInputService.createCommonInputs(
+                'commonInput',
+                mappedData
+              );
+            } else {
+              await afipInputService.createAfipInputs('afipInput', mappedData);
+            }
+
+            // Reload the page to show the new data
           } catch (error) {
             console.error('Error converting Excel to JSON:', error);
           } finally {
             setIsLoading(false);
-            //window.location.reload();
+            window.location.reload();
           }
         }
       };
