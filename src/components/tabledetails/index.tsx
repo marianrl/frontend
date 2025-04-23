@@ -21,6 +21,7 @@ import { afipInputService } from '../../services/ams/afipInput';
 import { cloudmersiveService } from '../../services/integrations/cloudmersive';
 import Spinner from '../general/Spinner';
 import { CreateInputRequest } from '../../types/createInputRequest';
+import { useSession } from '../sessionprovider';
 
 interface Data {
   id: number;
@@ -74,6 +75,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({
     useState(false);
   const [fileInput, setFileInput] = useState<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { role } = useSession();
 
   useEffect(() => {
     const input = document.createElement('input');
@@ -186,10 +188,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({
             const response = await cloudmersiveService.convertExcelToJson(file);
             console.log('Excel converted to JSON:', response.data);
 
-            // Map the Excel response to CreateInputRequest
             const mappedData: CreateInputRequest[] = response.data.map(
               (item: any) => {
-                // Convert date from MM/DD/YYYY to YYYY-MM-DD
                 const [month, day, year] = item.fecha_ingreso.split('/');
                 const formattedDate = `${year}-${month.padStart(
                   2,
@@ -213,7 +213,6 @@ const TableDetails: React.FC<TableDetailsProps> = ({
 
             console.log('mappedData', mappedData);
 
-            // Call the appropriate service based on CommonOrAfipAudit
             if (CommonOrAfipAudit === 'commonAuditDetails') {
               await commonInputService.createCommonInputs(
                 'commonInput',
@@ -222,8 +221,6 @@ const TableDetails: React.FC<TableDetailsProps> = ({
             } else {
               await afipInputService.createAfipInputs('afipInput', mappedData);
             }
-
-            // Reload the page to show the new data
           } catch (error) {
             console.error('Error converting Excel to JSON:', error);
           } finally {
@@ -272,37 +269,41 @@ const TableDetails: React.FC<TableDetailsProps> = ({
               <ul>
                 <div>
                   <li className="filaTable">
-                    <Button
-                      type="button"
-                      backgroundColor="#92a9fc"
-                      hoverColor="#92a9fc"
-                      hoverBorderColor="2px solid #92a9fc"
-                      onClick={() => setShowDeleteConfirmationModal(true)}
-                    >
-                      <FaCheck style={{ marginRight: '10px' }} /> Aprobar
-                    </Button>
-                    <Button
-                      type="button"
-                      backgroundColor="#004217"
-                      hoverColor="#004217"
-                      hoverBorderColor="2px solid #004217"
-                      onClick={handleImportClick}
-                      disabled={isLoading}
-                    >
-                      <RiFileExcel2Line style={{ marginRight: '10px' }} />{' '}
-                      Importar
-                    </Button>
-                    <Button
-                      type="button"
-                      label="Eliminar"
-                      backgroundColor="#960909"
-                      hoverColor="#960909"
-                      hoverBorderColor="2px solid #960909"
-                      onClick={() => setShowDeleteConfirmationModal(true)}
-                    >
-                      <RiDeleteBin6Fill style={{ marginRight: '10px' }} />{' '}
-                      Eliminar
-                    </Button>
+                    {role?.id !== 3 && (
+                      <>
+                        <Button
+                          type="button"
+                          backgroundColor="#92a9fc"
+                          hoverColor="#92a9fc"
+                          hoverBorderColor="2px solid #92a9fc"
+                          onClick={() => setShowDeleteConfirmationModal(true)}
+                        >
+                          <FaCheck style={{ marginRight: '10px' }} /> Aprobar
+                        </Button>
+                        <Button
+                          type="button"
+                          backgroundColor="#004217"
+                          hoverColor="#004217"
+                          hoverBorderColor="2px solid #004217"
+                          onClick={handleImportClick}
+                          disabled={isLoading}
+                        >
+                          <RiFileExcel2Line style={{ marginRight: '10px' }} />{' '}
+                          Importar
+                        </Button>
+                        <Button
+                          type="button"
+                          label="Eliminar"
+                          backgroundColor="#960909"
+                          hoverColor="#960909"
+                          hoverBorderColor="2px solid #960909"
+                          onClick={() => setShowDeleteConfirmationModal(true)}
+                        >
+                          <RiDeleteBin6Fill style={{ marginRight: '10px' }} />{' '}
+                          Eliminar
+                        </Button>
+                      </>
+                    )}
                     <Button
                       type="button"
                       backgroundColor="#00004b"

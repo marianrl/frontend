@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import '../table/style.css';
 import { IoMdAdd } from 'react-icons/io';
 import AddModal from '../addmodal';
+import { useSession } from '../sessionprovider';
 
 interface Data {
   id: number;
@@ -30,6 +31,7 @@ const Table: React.FC<TableProps> = ({
   auditType,
   auditTypeDetails,
 }) => {
+  const { role } = useSession();
   const [orderBy, setOrderBy] = useState<{
     key: keyof Data;
     asc: boolean;
@@ -109,16 +111,18 @@ const Table: React.FC<TableProps> = ({
             <div>
               <Buttongroup>
                 <div className="container">
-                  <Button
-                    type="button"
-                    backgroundColor="#00004b"
-                    hoverColor="#00004b"
-                    hoverBorderColor="2px solid #00004b"
-                    style={{ width: '140px', marginBottom: '10px' }}
-                    onClick={addAudit}
-                  >
-                    <IoMdAdd style={{ marginRight: '15px' }} /> Agregar
-                  </Button>
+                  {role?.id !== 3 && (
+                    <Button
+                      type="button"
+                      backgroundColor="#00004b"
+                      hoverColor="#00004b"
+                      hoverBorderColor="2px solid #00004b"
+                      style={{ width: '140px', marginBottom: '10px' }}
+                      onClick={addAudit}
+                    >
+                      <IoMdAdd style={{ marginRight: '15px' }} /> Agregar
+                    </Button>
+                  )}
                 </div>
               </Buttongroup>
             </div>
