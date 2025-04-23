@@ -10,6 +10,7 @@ import AuditAfip from './pages/auditafip';
 import CommonAuditDetail from './pages/commonauditdetail';
 import AfipAuditDetail from './pages/afipauditdetail';
 import Admin from './pages/admin';
+import ProtectedRoute from './components/protectedroute';
 
 const App: React.FC = () => {
   return (
@@ -18,20 +19,72 @@ const App: React.FC = () => {
         <SessionProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/audit" element={<Audit />} />
-            <Route path="/auditafip" element={<AuditAfip />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/audit"
+              element={
+                <ProtectedRoute allowedRoles={[1, 2, 3]}>
+                  <Audit />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/auditafip"
+              element={
+                <ProtectedRoute allowedRoles={[1, 2, 3]}>
+                  <AuditAfip />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/audit/commonAuditDetails/:auditNumber"
-              element={<CommonAuditDetail />}
+              element={
+                <ProtectedRoute allowedRoles={[1, 2, 3]}>
+                  <CommonAuditDetail />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/auditafip/afipAuditDetails/:auditNumber"
-              element={<AfipAuditDetail />}
+              element={
+                <ProtectedRoute allowedRoles={[1, 2, 3]}>
+                  <AfipAuditDetail />
+                </ProtectedRoute>
+              }
             />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route
+              path="/reports"
+              element={
+                <ProtectedRoute allowedRoles={[1, 2, 4]}>
+                  <Reports />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute allowedRoles={[1]}>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                localStorage.getItem('user') ? (
+                  <Navigate to="/dashboard" replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
           </Routes>
         </SessionProvider>
       </BrowserRouter>

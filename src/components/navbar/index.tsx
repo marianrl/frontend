@@ -11,9 +11,12 @@ import Logo from '../../img/Logo_izquierda.png';
 import Nombre from '../../img/Logo_derecha.png';
 import Buttongroup from '../general/buttongroup';
 import Modal from '../modal';
+import { useSession } from '../sessionprovider';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
+  const { role } = useSession();
+  console.log('Navbar role:', role);
   const [estadoModal, cambiarEstadoModal] = useState(false);
   const handleAudit = () => {
     navigate('/audit');
@@ -52,40 +55,48 @@ const Navbar: React.FC = () => {
               <span className="nav-text">Dashboard</span>
             </a>
           </li>
-          <li>
-            <a href="/auditafip" onClick={handleAuditAfip}>
-              <i className="fa fa-2x">
-                <AiOutlineAudit />
-              </i>
-              <span className="nav-text">Auditorias AFIP</span>
-            </a>
-          </li>
-          <li>
-            <a href="/audit" onClick={handleAudit}>
-              <i className="fa fa-2x">
-                <BsFileBarGraph />
-              </i>
-              <span className="nav-text">Auditorias Internas</span>
-            </a>
-          </li>
-          <li>
-            <a href="/reports">
-              <i className="fa fa-2x">
-                <TbReportSearch />
-              </i>
-              <span className="nav-text">Reportes</span>
-            </a>
-          </li>
+          {role?.id !== 4 && (
+            <li>
+              <a href="/auditafip" onClick={handleAuditAfip}>
+                <i className="fa fa-2x">
+                  <AiOutlineAudit />
+                </i>
+                <span className="nav-text">Auditorias AFIP</span>
+              </a>
+            </li>
+          )}
+          {role?.id !== 4 && (
+            <li>
+              <a href="/audit" onClick={handleAudit}>
+                <i className="fa fa-2x">
+                  <BsFileBarGraph />
+                </i>
+                <span className="nav-text">Auditorias Internas</span>
+              </a>
+            </li>
+          )}
+          {role?.id !== 3 && (
+            <li>
+              <a href="/reports">
+                <i className="fa fa-2x">
+                  <TbReportSearch />
+                </i>
+                <span className="nav-text">Reportes</span>
+              </a>
+            </li>
+          )}
         </ul>
         <ul className="logout">
-          <li>
-            <a href="/admin" onClick={handleAdminClick}>
-              <i className="fa fa-2x">
-                <RiAdminFill />
-              </i>
-              <span className="nav-text">Admin</span>
-            </a>
-          </li>
+          {role?.id === 1 && (
+            <li>
+              <a href="/admin" onClick={handleAdminClick}>
+                <i className="fa fa-2x">
+                  <RiAdminFill />
+                </i>
+                <span className="nav-text">Admin</span>
+              </a>
+            </li>
+          )}
           <li>
             <a href="#" onClick={handleClick}>
               <i className="fa fa-2x">

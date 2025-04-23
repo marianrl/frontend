@@ -25,8 +25,11 @@ const Login: React.FC = () => {
 
   const parseJwt = (token: string) => {
     try {
-      return JSON.parse(atob(token.split('.')[1])); // Decodifica el payload
+      const decoded = JSON.parse(atob(token.split('.')[1])); // Decodifica el payload
+      console.log('Full decoded token:', decoded);
+      return decoded;
     } catch (e) {
+      console.error('Error decoding token:', e);
       return null;
     }
   };
@@ -53,7 +56,12 @@ const Login: React.FC = () => {
           // Decodificar el token para obtener los datos del usuario
           const decodedToken = parseJwt(token);
           if (decodedToken) {
-            login(user, decodedToken.name, decodedToken.lastName);
+            console.log('Decoded token role:', decodedToken.role);
+            const roleObject = {
+              id: decodedToken.role,
+              role: decodedToken.role === 1 ? 'Admin' : 'User',
+            };
+            login(user, decodedToken.name, decodedToken.lastName, roleObject);
           }
 
           // Redirigir al dashboard
