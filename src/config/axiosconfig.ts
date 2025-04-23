@@ -29,10 +29,8 @@ apiClient.interceptors.response.use(
     if (error.response) {
       const { status } = error.response;
       if (status === 401) {
-        // Redirigir al login si el token es inválido o ha expirado
-        console.error('No autorizado, redirigiendo al login...');
-        localStorage.removeItem('authToken'); // Eliminar el token almacenado
-        window.location.href = '/login'; // Redirigir a la página de login
+        // Solo eliminar el token si existe, pero no redirigir automáticamente
+        localStorage.removeItem('authToken');
       } else if (status === 403) {
         // Solo redirigir si es un error de autenticación, no de permisos
         if (error.response.data?.message?.includes('JWT')) {

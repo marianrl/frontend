@@ -53,16 +53,15 @@ const userService = {
       const token = response.data.token;
       if (token) {
         localStorage.setItem('authToken', `Bearer ${token}`);
-        console.log('LOCAL STORAGE ' + localStorage.getItem('authToken'));
+        console.log('Token stored:', token);
+        return response.status;
       }
-
-      return response.status; // Devuelve solo el estado, ya que el token ya se almacenó
+      return 401; // If no token is received, treat as unauthorized
     } catch (error: any) {
-      if (error.response && error.response.status === 401) {
-        throw new Error('Usuario o contraseña incorrecta');
+      if (error.response) {
+        return error.response.status;
       }
-      console.error('Error en fetchUserByMailAndPassword:', error);
-      throw new Error('Error al procesar la solicitud');
+      return 500; // Return a generic error status
     }
   },
 

@@ -41,7 +41,6 @@ const Login: React.FC = () => {
     };
 
     try {
-      // Llamar a la función y solo verificar el estado
       const status = await userService.fetchUserByMailAndPassword(
         'user/authenticate',
         userRequest
@@ -54,27 +53,23 @@ const Login: React.FC = () => {
         const token = localStorage.getItem('authToken');
         if (token) {
           // Decodificar el token para obtener los datos del usuario
-          const decodedToken = parseJwt(token);
+          const decodedToken = parseJwt(token.replace('Bearer ', ''));
           if (decodedToken) {
-            console.log('Decoded token role:', decodedToken.role);
             const roleObject = {
               id: decodedToken.role,
               role: decodedToken.role === 1 ? 'Admin' : 'User',
             };
             login(user, decodedToken.name, decodedToken.lastName, roleObject);
+            navigate('/dashboard');
           }
-
-          // Redirigir al dashboard
-          navigate('/dashboard');
-        } else {
-          setErrorMessage('Token no encontrado en localStorage.');
         }
-      } else {
+      } else if (status === 401) {
         setErrorMessage('Usuario o contraseña incorrecta');
+      } else {
+        setErrorMessage('Error al procesar la solicitud');
       }
     } catch (error: any) {
       console.error('Error en el login:', error.message);
-      setUserData(null);
       setErrorMessage('Error al procesar la solicitud');
     }
   };
