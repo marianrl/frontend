@@ -16,7 +16,6 @@ import { useSession } from '../sessionprovider';
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { role } = useSession();
-  console.log('Navbar role:', role);
   const [estadoModal, cambiarEstadoModal] = useState(false);
   const handleAudit = () => {
     navigate('/audit');

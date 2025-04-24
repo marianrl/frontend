@@ -58,22 +58,38 @@ const auditService = {
       throw new Error('Error al crear nuevas auditorías');
     }
   },
-  async updateGroup(
+  async updateAudit(
     endpoint: string,
     id: string,
-    afipAudit: Audit
+    audit: Audit
   ): Promise<ApiResponse> {
     try {
+      console.log('Updating audit with data:', JSON.stringify(audit, null, 2));
       const response = await apiClient.put(
         `${API_BASE_URL}/${endpoint}/${id}`,
-        afipAudit
+        audit,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('Update response status:', response.status);
+      console.log(
+        'Update response data:',
+        JSON.stringify(response.data, null, 2)
       );
       return {
         data: response.data,
         status: response.status,
       };
-    } catch (error) {
-      throw new Error('Error al crear las auditorias');
+    } catch (error: any) {
+      console.error('Error updating audit:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
+      throw new Error('Error al actualizar las auditorias');
     }
   },
   async deleteAudit(endpoint: string, id: number): Promise<ApiResponse> {

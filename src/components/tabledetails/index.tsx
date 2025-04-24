@@ -22,6 +22,7 @@ import { cloudmersiveService } from '../../services/integrations/cloudmersive';
 import Spinner from '../general/Spinner';
 import { CreateInputRequest } from '../../types/createInputRequest';
 import { useSession } from '../sessionprovider';
+import ApprovalConfirmationModal from '../approvalconfirmationmodal';
 
 interface Data {
   id: number;
@@ -76,6 +77,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({
   const [fileInput, setFileInput] = useState<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { role } = useSession();
+  const [showApprovalConfirmationModal, setShowApprovalConfirmationModal] =
+    useState(false);
 
   useEffect(() => {
     const input = document.createElement('input');
@@ -233,12 +236,53 @@ const TableDetails: React.FC<TableDetailsProps> = ({
     }
   };
 
+  const isAllInputsApproved = () => {
+    // Check if all inputs have a different features.id than 49
+    const allInputsApproved = data.every((input) => input.features.id !== 49);
+    // Check if the audit is not already approved
+    const auditNotApproved =
+      data.length > 0 && data[0].audit.idAuditado.id !== 1;
+    return allInputsApproved && auditNotApproved;
+  };
+
+  const handleApprovalConfirmationButtonClick = async () => {
+    try {
+      // Update the audit object
+      const updatedAudit = {
+        id: auditId,
+        auditDate: data[0].audit.auditDate,
+        idTipoAuditoria: data[0].audit.idTipoAuditoria,
+        idAuditado: {
+          id: 1,
+          audited: 'Si',
+        },
+      };
+
+      console.log('Sending audit update:', updatedAudit);
+      const response = await auditService.updateAudit(
+        'audit',
+        auditId.toString(),
+        updatedAudit
+      );
+      console.log('Update response:', response);
+
+      // Redirect based on audit type
+      if (CommonOrAfipAudit === 'commonAuditDetails') {
+        navigate('/audit');
+      } else {
+        navigate('/auditafip');
+      }
+    } catch (error) {
+      console.error('Error al aprobar la auditoria:', error);
+    }
+  };
+
   return (
     <div id="bodywrap">
       <DetailsModal
         estado={estadoModal}
         cambiarEstadoModal={cambiarEstadoModal}
-        data={selectedRow} // Pasa la información de la fila seleccionada al detailsmodal
+        data={selectedRow}
         auditType={CommonOrAfipAudit}
       />
       {showDeleteConfirmationModal && (
@@ -249,6 +293,22 @@ const TableDetails: React.FC<TableDetailsProps> = ({
             handleDeleteConfirmationButtonClick
           }
           handleModalClose={handleModalClose}
+          auditType={
+            data.length > 0 ? data[0].audit.idTipoAuditoria.auditType : '--'
+          }
+          auditDate={data.length > 0 ? data[0].audit.auditDate : '--'}
+        />
+      )}
+      {showApprovalConfirmationModal && (
+        <ApprovalConfirmationModal
+          estado={showApprovalConfirmationModal}
+          cambiarEstadoApprovalConfirmationModal={
+            setShowApprovalConfirmationModal
+          }
+          handleModalClose={handleModalClose}
+          handleApprovalConfirmationButtonClick={
+            handleApprovalConfirmationButtonClick
+          }
           auditType={
             data.length > 0 ? data[0].audit.idTipoAuditoria.auditType : '--'
           }
@@ -273,10 +333,16 @@ const TableDetails: React.FC<TableDetailsProps> = ({
                       <>
                         <Button
                           type="button"
-                          backgroundColor="#92a9fc"
+                          backgroundColor={
+                            !isAllInputsApproved() ? '#cccccc' : '#92a9fc'
+                          }
                           hoverColor="#92a9fc"
                           hoverBorderColor="2px solid #92a9fc"
-                          onClick={() => setShowDeleteConfirmationModal(true)}
+                          hoverBackgroundColor={
+                            !isAllInputsApproved() ? '#cccccc' : '#ffffff'
+                          }
+                          onClick={() => setShowApprovalConfirmationModal(true)}
+                          disabled={!isAllInputsApproved()}
                         >
                           <FaCheck style={{ marginRight: '10px' }} /> Aprobar
                         </Button>
