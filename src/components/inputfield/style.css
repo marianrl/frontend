@@ -57,9 +57,12 @@
 .checkbox {
   margin-top: 7px;
   text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 .showPassword {
-  font-size: 13px;
+  font-size: 15px;
   margin-left: 5px;
+  line-height: 20px;
 }

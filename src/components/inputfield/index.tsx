@@ -45,6 +45,7 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
             checked={isPasswordVisible}
             onChange={togglePasswordVisibility}
             disabled={disabled}
+            style={{ width: '20px', height: '20px' }}
           />
           <label className="showPassword">Mostrar contraseña</label>
         </div>

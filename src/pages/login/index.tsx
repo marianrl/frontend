@@ -104,7 +104,9 @@ const Login: React.FC = () => {
               onChange={handlePasswordChange}
             />
             {errorMessage && <p className="errorMessage">{errorMessage}</p>}
-            <Button type="submit" label="INGRESAR" onClick={handleClick} />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button type="submit" label="INGRESAR" onClick={handleClick} />
+            </div>
           </form>
         </div>
       </div>
