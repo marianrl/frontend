@@ -26,8 +26,11 @@ const Modal: React.FC<DetailsModelProps> = ({ estado, cambiarEstadoModal }) => {
     <>
       {estado && (
         <div>
-          <div className="Overlay">
-            <div className="ModalContainer">
+          <div className="Overlay" onClick={handleModalClose}>
+            <div
+              className="ModalContainer"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="ContenidoModal">
                 <h1 className="TituloModalCerrar">Atención</h1>
                 <p className="centrarTexto">¿Desea cerrar sesion?</p>

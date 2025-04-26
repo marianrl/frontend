@@ -24,8 +24,11 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   return (
     <>
       {estado && (
-        <div className="Overlay">
-          <div className="ConfirmationModalContainer">
+        <div className="Overlay" onClick={handleDeleteUserModalClose}>
+          <div
+            className="ConfirmationModalContainer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="ConfirmationContenidoModal">
               <h1 className="ConfirmationTituloModalCerrar">
                 Se eliminara el siguiente usuario:{' '}

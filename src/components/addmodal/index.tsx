@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "./style.scss";
-import Button from "../general/button";
-import AuditTypeDropdown from "../audittypedropdown";
-import { auditTypeService } from "../../services/ams/auditType";
-import { AuditType } from "../../types/auditType";
-import { auditService } from "../../services/ams/audit";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import './style.scss';
+import Button from '../general/button';
+import AuditTypeDropdown from '../audittypedropdown';
+import { auditTypeService } from '../../services/ams/auditType';
+import { AuditType } from '../../types/auditType';
+import { auditService } from '../../services/ams/audit';
+import { useNavigate } from 'react-router-dom';
 
 interface AddModalProps {
   estado: boolean;
   cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>;
-  auditType: "commonAuditDetails" | "afipAuditDetails";
+  auditType: 'commonAuditDetails' | 'afipAuditDetails';
 }
 
 const AddModal: React.FC<AddModalProps> = ({
@@ -20,20 +20,20 @@ const AddModal: React.FC<AddModalProps> = ({
 }) => {
   const navigate = useNavigate();
   const [audits, setAudits] = useState<AuditType[]>([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState<AuditType | null>(null);
 
   useEffect(() => {
     auditTypeService
-      .fetchAllAuditType("auditType")
+      .fetchAllAuditType('auditType')
       .then((response) => {
         const allAuditTypes = response.data;
         setAudits(allAuditTypes);
-        setErrorMessage("");
+        setErrorMessage('');
       })
       .catch(() => {
         setAudits([]);
-        setErrorMessage("Error al procesar la solicitud");
+        setErrorMessage('Error al procesar la solicitud');
         console.log(errorMessage);
       });
   }, [errorMessage]);
@@ -42,17 +42,17 @@ const AddModal: React.FC<AddModalProps> = ({
     if (selectedOption) {
       try {
         const response = await auditService.createAudit(
-          "audit",
-          selectedOption.id,
+          'audit',
+          selectedOption.id
         );
         const auditId = response.auditId; // Obtén el ID de la respuesta
-        if (auditType === "commonAuditDetails") {
+        if (auditType === 'commonAuditDetails') {
           navigate(`/audit/commonAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
         } else {
           navigate(`/auditafip/afipAuditDetails/${auditId}`); // Utiliza el ID en el path de navigate
         }
       } catch (error) {
-        console.error("Error al obtener los AuditType:", error);
+        console.error('Error al obtener los AuditType:', error);
       }
     }
   };
@@ -69,8 +69,11 @@ const AddModal: React.FC<AddModalProps> = ({
     <>
       {estado && (
         <div>
-          <div className="Overlay">
-            <div className="ModalContainer">
+          <div className="Overlay" onClick={() => cambiarEstadoModal(false)}>
+            <div
+              className="ModalContainer"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="ContenidoModal">
                 <h1 className="TituloModalCerrar">
                   Agregar nueva auditoria interna
@@ -83,15 +86,14 @@ const AddModal: React.FC<AddModalProps> = ({
                         <AuditTypeDropdown
                           onSelect={handleDropdownSelect}
                           auditTypes={
-                            auditType === "commonAuditDetails"
+                            auditType === 'commonAuditDetails'
                               ? audits.filter(
                                   (audit) =>
-                                    audit.auditType !== "SIN RESPUESTA" &&
-                                    audit.auditType !== "CRUCE DE AFIP",
+                                    audit.auditType !== 'SIN RESPUESTA' &&
+                                    audit.auditType !== 'CRUCE DE AFIP'
                                 )
                               : audits.filter(
-                                  (audit) =>
-                                    audit.auditType === "CRUCE DE AFIP",
+                                  (audit) => audit.auditType === 'CRUCE DE AFIP'
                                 )
                           }
                           maxLength={12}

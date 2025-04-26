@@ -31,8 +31,14 @@ const AnswerConfirmationModal: React.FC<AnswerConfirmationModelProps> = ({
   return (
     <>
       {estado && (
-        <div className="Overlay">
-          <div className="ConfirmationModalContainer">
+        <div
+          className="Overlay"
+          onClick={() => cambiarEstadoConfirmationModal(false)}
+        >
+          <div
+            className="ConfirmationModalContainer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="ConfirmationContenidoModal">
               <h1 className="ConfirmationTituloModalCerrar">
                 Su respuesta sera:{' '}

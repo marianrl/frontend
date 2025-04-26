@@ -99,8 +99,8 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 
   return (
     <div>
-      <div className="Overlay">
-        <div className="ModalContainer">
+      <div className="Overlay" onClick={() => cambiarEstadoAddUserModal(false)}>
+        <div className="ModalContainer" onClick={(e) => e.stopPropagation()}>
           <div className="ContenidoModal">
             <h1 className="TituloModalCerrar">Modificar usuario</h1>
             <div>

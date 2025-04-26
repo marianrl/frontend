@@ -106,8 +106,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
 
   return (
     <div>
-      <div className="Overlay">
-        <div className="ModalContainer">
+      <div className="Overlay" onClick={() => cambiarEstadoAddUserModal(false)}>
+        <div className="ModalContainer" onClick={(e) => e.stopPropagation()}>
           <div className="ContenidoModal">
             <h1 className="TituloModalCerrar">Agregar nuevo usuario</h1>
             <div>

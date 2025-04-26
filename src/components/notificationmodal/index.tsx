@@ -16,11 +16,13 @@ interface NotificationModalProps {
 const NotificationModal: React.FC<NotificationModalProps> = ({
   className,
   isOpen,
+  onClose,
 }) => {
   return (
-    <div style={{ display: isOpen ? 'block' : 'none' }}>
+    <div style={{ display: isOpen ? 'block' : 'none' }} onClick={onClose}>
       <List
         className={className}
+        onClick={(e) => e.stopPropagation()}
         sx={{
           width: '100%',
           maxWidth: 360,

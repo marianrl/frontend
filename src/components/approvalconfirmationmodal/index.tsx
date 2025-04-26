@@ -29,8 +29,14 @@ const ApprovalConfirmationModal: React.FC<ApprovalConfirmationModalProps> = ({
   return (
     <>
       {estado && (
-        <div className="Overlay">
-          <div className="ConfirmationModalContainer">
+        <div
+          className="Overlay"
+          onClick={() => cambiarEstadoApprovalConfirmationModal(false)}
+        >
+          <div
+            className="ConfirmationModalContainer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="ConfirmationContenidoModal">
               <h1 className="ConfirmationTituloModalCerrar">
                 Se aprobará la siguiente auditoria:{' '}

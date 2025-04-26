@@ -131,8 +131,11 @@ const DetailsModal: React.FC<DetailsModelProps> = ({
     <>
       {estado && (
         <div>
-          <div className="Overlay">
-            <div className="ContendorModal">
+          <div className="Overlay" onClick={handleModalClose}>
+            <div
+              className="ContendorModal"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="Encabezado">
                 <h3 className="TituloModal">
                   {data ? `${data.lastName} ${data.name}` : ''}
