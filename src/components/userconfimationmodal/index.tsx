@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '../general/button';
-import { User } from '../../types/user';
 
 interface UserConfirmationModelProps {
   estado: boolean;
