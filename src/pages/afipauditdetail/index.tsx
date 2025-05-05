@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/general/header';
 import TableDetails from '../../components/tabledetails';
 import { useNavigate, useParams } from 'react-router-dom';
-import { commonInputService } from '../../services/ams/commonInput';
+import { afipInputService } from '../../services/ams/afipInput';
 import NotificationModal from '../../components/notificationmodal';
 import Navbar from '../../components/navbar';
 
@@ -29,8 +29,8 @@ const AfipAuditDetail: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      commonInputService
-        .fetchCommonAuditById('afipInput', auditNumberValue)
+      afipInputService
+        .fetchAfipInputById('afipInput', auditNumberValue.toString())
         .then((response) => {
           const allAudit = response.data;
           setData(allAudit);

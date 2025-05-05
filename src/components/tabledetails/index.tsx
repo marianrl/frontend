@@ -59,7 +59,7 @@ interface TableDetailsProps {
 }
 
 const TableDetails: React.FC<TableDetailsProps> = ({
-  data,
+  data: initialData,
   CommonOrAfipAudit,
   auditId,
 }) => {
@@ -79,6 +79,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({
   const { role } = useSession();
   const [showApprovalConfirmationModal, setShowApprovalConfirmationModal] =
     useState(false);
+  const [data, setData] = useState<Data[]>(initialData);
 
   useEffect(() => {
     const input = document.createElement('input');
@@ -94,6 +95,10 @@ const TableDetails: React.FC<TableDetailsProps> = ({
       }
     };
   }, []);
+
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
   const handleRowClick = (rowData: Data) => {
     setSelectedRow(rowData); // Almacena la información de la fila seleccionada en el estado
@@ -264,8 +269,6 @@ const TableDetails: React.FC<TableDetailsProps> = ({
         auditId.toString(),
         updatedAudit
       );
-      console.log('Update response:', response);
-
       // Redirect based on audit type
       if (CommonOrAfipAudit === 'commonAuditDetails') {
         navigate('/audit');
@@ -277,6 +280,28 @@ const TableDetails: React.FC<TableDetailsProps> = ({
     }
   };
 
+  // Add this function to update the data when a row is modified
+  const handleDataUpdate = async () => {
+    try {
+      // Fetch the updated data based on the audit type
+      let response;
+      if (CommonOrAfipAudit === 'commonAuditDetails') {
+        response = await commonInputService.fetchCommonAuditById(
+          'commonInput',
+          auditId
+        );
+      } else {
+        response = await afipInputService.fetchAfipInputById(
+          'afipInput',
+          auditId.toString()
+        );
+      }
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching updated data:', error);
+    }
+  };
+
   return (
     <div id="bodywrap">
       <DetailsModal
@@ -284,6 +309,7 @@ const TableDetails: React.FC<TableDetailsProps> = ({
         cambiarEstadoModal={cambiarEstadoModal}
         data={selectedRow}
         auditType={CommonOrAfipAudit}
+        onUpdate={handleDataUpdate}
       />
       {showDeleteConfirmationModal && (
         <DeleteConfirmationModal
@@ -344,7 +370,8 @@ const TableDetails: React.FC<TableDetailsProps> = ({
                           onClick={() => setShowApprovalConfirmationModal(true)}
                           disabled={!isAllInputsApproved()}
                         >
-                          <FaCheck style={{ marginRight: '10px' }} /> Aprobar
+                          <FaCheck style={{ marginRight: '10px' }} />{' '}
+                          {isAllInputsApproved() ? 'Aprobar' : 'Aprobado'}
                         </Button>
                         <Button
                           type="button"

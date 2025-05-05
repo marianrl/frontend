@@ -9,6 +9,7 @@ import ConfirmationModal from '../answerconfimationmodal';
 import { commonInputService } from '../../services/ams/commonInput';
 import { afipInputService } from '../../services/ams/afipInput';
 import { InputRequest } from '../../types/inputRequest';
+import { toast } from 'react-toastify';
 
 interface Data {
   id: number;
@@ -40,6 +41,7 @@ interface DetailsModelProps {
   cambiarEstadoModal: React.Dispatch<React.SetStateAction<boolean>>;
   data: Data | null;
   auditType: 'commonAuditDetails' | 'afipAuditDetails';
+  onUpdate?: () => void;
 }
 
 const DetailsModal: React.FC<DetailsModelProps> = ({
@@ -47,6 +49,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({
   cambiarEstadoModal,
   data,
   auditType,
+  onUpdate,
 }) => {
   const [selectedOption, setSelectedOption] = useState<Answer | null>(null);
   const [showButton, setShowButton] = useState(false);
@@ -90,8 +93,7 @@ const DetailsModal: React.FC<DetailsModelProps> = ({
           allocation: data.allocation,
           uoc: data.uoc,
           admissionDate: data.admissionDate,
-          // Asignar el featuresId a partir del selectedOption
-          answerId: selectedOption.id, // Suponiendo que selectedOption.id representa el featuresId
+          answerId: selectedOption.id,
           auditTypeId: data.audit.idTipoAuditoria.id,
         };
 
@@ -109,9 +111,39 @@ const DetailsModal: React.FC<DetailsModelProps> = ({
             updatedDataRequest
           );
         }
-        window.location.reload();
+
+        // Show success toast
+        toast.success('La respuesta se realizó correctamente', {
+          position: 'bottom-right',
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+
+        // Call the onUpdate callback instead of reloading
+        if (onUpdate) {
+          onUpdate();
+        }
+
+        // Close the modal
+        cambiarEstadoModal(false);
       } catch (error) {
         console.error('Error al actualizar el input común:', error);
+        // Show error toast
+        toast.error('Error al procesar la respuesta', {
+          position: 'bottom-right',
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       }
     }
   };
