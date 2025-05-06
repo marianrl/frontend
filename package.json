@@ -21,6 +21,7 @@
     "jquery": "^3.7.1",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.4",
+    "react-datepicker": "^8.3.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.17.0",
@@ -32,7 +33,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set \"GENERATE_SOURCEMAP=false\" && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@types/datatables.net": "^1.10.25",
     "@types/jquery": "^3.5.19",
+    "@types/react-datepicker": "^7.0.0",
     "@types/styled-components": "^5.1.30",
     "sass": "^1.72.0"
   }
