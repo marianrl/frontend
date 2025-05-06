@@ -5,6 +5,7 @@ import NotificationModal from '../../components/notificationmodal';
 import Navbar from '../../components/navbar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './reports.css';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import Button from '../../components/general/button';
 import { FaFilePdf } from 'react-icons/fa6';
@@ -77,8 +78,9 @@ const Reports: React.FC = () => {
                   selectsStart
                   startDate={startDate}
                   endDate={endDate}
-                  placeholderText="Start Date"
-                  className="form-control"
+                  placeholderText="Fecha de inicio"
+                  className="form-control date-picker-input"
+                  wrapperClassName="date-picker-wrapper"
                 />
                 <DatePicker
                   selected={endDate}
@@ -87,8 +89,9 @@ const Reports: React.FC = () => {
                   startDate={startDate}
                   endDate={endDate}
                   minDate={startDate ?? undefined}
-                  placeholderText="End Date"
-                  className="form-control"
+                  placeholderText="Fecha final"
+                  className="form-control date-picker-input"
+                  wrapperClassName="date-picker-wrapper"
                 />
               </Box>
             </Paper>

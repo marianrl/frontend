@@ -1,0 +1,31 @@
+.date-picker-wrapper {
+  width: 25%;
+}
+
+.date-picker-input {
+  width: 80%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Make the calendar popup bigger */
+.react-datepicker {
+  font-size: 16px;
+}
+
+.react-datepicker__header {
+  padding: 16px;
+}
+
+.react-datepicker__day {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  margin: 2px;
+}
+
+.react-datepicker__month {
+  margin: 8px;
+}
