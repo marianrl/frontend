@@ -53,12 +53,16 @@ const getLast12Months = () => {
 
 const SimpleLineGraph: React.FC = () => {
   const [data, setData] = useState<DataItem[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const fetchAudits = async () => {
       try {
         const response = await auditService.fetchAllAudit('audit');
         processData(response.data);
+        setTimeout(() => {
+          setIsReady(true);
+        }, 100);
       } catch (error) {
         console.error('Error al obtener las Auditorias', error);
       }
@@ -101,6 +105,12 @@ const SimpleLineGraph: React.FC = () => {
     setData(processedData);
   };
 
+  const emptyData = getLast12Months().map(({ month }) => ({
+    month,
+    Internas: 0,
+    AFIP: 0,
+  }));
+
   return (
     <ResponsiveContainer
       width="100%"
@@ -109,7 +119,7 @@ const SimpleLineGraph: React.FC = () => {
       minWidth="825px"
     >
       <LineChart
-        data={data}
+        data={isReady ? data : emptyData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />

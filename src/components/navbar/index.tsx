@@ -6,6 +6,7 @@ import { RiAdminFill } from 'react-icons/ri';
 import { AiOutlineAudit, AiOutlineHome } from 'react-icons/ai';
 import { BsFileBarGraph } from 'react-icons/bs';
 import { TbReportSearch } from 'react-icons/tb';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../img/Logo_izquierda.png';
 import Nombre from '../../img/Logo_derecha.png';
@@ -17,6 +18,8 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { role } = useSession();
   const [estadoModal, cambiarEstadoModal] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const handleAudit = () => {
     navigate('/audit');
   };
@@ -33,15 +36,25 @@ const Navbar: React.FC = () => {
 
   const handleAdminClick = () => {};
 
+  const toggleNavbar = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div>
       <Modal estado={estadoModal} cambiarEstadoModal={cambiarEstadoModal} />
-      <nav className="main-menu">
+      <nav className={`main-menu ${isExpanded ? 'expanded' : ''}`}>
+        <button className="toggle-button" onClick={toggleNavbar}>
+          {isExpanded ? (
+            <IoIosArrowBack size={25} />
+          ) : (
+            <IoIosArrowForward size={25} />
+          )}
+        </button>
         <ul>
           <li>
             <Buttongroup>
               <img src={Logo} className="nav-logo" alt="Logo" />
-              <img src={Nombre} className="nav-nombre" alt="Nombre" />
             </Buttongroup>
           </li>
         </ul>

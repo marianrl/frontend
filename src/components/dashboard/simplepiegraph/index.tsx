@@ -46,12 +46,16 @@ const renderCustomizedLabel = ({
 
 const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ type }) => {
   const [audits, setAudits] = useState<Audit[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const fetchAudits = async () => {
       try {
         const response = await auditService.fetchAllAudit('audit');
         setAudits(response.data);
+        setTimeout(() => {
+          setIsReady(true);
+        }, 100);
       } catch (error) {
         console.error('Error al obtener las Auditorias', error);
       }
@@ -78,11 +82,16 @@ const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ type }) => {
     { name: 'No Auditados', value: nonAuditedCount },
   ];
 
+  const emptyData = [
+    { name: 'Auditados', value: 0 },
+    { name: 'No Auditados', value: 0 },
+  ];
+
   return (
     <ResponsiveContainer>
       <PieChart>
         <Pie
-          data={data}
+          data={isReady ? data : emptyData}
           cx="50%"
           cy="50%"
           labelLine={false}

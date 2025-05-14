@@ -23,6 +23,7 @@ import Spinner from '../general/Spinner';
 import { CreateInputRequest } from '../../types/createInputRequest';
 import { useSession } from '../sessionprovider';
 import ApprovalConfirmationModal from '../approvalconfirmationmodal';
+import { notificationService } from '../../services/ams/notification';
 
 interface Data {
   id: number;
@@ -161,18 +162,26 @@ const TableDetails: React.FC<TableDetailsProps> = ({
           if (CommonOrAfipAudit === 'commonAuditDetails') {
             await commonInputService.deleteCommonInput('commonInput', auditId);
             await auditService.deleteAudit('audit', auditId);
+            // Remove the notification for the deleted audit
+            notificationService.removeNotificationByAuditId(auditId);
             navigate('/audit');
           } else {
             await afipInputService.deleteAfipInput('afipInput', auditId);
             await auditService.deleteAudit('audit', auditId);
+            // Remove the notification for the deleted audit
+            notificationService.removeNotificationByAuditId(auditId);
             navigate('/auditafip');
           }
         } else {
           if (CommonOrAfipAudit === 'commonAuditDetails') {
             await auditService.deleteAudit('audit', auditId);
+            // Remove the notification for the deleted audit
+            notificationService.removeNotificationByAuditId(auditId);
             navigate('/audit');
           } else {
             await auditService.deleteAudit('audit', auditId);
+            // Remove the notification for the deleted audit
+            notificationService.removeNotificationByAuditId(auditId);
             navigate('/auditafip');
           }
         }

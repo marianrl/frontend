@@ -29,12 +29,16 @@ const SimpleBarGraph: React.FC<SimpleBarGraphProps> = ({
   height = '100%',
 }) => {
   const [data, setData] = useState<DataItem[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const fetchAudits = async () => {
       try {
         const response = await auditService.fetchAllAudit('audit');
         processData(response.data);
+        setTimeout(() => {
+          setIsReady(true);
+        }, 100);
       } catch (error) {
         console.error('Error al obtener las Auditorias', error);
       }
@@ -70,14 +74,25 @@ const SimpleBarGraph: React.FC<SimpleBarGraphProps> = ({
         Internas: counts.Internas,
         AFIP: counts.AFIP,
       }))
-      .sort((a, b) => parseInt(a.year) - parseInt(b.year)); // Ordenar por año
+      .sort((a, b) => parseInt(a.year) - parseInt(b.year));
 
     setData(processedData);
   };
 
+  const emptyData = [
+    { year: '2020', Internas: 0, AFIP: 0 },
+    { year: '2021', Internas: 0, AFIP: 0 },
+    { year: '2022', Internas: 0, AFIP: 0 },
+    { year: '2023', Internas: 0, AFIP: 0 },
+    { year: '2024', Internas: 0, AFIP: 0 },
+  ];
+
   return (
     <ResponsiveContainer width={width} height={height}>
-      <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <BarChart
+        data={isReady ? data : emptyData}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
         <YAxis allowDecimals={false} />

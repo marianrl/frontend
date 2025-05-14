@@ -11,12 +11,6 @@
   font-size: 30px;
   padding: 15px 5px 15px 25px;
 }
-.main-menu:hover,
-nav.main-menu.expanded {
-  width: 300px;
-  overflow: visible;
-}
-
 .main-menu {
   background: #00004b;
   display: flex;
@@ -26,30 +20,51 @@ nav.main-menu.expanded {
   left: 0;
   width: 100px;
   overflow: hidden;
-  -webkit-transition: width 0.05s linear;
-  transition: width 0.15s linear;
+  transition: width 0.3s ease;
   z-index: 1000;
   min-height: 100vh;
   position: fixed;
 }
-
+.main-menu.expanded {
+  width: 300px;
+  overflow: visible;
+}
+.toggle-button {
+  position: absolute;
+  right: 20px;
+  bottom: 170px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+.toggle-button:hover {
+  background: #ffffff;
+  color: #00004b;
+  border-color: #00004b;
+}
 .main-menu > ul {
   margin: 7px 0;
 }
-
 .main-menu .menu-block {
   top: 100px;
   left: 0;
   bottom: 0;
   position: absolute;
 }
-
 .main-menu li {
   position: relative;
   display: flex;
   width: 300px;
 }
-
 .main-menu li > a {
   position: relative;
   display: table;
@@ -59,10 +74,8 @@ nav.main-menu.expanded {
   font-weight: bold;
   font-size: 18px;
   text-decoration: none;
-  -webkit-transition: all 0.1s linear;
-  transition: all 0.1s linear;
+  transition: all 0.3s ease;
 }
-
 .main-menu .nav-icon {
   position: relative;
   display: table-cell;
@@ -73,16 +86,14 @@ nav.main-menu.expanded {
   font-size: 18px;
   padding-left: 70px;
 }
-
 .main-menu .nav-text {
   position: relative;
   display: table-cell;
   vertical-align: middle;
   width: 190px;
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   padding-left: 20px;
 }
-
 .main-menu .nav-logo {
   position: relative;
   display: table-cell;
@@ -99,50 +110,35 @@ nav.main-menu.expanded {
   padding: 2px;
   margin-left: 50px;
 }
-
 .main-menu > ul.logout {
   position: absolute;
   left: 0;
   bottom: 0;
 }
-
 .no-touch .scrollable.hover {
   overflow-y: hidden;
 }
-
 nav {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-
 nav ul,
 nav li {
   outline: 0;
   margin: 0;
   padding: 0;
 }
-.main-menu li:hover > a,
-nav.main-menu li.active > a,
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus,
-.dropdown-menu > .active > a,
-.dropdown-menu > .active > a:hover,
-.dropdown-menu > .active > a:focus,
-.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
-.dashboard-page nav.dashboard-menu ul li.active a {
+.main-menu li > a:hover {
   color: black;
   background-color: #ffffff;
 }
-
 @font-face {
-  font-family: "Titillium Web";
+  font-family: 'Titillium Web';
   font-style: normal;
   font-weight: 300;
-  src:
-    local("Titillium WebLight"),
-    local("TitilliumWeb-Light"),
+  src: local('Titillium WebLight'), local('TitilliumWeb-Light'),
     url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff)
-      format("woff");
+      format('woff');
 }
