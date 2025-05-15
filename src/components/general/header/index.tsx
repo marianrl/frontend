@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ name, onToggleNotificationModal }) => {
         setUnreadCount(notificationService.getUnreadCount());
       };
       fetchNotifications();
-      // Set up polling every minute
+      // setea el intervalo de 1 minuto para actualizar las notificaciones
       const interval = setInterval(fetchNotifications, 60000);
       return () => clearInterval(interval);
     }

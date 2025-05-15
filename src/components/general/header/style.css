@@ -1,7 +1,8 @@
 .header {
-  background-color: #ffffff;
+  background-color: #00004b;
   padding-left: 150px;
   display: flex;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 .profile-contein {
   margin: 20px 40px 25px auto;
@@ -11,4 +12,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ffffff;
 }
