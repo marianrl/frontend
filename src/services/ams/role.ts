@@ -1,5 +1,4 @@
 import apiClient from '../../config/axiosconfig';
-import { Role } from '../../types/role';
 
 export interface ApiResponse {
   // Define la estructura de la respuesta de la API si es necesario

@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 import Button from '../general/button';
-import { useSession } from '../sessionprovider';
+import { useSession } from '../session-provider';
 import { useNavigate } from 'react-router-dom';
 
 interface DetailsModelProps {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './style.css';
 import { BiLogOut } from 'react-icons/bi';
-import { CiSearch } from 'react-icons/ci';
 import { RiAdminFill } from 'react-icons/ri';
 import { AiOutlineAudit, AiOutlineHome } from 'react-icons/ai';
 import { BsFileBarGraph } from 'react-icons/bs';
@@ -9,10 +8,9 @@ import { TbReportSearch } from 'react-icons/tb';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../img/Logo_izquierda.png';
-import Nombre from '../../img/Logo_derecha.png';
-import Buttongroup from '../general/buttongroup';
+import Buttongroup from '../general/button-group';
 import Modal from '../modal';
-import { useSession } from '../sessionprovider';
+import { useSession } from '../session-provider';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();

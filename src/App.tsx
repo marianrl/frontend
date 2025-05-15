@@ -3,16 +3,16 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Login from './pages/login';
-import Dashboard from './pages/dashboard';
-import { SessionProvider } from './components/sessionprovider';
-import Audit from './pages/audit';
-import Reports from './pages/reports';
-import AuditAfip from './pages/auditafip';
-import CommonAuditDetail from './pages/commonauditdetail';
-import AfipAuditDetail from './pages/afipauditdetail';
-import Admin from './pages/admin';
-import ProtectedRoute from './components/protectedroute';
+import Login from './pages/login-page';
+import Dashboard from './pages/dashboard-page';
+import { SessionProvider } from './components/session-provider';
+import Audit from './pages/audit-page';
+import Reports from './pages/reports-page';
+import AuditAfip from './pages/audit-afip-page';
+import CommonAuditDetail from './pages/common-audit-detail-page';
+import AfipAuditDetail from './pages/afip-audit-detail-page';
+import Admin from './pages/admin-page';
+import ProtectedRoute from './components/protected-route';
 
 const App: React.FC = () => {
   return (

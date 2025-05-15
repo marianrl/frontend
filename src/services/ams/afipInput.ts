@@ -1,5 +1,4 @@
 import apiClient from '../../config/axiosconfig';
-import { AfipInput } from '../../types/afipInput';
 import { CreateInputRequest } from '../../types/createInputRequest';
 import { InputRequest } from '../../types/inputRequest';
 

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Button from '../general/button';
-import Buttongroup from '../general/buttongroup';
+import Buttongroup from '../general/button-group';
 import { Link } from 'react-router-dom';
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import '../table/style.css';
 import { IoMdAdd } from 'react-icons/io';
-import AddModal from '../addmodal';
-import { useSession } from '../sessionprovider';
+import AddModal from '../add-modal';
+import { useSession } from '../session-provider';
 
 interface Data {
   id: number;

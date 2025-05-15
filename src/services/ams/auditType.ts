@@ -1,5 +1,4 @@
 import apiClient from '../../config/axiosconfig';
-import { AuditType } from '../../types/auditType';
 
 export interface ApiResponse {
   // Define la estructura de la respuesta de la API si es necesario

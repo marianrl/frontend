@@ -4,7 +4,7 @@ import { Badge } from '@mui/material';
 import { IoIosNotifications } from 'react-icons/io';
 import Button from '../button';
 import { notificationService } from '../../../services/ams/notification';
-import { useSession } from '../../sessionprovider';
+import { useSession } from '../../session-provider';
 
 interface HeaderProps {
   name: string;
