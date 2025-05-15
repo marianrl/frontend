@@ -12,18 +12,10 @@ export interface ApiResponse {
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
 const afipInputService = {
-  async fetchAllAfipInputs(endpoint: string): Promise<ApiResponse> {
-    try {
-      const response = await apiClient.get(`${API_BASE_URL}/${endpoint}`);
-      return {
-        data: response.data,
-        status: response.status,
-      };
-    } catch (error) {
-      throw new Error('Error al obtener las Auditorias');
-    }
-  },
-  async fetchAfipInputById(endpoint: string, id: string): Promise<ApiResponse> {
+  async fetchAfipInputsByAuditId(
+    endpoint: string,
+    id: string
+  ): Promise<ApiResponse> {
     try {
       const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
       return {

@@ -30,7 +30,7 @@ const AfipAuditDetail: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       afipInputService
-        .fetchAfipInputById('afipInput', auditNumberValue.toString())
+        .fetchAfipInputsByAuditId('afipInput', auditNumberValue.toString())
         .then((response) => {
           const allAudit = response.data;
           setData(allAudit);

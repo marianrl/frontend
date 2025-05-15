@@ -19,7 +19,7 @@ class NotificationService {
   private readonly LAST_CHECK_KEY = 'lastNotificationCheck';
 
   private constructor() {
-    // Load notifications from localStorage on initialization
+    // Cargar notificaciones desde localStorage al inicializar
     const storedNotifications = localStorage.getItem(this.STORAGE_KEY);
     if (storedNotifications) {
       this.notifications = JSON.parse(storedNotifications);
@@ -46,44 +46,44 @@ class NotificationService {
 
   private async cleanupInvalidNotifications(): Promise<void> {
     try {
-      // Get all audits
+      // Obtener todas las auditorías
       const response = await auditService.fetchAllAudit('audit');
       const audits = response.data;
 
-      // Create a set of valid audit IDs
+      // Crear un conjunto de IDs de auditorías válidas
       const validAuditIds = new Set(audits.map((audit: Audit) => audit.id));
 
-      // Remove notifications for non-existent audits
+      // Eliminar notificaciones para auditorías inexistentes
       this.notifications = this.notifications.filter((n) =>
         validAuditIds.has(n.auditId)
       );
 
-      // Save the cleaned up notifications
+      // Guardar las notificaciones limpias
       this.saveToStorage();
     } catch (error) {
-      console.error('Error cleaning up notifications:', error);
+      console.error('Error al limpiar notificaciones:', error);
     }
   }
 
   public async fetchNotifications(userId: number): Promise<Notification[]> {
     try {
-      // First, clean up any notifications for non-existent audits
+      // Primero, limpiar cualquier notificación para auditorías inexistentes
       await this.cleanupInvalidNotifications();
 
-      // Get all audits
+      // Obtener todas las auditorías
       const response = await auditService.fetchAllAudit('audit');
       const audits = response.data;
 
-      // Sort audits by date in descending order
+      // Ordenar auditorías por fecha en orden descendente
       const sortedAudits = audits.sort(
         (a: Audit, b: Audit) =>
           new Date(b.auditDate).getTime() - new Date(a.auditDate).getTime()
       );
 
-      // Get the last 5 audits
+      // Obtener las últimas 5 auditorías
       const lastFiveAudits = sortedAudits.slice(0, 5);
 
-      // Create notifications for the last 5 audits
+      // Crear notificaciones para las últimas 5 auditorías
       const newNotifications = lastFiveAudits.map((audit: Audit) => ({
         id: audit.id,
         auditId: audit.id,
@@ -96,7 +96,7 @@ class NotificationService {
         isAFIP: audit.idTipoAuditoria.id === 9,
       }));
 
-      // Only add new notifications that don't exist in the current list
+      // Solo agregar nuevas notificaciones que no existan en la lista actual
       const existingIds = new Set(
         this.notifications.map((n: Notification) => n.id)
       );
@@ -104,12 +104,12 @@ class NotificationService {
         (n: Notification) => !existingIds.has(n.id)
       );
 
-      // Update notifications list with new notifications and sort by date
+      // Actualizar lista de notificaciones con nuevas notificaciones y ordenar por fecha
       this.notifications = [...this.notifications, ...uniqueNewNotifications]
         .sort((a, b) => {
           const dateA = new Date(a.date).getTime();
           const dateB = new Date(b.date).getTime();
-          // If dates are equal, sort by ID in descending order (newer IDs first)
+          // Si las fechas son iguales, ordenar por ID en orden descendente (IDs más nuevos primero)
           if (dateA === dateB) {
             return b.id - a.id;
           }
@@ -117,15 +117,15 @@ class NotificationService {
         })
         .slice(0, 5);
 
-      // Update last check time
+      // Actualizar tiempo de última verificación
       this.lastCheck = new Date().toISOString();
 
-      // Save to localStorage
+      // Guardar en localStorage
       this.saveToStorage();
 
       return this.notifications;
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error('Error al obtener notificaciones:', error);
       return this.notifications;
     }
   }
@@ -144,23 +144,11 @@ class NotificationService {
     }
   }
 
-  public markAllAsRead(): void {
-    this.notifications.forEach((n) => (n.isRead = true));
-    this.saveToStorage();
-  }
-
   public removeNotificationByAuditId(auditId: number): void {
     this.notifications = this.notifications.filter(
       (n) => n.auditId !== auditId
     );
     this.saveToStorage();
-  }
-
-  public clearNotifications(): void {
-    this.notifications = [];
-    this.lastCheck = null;
-    localStorage.removeItem(this.STORAGE_KEY);
-    localStorage.removeItem(this.LAST_CHECK_KEY);
   }
 }
 

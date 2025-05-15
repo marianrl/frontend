@@ -1,4 +1,5 @@
 import apiClient from '../../config/axiosconfig';
+import { CommonInput } from '../../types/commonInput';
 import { CreateInputRequest } from '../../types/createInputRequest';
 import { InputRequest } from '../../types/inputRequest';
 
@@ -22,9 +23,9 @@ const commonInputService = {
       throw new Error('Error al obtener las Auditorias');
     }
   },
-  async fetchCommonAuditById(
+  async fetchCommonInputsByAuditId(
     endpoint: string,
-    id: number
+    id: string
   ): Promise<ApiResponse> {
     try {
       const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
@@ -38,18 +39,30 @@ const commonInputService = {
   },
   async createCommonInputs(
     endpoint: string,
-    commonAudits: CreateInputRequest[]
+    commonInputs: CreateInputRequest[]
   ): Promise<ApiResponse> {
     try {
+      console.log('Sending data to backend:', commonInputs);
       const response = await apiClient.post(
         `${API_BASE_URL}/${endpoint}`,
-        commonAudits
+        commonInputs,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       return {
         data: response.data,
         status: response.status,
       };
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error in createCommonInputs:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+        console.error('Error headers:', error.response.headers);
+      }
       throw new Error('Error al crear nuevas auditorias');
     }
   },

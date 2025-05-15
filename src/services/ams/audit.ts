@@ -22,17 +22,6 @@ const auditService = {
       throw new Error('Error al obtener las Auditorias');
     }
   },
-  async fetchAuditById(endpoint: string, id: string): Promise<ApiResponse> {
-    try {
-      const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
-      return {
-        data: response.data,
-        status: response.status,
-      };
-    } catch (error) {
-      throw new Error('Error al obtener las Auditorias por ID');
-    }
-  },
   async createAudit(
     endpoint: string,
     auditInput: number

@@ -295,12 +295,12 @@ const TableDetails: React.FC<TableDetailsProps> = ({
       // Fetch the updated data based on the audit type
       let response;
       if (CommonOrAfipAudit === 'commonAuditDetails') {
-        response = await commonInputService.fetchCommonAuditById(
+        response = await commonInputService.fetchCommonInputsByAuditId(
           'commonInput',
-          auditId
+          auditId.toString()
         );
       } else {
-        response = await afipInputService.fetchAfipInputById(
+        response = await afipInputService.fetchAfipInputsByAuditId(
           'afipInput',
           auditId.toString()
         );

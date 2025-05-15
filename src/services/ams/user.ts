@@ -28,20 +28,6 @@ const userService = {
     }
   },
 
-  async fetchUserById(endpoint: string, id: number): Promise<ApiResponse> {
-    try {
-      const response = await apiClient.get(`${API_BASE_URL}/${endpoint}/${id}`);
-      return {
-        data: response.data,
-        status: response.status,
-        name: response.data.name,
-        lastName: response.data.lastName,
-      };
-    } catch (error) {
-      throw new Error('Error al obtener los datos de los Usuarios por ID');
-    }
-  },
-
   async fetchUserByMailAndPassword(
     endpoint: string,
     userRequest: UserRequest

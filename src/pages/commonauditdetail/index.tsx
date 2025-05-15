@@ -35,7 +35,10 @@ const CommonAuditDetail: React.FC = () => {
       setTimeout(() => {
         // Establecer una duración mínima de 1 segundo para el estado de carga
         commonInputService
-          .fetchCommonAuditById('commonInput', auditNumberValue)
+          .fetchCommonInputsByAuditId(
+            'commonInput',
+            auditNumberValue.toString()
+          )
           .then((response) => {
             const allAudit = response.data;
             setData(allAudit);
