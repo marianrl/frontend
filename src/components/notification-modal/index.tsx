@@ -90,7 +90,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   return (
     <div
       style={{
-        position: 'fixed',
+        position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
@@ -103,9 +103,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
         className={className}
         sx={{
           width: '100%',
-          maxWidth: 360,
+          maxWidth: 370,
           bgcolor: 'background.paper',
-          position: 'fixed',
+          position: 'absolute',
           top: '10px',
           right: '10px',
           marginTop: '90px',
@@ -146,6 +146,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
               onClick={() => handleNotificationClick(notification)}
               sx={{
                 bgcolor: notification.isRead ? 'inherit' : 'action.hover',
+                '&:hover': {
+                  bgcolor: '#dae0ff',
+                },
               }}
             >
               <ListItemIcon>
