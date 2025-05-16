@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../general/button';
+import './style.scss';
 
 interface DeleteUserModalProps {
   estado: boolean;

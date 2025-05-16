@@ -8,6 +8,7 @@ import { userService } from '../../services/ams/user';
 import { User } from '../../types/user';
 import { UserMailRequest } from '../../types/user_mail_request';
 import UserConfirmationModal from '../user-confirmation-modal';
+import './style.scss';
 
 interface AddUserModalProps {
   cambiarEstadoAddUserModal: React.Dispatch<React.SetStateAction<boolean>>;

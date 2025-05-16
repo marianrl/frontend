@@ -111,6 +111,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           marginTop: '90px',
           zIndex: 1000,
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          animation: 'slideDown 0.3s ease-out',
         }}
         component="nav"
         aria-labelledby="nested-list-subheader"
@@ -120,6 +121,20 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           </ListSubheader>
         }
       >
+        <style>
+          {`
+            @keyframes slideDown {
+              0% {
+                opacity: 0;
+                transform: translateY(-10px);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+          `}
+        </style>
         {notifications.length === 0 ? (
           <ListItemButton>
             <ListItemText primary="No hay notificaciones" />

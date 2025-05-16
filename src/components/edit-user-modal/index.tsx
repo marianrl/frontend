@@ -7,6 +7,7 @@ import InputWrapper from '../input-field';
 import { userService } from '../../services/ams/user';
 import { User } from '../../types/user';
 import UserConfirmationModal from '../user-confirmation-modal';
+import './style.scss';
 
 interface EditUserModalProps {
   cambiarEstadoAddUserModal: React.Dispatch<React.SetStateAction<boolean>>;
