@@ -3,13 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/general/header';
 import NotificationModal from '../../components/notification-modal';
 import Navbar from '../../components/navbar';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './reports.css';
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  TextField,
+} from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '../../components/general/button';
 import { FaFilePdf } from 'react-icons/fa6';
 import { ilovepdfService } from '../../services/integrations/ilovepdf';
+import './reports.css';
 
 const Reports: React.FC = () => {
   const navigate = useNavigate();
@@ -107,29 +115,33 @@ const Reports: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 Seleccionar rango de fechas
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                <DatePicker
-                  selected={startDate}
-                  onChange={setStartDate}
-                  selectsStart
-                  startDate={startDate}
-                  endDate={endDate}
-                  placeholderText="Fecha de inicio"
-                  className="form-control date-picker-input"
-                  wrapperClassName="date-picker-wrapper"
-                />
-                <DatePicker
-                  selected={endDate}
-                  onChange={setEndDate}
-                  selectsEnd
-                  startDate={startDate}
-                  endDate={endDate}
-                  minDate={startDate ?? undefined}
-                  placeholderText="Fecha final"
-                  className="form-control date-picker-input"
-                  wrapperClassName="date-picker-wrapper"
-                />
-              </Box>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                  <DatePicker
+                    label="Fecha de inicio"
+                    value={startDate}
+                    onChange={(newValue) => setStartDate(newValue)}
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        variant: 'outlined',
+                      },
+                    }}
+                  />
+                  <DatePicker
+                    label="Fecha final"
+                    value={endDate}
+                    onChange={(newValue) => setEndDate(newValue)}
+                    minDate={startDate ?? undefined}
+                    slotProps={{
+                      textField: {
+                        fullWidth: true,
+                        variant: 'outlined',
+                      },
+                    }}
+                  />
+                </Box>
+              </LocalizationProvider>
             </Paper>
           </Grid>
 
