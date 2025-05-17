@@ -76,7 +76,9 @@ const AddModal: React.FC<AddModalProps> = ({
             >
               <div className="ContenidoModal">
                 <h1 className="TituloModalCerrar">
-                  Agregar nueva auditoria interna
+                  {auditType === 'commonAuditDetails'
+                    ? 'Agregar nueva auditoria interna'
+                    : 'Agregar nueva auditoria AFIP'}
                 </h1>
                 <div>
                   <ul>
