@@ -87,7 +87,7 @@ const Login: React.FC = () => {
         </div>
         <div className="right">
           <form onSubmit={handleFormSubmit}>
-            <h2 className="title">BIENVENIDO</h2>
+            <h2 className="title">BIENVENIDO/A</h2>
             <InputWrapper
               label="Usuario"
               type="text"
