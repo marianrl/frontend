@@ -16,8 +16,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '../../components/general/button';
 import { FaFilePdf } from 'react-icons/fa6';
-import { ilovepdfService } from '../../services/integrations/ilovepdf';
 import './style.css';
+import { pdfService } from '../../services/integrations/pdfService';
 
 const Reports: React.FC = () => {
   const navigate = useNavigate();
@@ -26,7 +26,42 @@ const Reports: React.FC = () => {
   const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const [loadingDots, setLoadingDots] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isExporting) {
+      interval = setInterval(() => {
+        setLoadingDots((prev) => {
+          if (prev === '...') return '';
+          if (prev === '..') return '...';
+          if (prev === '.') return '..';
+          return '.';
+        });
+      }, 500);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isExporting]);
+
+  const handleGeneratePdf = async () => {
+    try {
+      setIsExporting(true);
+      const response = await pdfService.generatePdf('https://example.com');
+      if (response.data.status === 'SUCCESS' && response.data.documentUrl) {
+        window.open(response.data.documentUrl, '_blank');
+      } else {
+        console.error('Error generating PDF:', response.data.errorMessage);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   useEffect(() => {
     if (!localStorage.getItem('user')) {
@@ -37,40 +72,6 @@ const Reports: React.FC = () => {
 
   const handleToggleNotificationModal = () => {
     setNotificationModalOpen((prev) => !prev);
-  };
-
-  const handleExportToPdf = async () => {
-    try {
-      if (!containerRef.current) return;
-
-      // Obtener el contenido HTML del contenedor
-      const htmlContent = containerRef.current.innerHTML;
-
-      // Llamar al servicio iLovePDF para convertir HTML a PDF
-      const response = await ilovepdfService.convertHtmlToPdf(htmlContent);
-
-      // Crear un blob desde los datos del PDF
-      const blob = new Blob([response.data], { type: 'application/pdf' });
-
-      // Crear una URL para el blob
-      const url = window.URL.createObjectURL(blob);
-
-      // Crear un elemento de enlace temporal
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `reporte-${new Date().toISOString().split('T')[0]}.pdf`;
-
-      // Agregar el enlace al cuerpo, hacer clic en él y eliminarlo
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Limpiar la URL
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error exporting to PDF:', error);
-      // Es posible que quieras mostrar una notificación de error aquí
-    }
   };
 
   return (
@@ -102,9 +103,12 @@ const Reports: React.FC = () => {
               backgroundColor="#960909"
               hoverColor="#960909"
               hoverBorderColor="2px solid #960909"
-              onClick={handleExportToPdf}
+              onClick={handleGeneratePdf}
+              disabled={isExporting}
+              className={isExporting ? 'export-button-exporting' : ''}
             >
-              <FaFilePdf style={{ marginRight: '10px' }} /> Exportar
+              <FaFilePdf style={{ marginRight: '10px' }} />
+              {isExporting ? `Exportando${loadingDots}` : 'Exportar'}
             </Button>
           </Grid>
         </Grid>
