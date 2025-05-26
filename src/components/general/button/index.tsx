@@ -14,6 +14,7 @@ interface ButtonProps {
   disabled?: boolean;
   style?: React.CSSProperties; // Propiedad 'style' para aplicar estilos adicionales
   children?: React.ReactNode; // Nueva propiedad para aceptar cualquier contenido React
+  className?: string; // Add className prop
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -29,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   style, // Recibir la propiedad 'style' en las props
   children,
+  className,
   ...buttonProps
 }) => {
   const [hovered, setHovered] = useState(false);
@@ -45,7 +47,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className="button"
+      className={`button ${className || ''}`}
       type={type}
       style={buttonStyle}
       onMouseEnter={() => setHovered(true)}

@@ -17,7 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '../../components/general/button';
 import { FaFilePdf } from 'react-icons/fa6';
 import { ilovepdfService } from '../../services/integrations/ilovepdf';
-import './reports.css';
+import './style.css';
 
 const Reports: React.FC = () => {
   const navigate = useNavigate();
@@ -125,6 +125,7 @@ const Reports: React.FC = () => {
                       textField: {
                         fullWidth: true,
                         variant: 'outlined',
+                        sx: { width: '320px' },
                       },
                     }}
                   />
@@ -137,8 +138,24 @@ const Reports: React.FC = () => {
                       textField: {
                         fullWidth: true,
                         variant: 'outlined',
+                        sx: { width: '320px' },
                       },
                     }}
+                  />
+                  <Button
+                    label="Generar"
+                    onClick={() => {
+                      // Add your generate report logic here
+                      console.log('Generating report for dates:', {
+                        startDate,
+                        endDate,
+                      });
+                    }}
+                    type="button"
+                    backgroundColor="#00004b"
+                    hoverColor="#00004b"
+                    hoverBorderColor="2px solid #00004b"
+                    className="generate-button"
                   />
                 </Box>
               </LocalizationProvider>
