@@ -78,7 +78,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="App">
+    <div className="App login-page">
       <div className="split-screen">
         <div className="left">
           <div className="background-image">

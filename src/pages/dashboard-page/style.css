@@ -1,42 +1,56 @@
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Máximo de dos columnas */
-  gap: 10px;
-  padding: 10px;
-  margin-left: 150px; /* Añade margen izquierdo */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin-left: 150px;
+  max-width: 1800px;
 }
 
-.grid-item-left {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
-
+.grid-item-left,
 .grid-item-right {
-  display: flex;
-  align-items: center;
-  justify-content: right;
+  width: 100%;
 }
 
 .dashboard-title {
-  margin-left: 150px; /* Ajusta el margen para que coincida con el grid-container */
+  margin-left: 150px;
 }
 
 .dashboard-background-color {
   background-color: #eaedf1;
   height: 100vh;
-  position: relative; /* Asegura que los hijos con posición absoluta se ubiquen correctamente */
+  position: relative;
 }
 
 .notification-modal {
-  position: fixed; /* Hace que el modal flote en la ventana */
-  top: 10px; /* Espacio desde la parte superior */
-  right: 10px; /* Espacio desde la derecha */
-  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.pie-charts-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.pie-chart-card {
+  width: 100%;
 }
 
 @media (max-width: 1300px) {
   .grid-container {
-    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    grid-template-columns: 1fr;
+    margin-left: 20px;
+  }
+
+  .dashboard-title {
+    margin-left: 20px;
+  }
+
+  .pie-charts-container {
+    grid-template-columns: 1fr;
   }
 }

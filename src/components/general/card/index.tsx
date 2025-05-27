@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.css';
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ children }) => {
+const Card: React.FC<CardProps> = ({ children, className, ...props }) => {
   return (
-    <div className="overviewCard">
+    <div className={`overviewCard ${className || ''}`} {...props}>
       <div>{children}</div>
     </div>
   );

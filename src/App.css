@@ -69,6 +69,14 @@ body,
 .global-background-color {
   background-color: #eaedf1;
   min-height: 100vh;
-  width: 100%;
+  width: calc(100% - 75px);
   position: relative;
+  margin-left: 75px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.login-page {
+  margin-left: 0 !important;
 }

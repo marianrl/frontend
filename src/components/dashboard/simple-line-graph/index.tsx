@@ -112,12 +112,7 @@ const SimpleLineGraph: React.FC = () => {
   }));
 
   return (
-    <ResponsiveContainer
-      width="100%"
-      height="100%"
-      minHeight="282px"
-      minWidth="825px"
-    >
+    <ResponsiveContainer width="100%" height="100%" minHeight="282px">
       <LineChart
         data={isReady ? data : emptyData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}

@@ -13,6 +13,7 @@ import { auditService } from '../../services/ams/audit';
 import { Audit } from '../../types/audit';
 import { GoDotFill } from 'react-icons/go';
 import Spinner from '../../components/general/Spinner';
+import { Container, Grid, Paper, Typography } from '@mui/material';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -76,72 +77,166 @@ const Dashboard: React.FC = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="grid-container">
-          <div className="grid-item-right">
-            <Card>
-              <h2>Auditorias Mensuales</h2>
-              <p>Cantidad de auditorias creadas en el ultimo año</p>
-              <SimpleLineGraph />
-            </Card>
-          </div>
-          <div className="grid-item-left">
-            <Card>
-              <h2>Últimas Auditorías</h2>
-              <CustomizedTable rows={audits} />
-            </Card>
-          </div>
-          <div className="grid-item-right">
-            <div
-              style={{
-                display: 'flex',
-                gap: '30px',
-                minHeight: '435px',
-                width: '849px',
-              }}
-            >
-              <Card>
-                <div style={{ width: '400px' }}>
-                  <h2>Auditorias internas</h2>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <GoDotFill color="#00C49F" size="20px" /> Auditadas
-                    <GoDotFill color="#0088FE" size="20px" />
-                    Sin Auditar
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div style={{ width: '300px', height: '300px' }}>
+        <Container
+          maxWidth={false}
+          sx={{
+            mt: 2,
+            mb: 2,
+            maxWidth: '1500px !important',
+            height: '805px',
+            overflow: 'auto',
+          }}
+        >
+          <Grid container spacing={2}>
+            {/* First Row */}
+            <Grid item xs={12} md={6}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 360,
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{ fontWeight: 'bold' }}
+                >
+                  Auditorias Mensuales
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Cantidad de auditorias creadas en el ultimo año
+                </Typography>
+                <SimpleLineGraph />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 360,
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{ fontWeight: 'bold' }}
+                >
+                  Últimas Auditorías
+                </Typography>
+                <CustomizedTable rows={audits} />
+              </Paper>
+            </Grid>
+
+            {/* Second Row */}
+            <Grid item xs={12} md={6}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: 360,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      sx={{ fontWeight: 'bold' }}
+                    >
+                      Auditorias internas
+                    </Typography>
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: '10px',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      <GoDotFill color="#00C49F" size="20px" /> Auditadas
+                      <GoDotFill color="#0088FE" size="20px" />
+                      Sin Auditar
+                    </div>
+                    <div
+                      style={{
+                        flex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
                       <SimplePieGraph type="comunes" />
                     </div>
-                  </div>
-                </div>
-              </Card>
-              <Card>
-                <div style={{ width: '400px' }}>
-                  <h2>Auditorias de AFIP</h2>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <GoDotFill color="#00C49F" size="20px" /> Auditadas
-                    <GoDotFill color="#0088FE" size="20px" />
-                    Sin Auditar
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div style={{ width: '300px', height: '300px' }}>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: 360,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      sx={{ fontWeight: 'bold' }}
+                    >
+                      Auditorias de AFIP
+                    </Typography>
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: '10px',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      <GoDotFill color="#00C49F" size="20px" /> Auditadas
+                      <GoDotFill color="#0088FE" size="20px" />
+                      Sin Auditar
+                    </div>
+                    <div
+                      style={{
+                        flex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
                       <SimplePieGraph type="afip" />
                     </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
-          <div className="grid-item-left">
-            <Card>
-              <div style={{ width: '700px', height: '392px' }}>
-                <h2>Volumen anual de auditorias</h2>
-                <div style={{ width: '660px', height: '330px' }}>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 360,
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{ fontWeight: 'bold' }}
+                >
+                  Volumen anual de auditorias
+                </Typography>
+                <div style={{ flex: 1 }}>
                   <SimpleBarGraph />
                 </div>
-              </div>
-            </Card>
-          </div>
-        </div>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
       )}
     </div>
   );
