@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/general/header';
 import SimpleLineGraph from '../../components/dashboard/simple-line-graph';
-import Card from '../../components/general/card';
 import './style.css';
 import SimpleBarGraph from '../../components/dashboard/simple-bar-graph';
 import SimplePieGraph from '../../components/dashboard/simple-pie-graph';
@@ -20,35 +19,56 @@ const Dashboard: React.FC = () => {
   const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
   const [audits, setAudits] = useState<Audit[]>([]); // Estado para los últimos 5 audits
   const [isLoading, setIsLoading] = useState(true); // Estado de carga
+  const [allAudits, setAllAudits] = useState<Audit[]>([]); // Estado para todas las auditorías
 
+  // Separate useEffect for authentication check
   useEffect(() => {
     if (!localStorage.getItem('user')) {
       navigate('/login');
     }
+  }, [navigate]);
 
-    const fetchLast5Audits = async () => {
+  // Separate useEffect for data fetching
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchAudits = async () => {
       try {
         setIsLoading(true);
         const response = await auditService.fetchAllAudit('audit');
-        const allAudit = response.data;
+        if (isMounted) {
+          const allAudit = response.data;
+          setAllAudits(allAudit);
 
-        // Ordena por auditDate de forma descendente (más reciente primero)
-        const sortedAudits = allAudit.sort((a: Audit, b: Audit) => {
-          return (
-            new Date(b.auditDate).getTime() - new Date(a.auditDate).getTime()
-          );
-        });
+          // Ordena por auditDate de forma descendente (más reciente primero)
+          const sortedAudits = allAudit.sort((a: Audit, b: Audit) => {
+            return (
+              new Date(b.auditDate).getTime() - new Date(a.auditDate).getTime()
+            );
+          });
 
-        // Devuelve los 5 más recientes
-        setAudits(sortedAudits.slice(0, 5));
-        setIsLoading(false);
+          // Devuelve los 5 más recientes
+          setAudits(sortedAudits.slice(0, 5));
+        }
       } catch (error) {
         console.error('Error al obtener las auditorías:', error);
+        if (isMounted) {
+          setAudits([]);
+          setAllAudits([]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
-    fetchLast5Audits();
-  }, [navigate]);
+    fetchAudits();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); // Empty dependency array since we only want to fetch once when component mounts
 
   const name = localStorage.getItem('name');
   const lastName = localStorage.getItem('lastName');
@@ -108,7 +128,7 @@ const Dashboard: React.FC = () => {
                 <Typography variant="body2" color="text.secondary" gutterBottom>
                   Cantidad de auditorias creadas en el ultimo año
                 </Typography>
-                <SimpleLineGraph />
+                <SimpleLineGraph audits={allAudits} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -169,7 +189,7 @@ const Dashboard: React.FC = () => {
                         alignItems: 'center',
                       }}
                     >
-                      <SimplePieGraph type="comunes" />
+                      <SimplePieGraph type="comunes" audits={allAudits} />
                     </div>
                   </Paper>
                 </Grid>
@@ -208,7 +228,7 @@ const Dashboard: React.FC = () => {
                         alignItems: 'center',
                       }}
                     >
-                      <SimplePieGraph type="afip" />
+                      <SimplePieGraph type="afip" audits={allAudits} />
                     </div>
                   </Paper>
                 </Grid>
@@ -231,7 +251,7 @@ const Dashboard: React.FC = () => {
                   Volumen anual de auditorias
                 </Typography>
                 <div style={{ flex: 1 }}>
-                  <SimpleBarGraph />
+                  <SimpleBarGraph audits={allAudits} />
                 </div>
               </Paper>
             </Grid>

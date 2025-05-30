@@ -10,7 +10,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { auditService } from '../../../services/ams/audit';
 import { Audit } from '../../../types/audit';
 
 interface DataItem {
@@ -22,30 +21,21 @@ interface DataItem {
 interface SimpleBarGraphProps {
   width?: string | number;
   height?: string | number;
+  audits: Audit[];
 }
 
 const SimpleBarGraph: React.FC<SimpleBarGraphProps> = ({
   width = '100%',
   height = '100%',
+  audits,
 }) => {
   const [data, setData] = useState<DataItem[]>([]);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const fetchAudits = async () => {
-      try {
-        const response = await auditService.fetchAllAudit('audit');
-        processData(response.data);
-        setTimeout(() => {
-          setIsReady(true);
-        }, 100);
-      } catch (error) {
-        console.error('Error al obtener las Auditorias', error);
-      }
-    };
-
-    fetchAudits();
-  }, []);
+    processData(audits);
+    setIsReady(true);
+  }, [audits]);
 
   const processData = (audits: Audit[]) => {
     const dataMap = new Map<string, { Internas: number; AFIP: number }>();

@@ -42,31 +42,37 @@ const Audit: React.FC = () => {
   }, [navigate]);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchData() {
-      setIsLoading(true); // Establecer isLoading en true al iniciar la carga de datos
-      setTimeout(() => {
-        // Establecer una duración mínima de 1 segundo para el estado de carga
-        auditService
-          .fetchAllAudit('audit')
-          .then((response) => {
-            const allAudit = response.data;
-
-            const filteredAudit = allAudit.filter(
-              (audit: AuditData) => audit.idTipoAuditoria.id !== 9
-            );
-
-            setData(filteredAudit);
-            setIsLoading(false); // Establecer isLoading en false cuando se completó la carga de datos
-            console.log(filteredAudit);
-          })
-          .catch(() => {
-            setData([]);
-            setIsLoading(false); // Establecer isLoading en false si hubo un error al cargar los datos
-            setErrorMessage('Error al procesar la solicitud');
-          });
-      }, 100); // 1000 milisegundos = 1 segundo
+      setIsLoading(true);
+      try {
+        const response = await auditService.fetchAllAudit('audit');
+        if (isMounted) {
+          const allAudit = response.data;
+          const filteredAudit = allAudit.filter(
+            (audit: AuditData) => audit.idTipoAuditoria.id !== 9
+          );
+          setData(filteredAudit);
+          console.log(filteredAudit);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setData([]);
+          setErrorMessage('Error al procesar la solicitud');
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
     }
+
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleAuditClick = (auditNumber: number) => {

@@ -9,13 +9,16 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { auditService } from '../../../services/ams/audit';
 import { Audit } from '../../../types/audit';
 
 interface DataItem {
   month: string;
   Internas: number;
   AFIP: number;
+}
+
+interface SimpleLineGraphProps {
+  audits: Audit[];
 }
 
 const MonthsEnum = [
@@ -34,7 +37,7 @@ const MonthsEnum = [
 ];
 
 const getLast12Months = () => {
-  const currentDate = new Date(); // Ultima fecha conocida
+  const currentDate = new Date();
   const months = [];
 
   for (let i = 11; i >= 0; i--) {
@@ -51,25 +54,14 @@ const getLast12Months = () => {
   return months;
 };
 
-const SimpleLineGraph: React.FC = () => {
+const SimpleLineGraph: React.FC<SimpleLineGraphProps> = ({ audits }) => {
   const [data, setData] = useState<DataItem[]>([]);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const fetchAudits = async () => {
-      try {
-        const response = await auditService.fetchAllAudit('audit');
-        processData(response.data);
-        setTimeout(() => {
-          setIsReady(true);
-        }, 100);
-      } catch (error) {
-        console.error('Error al obtener las Auditorias', error);
-      }
-    };
-
-    fetchAudits();
-  }, []);
+    processData(audits);
+    setIsReady(true);
+  }, [audits]);
 
   const processData = (audits: Audit[]) => {
     const last12Months = getLast12Months();

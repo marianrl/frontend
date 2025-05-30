@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
-import { auditService } from '../../../services/ams/audit';
 import { Audit } from '../../../types/audit';
 
 interface SimplePieGraphProps {
   type: 'comunes' | 'afip';
+  audits: Audit[];
 }
 
 interface CustomizedLabelProps {
@@ -44,25 +44,12 @@ const renderCustomizedLabel = ({
   );
 };
 
-const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ type }) => {
-  const [audits, setAudits] = useState<Audit[]>([]);
+const SimplePieGraph: React.FC<SimplePieGraphProps> = ({ type, audits }) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const fetchAudits = async () => {
-      try {
-        const response = await auditService.fetchAllAudit('audit');
-        setAudits(response.data);
-        setTimeout(() => {
-          setIsReady(true);
-        }, 100);
-      } catch (error) {
-        console.error('Error al obtener las Auditorias', error);
-      }
-    };
-
-    fetchAudits();
-  }, []);
+    setIsReady(true);
+  }, [audits]);
 
   const filteredAudits = audits.filter((audit) =>
     type === 'afip'
