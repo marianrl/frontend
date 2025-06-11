@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_ENV = "production"
+  REACT_APP_API_URL = "https://ams-backend-0it4.onrender.com/api/v1" 

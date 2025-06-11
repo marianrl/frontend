@@ -2,6 +2,7 @@ import apiClient from '../../config/axiosconfig';
 import { User } from '../../types/user';
 import { UserMailRequest } from '../../types/user_mail_request';
 import { UserRequest } from '../../types/user_request';
+import axios from 'axios';
 
 export interface ApiResponse {
   // Define la estructura de la respuesta de la API si es necesario
@@ -11,12 +12,12 @@ export interface ApiResponse {
   lastName: string;
 }
 
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 const userService = {
   async fetchAllUser(endpoint: string): Promise<ApiResponse> {
     try {
-      const response = await apiClient.get(`${API_BASE_URL}/${endpoint}`);
+      const response = await apiClient.get(`/${endpoint}`);
       return {
         data: response.data,
         status: response.status,
@@ -33,7 +34,23 @@ const userService = {
     userRequest: UserRequest
   ): Promise<number> {
     try {
-      const response = await apiClient.post(endpoint, userRequest);
+      console.log('Attempting authentication with:', {
+        url: `${API_BASE_URL}/${endpoint}`,
+        payload: userRequest,
+      });
+
+      // Simple request without CORS headers
+      const response = await axios.post(
+        `${API_BASE_URL}/${endpoint}`,
+        userRequest,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('Authentication response:', response.data);
 
       // Almacenar el token en localStorage
       const token = response.data.token;
@@ -44,6 +61,14 @@ const userService = {
       }
       return 401; // If no token is received, treat as unauthorized
     } catch (error: any) {
+      console.error('Authentication error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        headers: error.response?.headers,
+        requestData: userRequest,
+        stackTrace: error.stack,
+      });
       if (error.response) {
         return error.response.status;
       }
@@ -53,8 +78,7 @@ const userService = {
 
   async userExists(endpoint: string, mail: UserMailRequest): Promise<boolean> {
     try {
-      const response = await apiClient.post(endpoint, mail);
-
+      const response = await apiClient.post(`/${endpoint}`, mail);
       return response.data;
     } catch (error) {
       throw new Error('Error al buscar el Usuarios');
@@ -63,10 +87,7 @@ const userService = {
 
   async createUser(endpoint: string, user: User): Promise<ApiResponse> {
     try {
-      const response = await apiClient.post(
-        `${API_BASE_URL}/${endpoint}`,
-        user
-      );
+      const response = await apiClient.post(`/${endpoint}`, user);
       return {
         data: response.data,
         status: response.status,
@@ -84,10 +105,7 @@ const userService = {
     user: User
   ): Promise<ApiResponse> {
     try {
-      const response = await apiClient.put(
-        `${API_BASE_URL}/${endpoint}/${id}`,
-        user
-      );
+      const response = await apiClient.put(`/${endpoint}/${id}`, user);
       return {
         data: response.data,
         status: response.status,
@@ -101,9 +119,7 @@ const userService = {
 
   async deleteUser(endpoint: string, id: number): Promise<ApiResponse> {
     try {
-      const response = await apiClient.delete(
-        `${API_BASE_URL}/${endpoint}/${id}`
-      );
+      const response = await apiClient.delete(`/${endpoint}/${id}`);
       return {
         data: response.data,
         status: response.status,
