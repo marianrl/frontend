@@ -81,7 +81,9 @@ const Reports: React.FC = () => {
   const handleGeneratePdf = async () => {
     try {
       setIsExporting(true);
-      const response = await pdfService.generatePdf('https://example.com');
+      const response = await pdfService.generatePdf(
+        'https://auditms.netlify.app/reports'
+      );
       if (response.data.status === 'SUCCESS' && response.data.documentUrl) {
         window.open(response.data.documentUrl, '_blank');
       } else {
