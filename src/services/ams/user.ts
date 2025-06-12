@@ -39,16 +39,7 @@ const userService = {
         payload: userRequest,
       });
 
-      // Simple request without CORS headers
-      const response = await axios.post(
-        `${API_BASE_URL}/${endpoint}`,
-        userRequest,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await apiClient.post(`/${endpoint}`, userRequest);
 
       console.log('Authentication response:', response.data);
 
