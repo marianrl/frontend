@@ -1,31 +1,14 @@
 import apiClient from '../../config/axiosconfig';
-
-export interface PdfGenerationRequest {
-  url: string;
-}
-
-export interface PdfGenerationResponse {
-  requestId: string;
-  status: string;
-  errorCode: string | null;
-  errorMessage: string | null;
-  documentUrl: string;
-  expiresAt: string;
-}
-
-export interface ApiResponse {
-  data: PdfGenerationResponse;
-  status: number;
-}
+import { PageData, ApiResponse } from '../../types/pdf';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 const pdfService = {
-  async generatePdf(url: string): Promise<ApiResponse> {
+  async generatePdf(pageData: PageData): Promise<ApiResponse> {
     try {
       const response = await apiClient.post(
         `${API_BASE_URL}/pdf/generate`,
-        { url },
+        { pageData },
         {
           headers: {
             'Content-Type': 'application/json',

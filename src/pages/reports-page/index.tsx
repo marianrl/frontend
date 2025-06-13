@@ -81,9 +81,26 @@ const Reports: React.FC = () => {
   const handleGeneratePdf = async () => {
     try {
       setIsExporting(true);
-      const response = await pdfService.generatePdf(
-        'https://auditms.netlify.app/reports'
-      );
+
+      // Prepare the data to be included in the PDF
+      const pageData = {
+        totalAudits,
+        completedAudits,
+        pendingAudits,
+        recentAudits: recentAudits.map((audit) => ({
+          id: audit.id,
+          auditDate: audit.auditDate,
+        })),
+        chartData,
+        pieData,
+        dateRange: {
+          start: startDate,
+          end: endDate,
+        },
+      };
+
+      const response = await pdfService.generatePdf(pageData);
+
       if (response.data.status === 'SUCCESS' && response.data.documentUrl) {
         window.open(response.data.documentUrl, '_blank');
       } else {
